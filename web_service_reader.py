@@ -12,17 +12,35 @@ import datetime
 import time
 import requests as r
 import json
+import pandas as pd
+import sys
+
+def flatten_json(y):
+    out = {}
+
+    def flatten(x, name=''):
+        if type(x) is dict:
+            for a in x:
+                flatten(x[a], name + a + '_')
+        elif type(x) is list:
+            i = 0
+            for a in x:
+                flatten(a, name + str(i) + '_')
+                i += 1
+        else:
+            out[name[:-1]] = x
 
 
-
-def get_webservice_data(instance, username, password, tablename, fields, start_date, end_date):
+def get_servicenow_webservice_data(instance, username, password, tablename, fields, start_date, end_date):
 
     limit = "&sysparm_limit=0"
     offset = "&sysparm_offset=0"
-    query_limit = 10
+    query_limit = 500
 
     start_date = start_date.strftime('%Y%m%d%H%M%S')
     end_date = end_date.strftime('%Y%m%d%H%M%S')
+
+    print(start_date + " ----- " + end_date)
 
     #THESE ARE THE CLOSED FILTERS
     filter_string = "sysparm_query=closed_at%3E%3D"+start_date+"%5Eclosed_at%3C%3D"+end_date+"%5ENQsys_updated_on%3E%3D"
@@ -43,6 +61,10 @@ def get_webservice_data(instance, username, password, tablename, fields, start_d
     total_itt = 0
     offset_itt = 0
     query_count = 0
+    used = 0
+
+    output_df = pd.DataFrame()
+
     for i in range(item_count):
         itt+=1
         total_itt+=1
@@ -57,12 +79,47 @@ def get_webservice_data(instance, username, password, tablename, fields, start_d
             #SEND OFF THE REQUEST
             url = instance+"/api/now/table/"+tablename+"?sysparm_display_value=all&"+filter_string+"&"+fields+limit+offset
             response = r.get(url, auth=(username, password))
+            json_text = response.json()
+
+            j_dump = json.dumps(json_text['result'], sort_keys=True,indent=4, separators=(',', ': ')) #pull out the value data from the json file, messages are stored in value
+            df = pd.read_json(j_dump) #read the json file into a dataframe
+            
+
+            #FLATTERN THE JSON INFORMATION SO WE NO LONGER HAVE NESTED DISPLAY_VALUE AND VALUE IN THE SAME CELL
+            for row in df.iterrows():
+                data = row[1] #GET ROW DATA
+
+                #CREATE TWO ARRAYS THAT'LL STORE THE NEW INDEX AND RELATED VALUES
+                my_list = []
+                index_list = []
+
+                #LOOP TROUGH EACH VALUE OF THE ROW
+                for index, item in data.items():
+                    test = json.dumps(item, sort_keys=True,indent=4, separators=(',', ': ')) #
+                    test = json.loads(test)
+
+                    #LOOP THROUGH THE SUB VALUES IN THE ROW VALUES
+                    for part in test:
+                        value = str(test[part])
+                        if value == "None":
+                            value = ""
+                        #print(index + " -- " + part + " -- " + value)
+                        index_list.append(index + "_" + part)
+                        my_list.append(value)
+
+                #print('test')
+                new_df = pd.DataFrame(my_list,index=index_list)
+                new_df = new_df.transpose() #TRANSPOSE THE VALUES SO THEY'RE COLUMNS AND NOW ROWS
+                frames = [output_df, new_df]
+                output_df = pd.concat(frames, sort=False)
 
             #UPDATE OFFSET VALUES
             offset_itt = offset_itt + itt
             itt = 0
             query_count+=1
 
+    output_df = output_df.reset_index(drop=True)
+    output_df.to_csv('TEST.csv')
 
 
 fields = "sysparm_fields="
@@ -105,6 +162,7 @@ fields += "u_ft"+"%2C"
 
 now = d.now()
 end_date = now
-start_date = now - datetime.timedelta(hours=2)
+start_date = now - datetime.timedelta(hours=48)
 
-get_webservice_data(fsa_instancename, fsa_username, fsa_password, 'incident', fields, start_date, end_date)
+#get_servicenow_webservice_data(fsa_instancename, fsa_username, fsa_password, 'incident', fields, start_date, end_date)
+get_servicenow_webservice_data(he_instancename, he_username, he_password, 'incident', fields, start_date, end_date)
