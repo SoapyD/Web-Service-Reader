@@ -6,6 +6,7 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 exec(open(base_path+"_passwords\\_master.py").read()) #load the master password file
 exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
 
+exec(open("return_field_list.py").read())
 
 from datetime import datetime as d
 import datetime
@@ -15,32 +16,20 @@ import json
 import pandas as pd
 import sys
 
-def flatten_json(y):
-    out = {}
 
-    def flatten(x, name=''):
-        if type(x) is dict:
-            for a in x:
-                flatten(x[a], name + a + '_')
-        elif type(x) is list:
-            i = 0
-            for a in x:
-                flatten(a, name + str(i) + '_')
-                i += 1
-        else:
-            out[name[:-1]] = x
-
-
-def get_servicenow_webservice_data(instance, username, password, tablename, fields, start_date, end_date):
+def get_servicenow_webservice_data(source, instance, username, password, tablename, fields, start_date, end_date):
 
     limit = "&sysparm_limit=0"
     offset = "&sysparm_offset=0"
     query_limit = 500
 
+    #url = instance+"/api/now/table/sys_dictionary?sysparm_fields=internal_type,element&table="+tablename
+    #response = r.get(url, auth=(username, password))
+    #print(response.text)
+
     start_date = start_date.strftime('%Y%m%d%H%M%S')
     end_date = end_date.strftime('%Y%m%d%H%M%S')
-
-    print(start_date + " ----- " + end_date)
+    #print(start_date + " ----- " + end_date)
 
     #THESE ARE THE CLOSED FILTERS
     filter_string = "sysparm_query=closed_at%3E%3D"+start_date+"%5Eclosed_at%3C%3D"+end_date+"%5ENQsys_updated_on%3E%3D"
@@ -55,7 +44,7 @@ def get_servicenow_webservice_data(instance, username, password, tablename, fiel
     json_text = response.json()
     item_count = json_text['result']['stats']['count']
     item_count = int(item_count) #conver returned string to number
-    print('pulling '+str(item_count)+' records from the '+tablename+' table in '+fsa_instancename)
+    print('pulling '+str(item_count)+' records from the '+tablename+' table in '+instance)
 
     itt = 0
     total_itt = 0
@@ -99,13 +88,17 @@ def get_servicenow_webservice_data(instance, username, password, tablename, fiel
                     test = json.loads(test)
 
                     #LOOP THROUGH THE SUB VALUES IN THE ROW VALUES
+                    saved_val = ''
                     for part in test:
                         value = str(test[part])
                         if value == "None":
                             value = ""
                         #print(index + " -- " + part + " -- " + value)
-                        index_list.append(index + "_" + part)
-                        my_list.append(value)
+                        #ONLY SAVE THE VALUE IF IT'S NEW AND ISN'T A LINK
+                        if value.lower() != saved_val.lower() and part != 'link':
+                            index_list.append(index + "_" + part)
+                            my_list.append(value)
+                            saved_val = value
 
                 #print('test')
                 new_df = pd.DataFrame(my_list,index=index_list)
@@ -119,50 +112,27 @@ def get_servicenow_webservice_data(instance, username, password, tablename, fiel
             query_count+=1
 
     output_df = output_df.reset_index(drop=True)
-    output_df.to_csv('TEST.csv')
+    output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
 
-fields = "sysparm_fields="
-fields += "number"+"%2C"
-fields += "company"+"%2C"
-fields += "short_description"+"%2C"
-fields += "priority"+"%2C"
-fields += "state"+"%2C"
-fields += "contact_type"+"%2C"
-fields += "category"+"%2C"
-fields += "subcategory"+"%2C"
-fields += "u_first_fix"+"%2C"
-fields += "assignment_group"+"%2C"
-fields += "assigned_to"+"%2C"
-fields += "close_code"+"%2C"
-fields += "sys_created_by"+"%2C"
-fields += "sys_created_on"+"%2C"
-fields += "resolved_by"+"%2C"
-fields += "resolved_at"+"%2C"
-fields += "closed_by"+"%2C"
-fields += "closed_at"+"%2C"
-fields += "sys_updated_by"+"%2C"
-fields += "sys_updated_on"+"%2C"
-fields += "caller_id"+"%2C"
-fields += "location"+"%2C"
-fields += "active"+"%2C"
-fields += "u_psupplier"+"%2C"
-fields += "u_3rd_party_reference"+"%2C"
-fields += "u_resolving_team"+"%2C"
-fields += "u_fix_code"+"%2C"
-fields += "u_exception_y_n"+"%2C"
-fields += "u_exception_reason"+"%2C"
-fields += "u_lf_comments"+"%2C"
-fields += "u_agreed"+"%2C"
-fields += "u_he_comments"+"%2C"
-fields += "parent_incident"+"%2C"
-fields += "company"+"%2C"
-fields += "u_fa"+"%2C"
-fields += "u_ft"+"%2C"
 
 now = d.now()
 end_date = now
-start_date = now - datetime.timedelta(hours=48)
+start_date = now - datetime.timedelta(hours=24)
 
-#get_servicenow_webservice_data(fsa_instancename, fsa_username, fsa_password, 'incident', fields, start_date, end_date)
-get_servicenow_webservice_data(he_instancename, he_username, he_password, 'incident', fields, start_date, end_date)
+#GET THE TABLE FIELDS
+tablename = 'incident'
+fields = return_field_list(tablename)
+#QUERY THE TABLE DATA
+get_servicenow_webservice_data('HE', he_instancename, he_username, he_password, tablename, fields, start_date, end_date)
+get_servicenow_webservice_data('FSA', fsa_instancename, fsa_username, fsa_password, tablename, fields, start_date, end_date)
+get_servicenow_webservice_data('MHCLG', mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, start_date, end_date)
+
+
+#GET THE TABLE FIELDS
+tablename = 'sc_req_item'
+fields = return_field_list(tablename)
+#QUERY THE TABLE DATA
+get_servicenow_webservice_data('HE', he_instancename, he_username, he_password, tablename, fields, start_date, end_date)
+get_servicenow_webservice_data('FSA', fsa_instancename, fsa_username, fsa_password, tablename, fields, start_date, end_date)
+get_servicenow_webservice_data('MHCLG', mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, start_date, end_date)
