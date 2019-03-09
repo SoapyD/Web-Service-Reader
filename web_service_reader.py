@@ -19,17 +19,14 @@ import sys
 
 def get_servicenow_webservice_data(source, instance, username, password, tablename, fields, start_date, end_date):
 
+    start_time = datetime.datetime.now() #need for process time printing
+
     limit = "&sysparm_limit=0"
     offset = "&sysparm_offset=0"
     query_limit = 500
 
-    #url = instance+"/api/now/table/sys_dictionary?sysparm_fields=internal_type,element&table="+tablename
-    #response = r.get(url, auth=(username, password))
-    #print(response.text)
-
     start_date = start_date.strftime('%Y%m%d%H%M%S')
     end_date = end_date.strftime('%Y%m%d%H%M%S')
-    #print(start_date + " ----- " + end_date)
 
     #THESE ARE THE CLOSED FILTERS
     filter_string = "sysparm_query=closed_at%3E%3D"+start_date+"%5Eclosed_at%3C%3D"+end_date+"%5ENQsys_updated_on%3E%3D"
@@ -44,7 +41,10 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     json_text = response.json()
     item_count = json_text['result']['stats']['count']
     item_count = int(item_count) #conver returned string to number
+
+    print('########################################')
     print('pulling '+str(item_count)+' records from the '+tablename+' table in '+instance)
+    print('########################################')
 
     itt = 0
     total_itt = 0
@@ -63,7 +63,8 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
             offset = "&sysparm_offset="+str(offset_itt)        
 
             #Write-Host "RUNNING MAIN QUERY: $($query_count)"
-            print('returning records '+str(offset_itt)+" to "+str(offset_itt+query_limit))
+            
+            print('returning records '+str(offset_itt)+" to "+str(offset_itt+query_limit)) 
 
             #SEND OFF THE REQUEST
             url = instance+"/api/now/table/"+tablename+"?sysparm_display_value=all&"+filter_string+"&"+fields+limit+offset
@@ -114,7 +115,23 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     output_df = output_df.reset_index(drop=True)
     output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
+    finish_time = datetime.datetime.now()
+    print('########################################')
+    print('REST QUERY COMPLETE')
+    print('Start: '+str(start_time))
+    print('End: '+str(finish_time))
+    print('Time Taken: '+str(finish_time - start_time))
+    print('########################################')
+    print('')
 
+
+
+print('########################################')
+print('RUNNING SERVICE EXTRACT PROCESS')
+print('########################################')
+
+
+start_time = datetime.datetime.now() #need for process time printing
 
 now = d.now()
 end_date = now
@@ -136,3 +153,12 @@ fields = return_field_list(tablename)
 get_servicenow_webservice_data('HE', he_instancename, he_username, he_password, tablename, fields, start_date, end_date)
 get_servicenow_webservice_data('FSA', fsa_instancename, fsa_username, fsa_password, tablename, fields, start_date, end_date)
 get_servicenow_webservice_data('MHCLG', mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, start_date, end_date)
+
+finish_time = datetime.datetime.now()
+print('########################################')
+print('PROCESS COMPLETE')
+print('Start: '+str(start_time))
+print('End: '+str(finish_time))
+print('Time Taken: '+str(finish_time - start_time))
+print('########################################')
+print('')
