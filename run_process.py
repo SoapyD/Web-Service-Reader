@@ -1,3 +1,3 @@
 import os
 
-exec(open("web_service_reader.py").read())
+exec(open("_main.py").read())

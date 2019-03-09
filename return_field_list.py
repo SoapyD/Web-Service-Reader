@@ -1,5 +1,6 @@
 def return_field_list(tablename):
 	fields = "sysparm_fields="
+	filter_fields = ''
 
 	##########################################################################
 	##########################################################################
@@ -45,6 +46,7 @@ def return_field_list(tablename):
 		fields += "u_fa"+"%2C"
 		fields += "u_ft"+"%2C"
 
+		filter_fields = ['closed_at','sys_updated_on']
 
 	##########################################################################
 	##########################################################################
@@ -74,6 +76,7 @@ def return_field_list(tablename):
 		fields += "request"+"%2C"
 		fields += "company"+"%2C"
 
+		filter_fields = ['closed_at','sys_updated_on']
 
 	##########################################################################
 	##########################################################################
@@ -104,5 +107,9 @@ def return_field_list(tablename):
 	    fields += "sys_updated_by"+"%2C"
 	    fields += "sys_updated_on"+"%2C"
 
+	    filter_fields = ['sys_created_on','sys_updated_on']
 
-	return fields
+
+	return_info = [fields, filter_fields]
+
+	return return_info
