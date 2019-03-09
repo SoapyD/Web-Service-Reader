@@ -75,4 +75,34 @@ def return_field_list(tablename):
 		fields += "company"+"%2C"
 
 
+	##########################################################################
+	##########################################################################
+	################################INCIDENTS
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'task_sla':
+
+	    #SELECT THE FIELDS WE WANT TO SEE FROM INCIDENTS
+	    fields += "sys_id"+"%2C"
+	    fields += "task"+"%2C"
+	    fields += "sla"+"%2C"
+	    fields += "stage"+"%2C"
+	    fields += "start_time"+"%2C"
+	    fields += "planned_end_time"+"%2C"
+	    fields += "end_time"+"%2C"
+	    fields += "duration"+"%2C"
+	    fields += "percentage"+"%2C"
+	    fields += "time_left"+"%2C"
+	    fields += "business_duration"+"%2C"
+	    fields += "business_percentage"+"%2C"
+	    fields += "business_time_left"+"%2C"
+	    fields += "has_breached"+"%2C"
+	    fields += "active"+"%2C"
+	    fields += "sys_created_by"+"%2C"
+	    fields += "sys_created_on"+"%2C"
+	    fields += "sys_updated_by"+"%2C"
+	    fields += "sys_updated_on"+"%2C"
+
+
 	return fields

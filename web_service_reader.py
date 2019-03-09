@@ -29,13 +29,15 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     end_date = end_date.strftime('%Y%m%d%H%M%S')
 
     #THESE ARE THE CLOSED FILTERS
-    filter_string = "sysparm_query=closed_at%3E%3D"+start_date+"%5Eclosed_at%3C%3D"+end_date+"%5ENQsys_updated_on%3E%3D"
-    filter_string = filter_string+start_date+"%5Esys_updated_on%3C%3D"+end_date #THIS IS THE FILTER FOR CLOSED TICKETS
+    filter_string = "sysparm_query="
+    #filter_string += "closed_at%3E%3D"+start_date+"%5Eclosed_at%3C%3D"+end_date+"%5ENQ"
+    filter_string += "sys_updated_on%3E%3D"+start_date+"%5Esys_updated_on%3C%3D"+end_date #THIS IS THE FILTER FOR CLOSED TICKETS
 
     #FORMAT THE URL TO RETURN THE NUMBER OF RECORDS THAT MATCH THE ABOVE FILTER CRITERIA
     url = instance+"/api/now/stats/"+tablename+"?sysparm_count=true&"+filter_string
     #RETURN THE STAT DATA FROM THE FORMATTED URL
     response = r.get(url, auth=(username, password))
+    #print(response.text)
 
     #PULL AND PRINT THE TICKET NUMBER FROM THE RETURNED DATA
     json_text = response.json()
@@ -115,6 +117,8 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     output_df = output_df.reset_index(drop=True)
     output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
+    return output_df
+
     finish_time = datetime.datetime.now()
     print('########################################')
     print('REST QUERY COMPLETE')
@@ -123,6 +127,30 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     print('Time Taken: '+str(finish_time - start_time))
     print('########################################')
     print('')
+
+def update_tables(source, tablename, fields, start_date, end_date):
+
+    output_df = pd.DataFrame()
+
+    if source == 'HE':
+        output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, start_date, end_date)
+    if source == 'FSA':    
+        output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, start_date, end_date)
+    if source == 'MHCLG':    
+        output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, start_date, end_date)
+
+    #PASS TABLES TO DATABASE
+
+    #BREAK DOWN ANY RETURNED DATA INTO SMALLER CHUNKS SO LARGE UPLOADS DON'T CHOKE THE PROCESS OUT
+
+    #BULK UPLOAD DATA
+
+    #RUN MERGE SCRIPT
+
+
+
+
+
 
 
 
@@ -135,24 +163,34 @@ start_time = datetime.datetime.now() #need for process time printing
 
 now = d.now()
 end_date = now
-start_date = now - datetime.timedelta(hours=24)
+start_date = now - datetime.timedelta(hours=10)
 
 #GET THE TABLE FIELDS
 tablename = 'incident'
 fields = return_field_list(tablename)
 #QUERY THE TABLE DATA
-get_servicenow_webservice_data('HE', he_instancename, he_username, he_password, tablename, fields, start_date, end_date)
-get_servicenow_webservice_data('FSA', fsa_instancename, fsa_username, fsa_password, tablename, fields, start_date, end_date)
-get_servicenow_webservice_data('MHCLG', mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, start_date, end_date)
-
+#update_tables('HE', tablename, fields, start_date, end_date)
+#update_tables('FSA', tablename, fields, start_date, end_date)
+#update_tables('MHCLG', tablename, fields, start_date, end_date)
 
 #GET THE TABLE FIELDS
 tablename = 'sc_req_item'
 fields = return_field_list(tablename)
 #QUERY THE TABLE DATA
-get_servicenow_webservice_data('HE', he_instancename, he_username, he_password, tablename, fields, start_date, end_date)
-get_servicenow_webservice_data('FSA', fsa_instancename, fsa_username, fsa_password, tablename, fields, start_date, end_date)
-get_servicenow_webservice_data('MHCLG', mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, start_date, end_date)
+#update_tables('HE', tablename, fields, start_date, end_date)
+#update_tables('FSA', tablename, fields, start_date, end_date)
+#update_tables('MHCLG', tablename, fields, start_date, end_date)
+
+#GET THE TABLE FIELDS
+tablename = 'task_sla'
+fields = return_field_list(tablename)
+#QUERY THE TABLE DATA
+update_tables('HE', tablename, fields, start_date, end_date)
+#update_tables('FSA', tablename, fields, start_date, end_date)
+#update_tables('MHCLG', tablename, fields, start_date, end_date)
+
+#NEED TO ADD A MEANS OF SENDING AN ARRAY OF DATE FIELD NAMES THAT'LL GET TURNED INTO THE DATE FILTER STRING
+
 
 finish_time = datetime.datetime.now()
 print('########################################')
