@@ -155,11 +155,39 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
     if source == 'MHCLG':    
         output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
 
-    #PASS TABLES TO DATABASE
+    row_count = output_df.shape[0] #GET THE ROW COUNT
+    #IF THERE#S BEEN ANY RESULTING DF RETURNED
+    if output_df is not None and row_count > 0:
 
-    #BREAK DOWN ANY RETURNED DATA INTO SMALLER CHUNKS SO LARGE UPLOADS DON'T CHOKE THE PROCESS OUT
+        print('slicing output...')
 
-    #BULK UPLOAD DATA
+        
+        run_loop = 1
+        offset = 0
+        max_rows = 500
+        print(str(row_count)+' rows to slice. max slice size is '+str(max_rows))
 
-    #RUN MERGE SCRIPT
+        while run_loop == 1:
+            slice_end = offset+max_rows
+            if slice_end >= row_count:
+                slice_end = row_count
+                run_loop = 0
 
+            #SLICE THE DF
+            df_slice = output_df.iloc[offset:slice_end]
+            slice_range = str(offset+1)+' to '+str(slice_end)
+            print('unloading slice '+slice_range)
+
+            #df_slice.to_csv('exports\\'+tablename+'_'+str(offset)+' to '+str(slice_end)+'.csv')
+            
+            #SEND THE SLICE TO THE DEV DATABASE
+            #(NEEDS A MORE EFFICIENT BULK UPLOAD METHOD)
+            insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
+
+            #RUN MERGE SCRIPT
+            #sql_filename = source + '_' + tablename
+            #sqlfile = get_sql_query(sql_filename, swd)
+            #query_database2(sql_filename, sqlfile, 2)
+
+
+            offset += max_rows
