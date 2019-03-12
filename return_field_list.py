@@ -8,6 +8,20 @@ def return_field_list(tablename):
 	##########################################################################
 	##########################################################################
 
+	if tablename == 'incident2':
+		fields += "number"+"%2C"
+		fields += "company"+"%2C"
+		fields += "short_description"+"%2C"
+		fields += "priority"+"%2C"
+		fields += "state"+"%2C"
+		fields += "contact_type"+"%2C"
+		fields += "category"+"%2C"
+		fields += "subcategory"+"%2C"
+		fields += "u_first_fix"+"%2C"
+		fields += "assignment_group"
+
+		filter_fields = ['closed_at','sys_updated_on']
+
 	if tablename == 'incident':
 		fields += "number"+"%2C"
 		fields += "company"+"%2C"

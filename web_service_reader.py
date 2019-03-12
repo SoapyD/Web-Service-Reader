@@ -21,6 +21,11 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 
     start_time = datetime.datetime.now() #need for process time printing
 
+    print("running servicenow extract method for...")
+    print(tablename+' table on '+instance)
+    print('')
+    print('Start: '+str(start_time))
+
     limit = "&sysparm_limit=0"
     offset = "&sysparm_offset=0"
     query_limit = 500
@@ -55,8 +60,8 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
         item_count = json_text['result']['stats']['count']
         item_count = int(item_count) #conver returned string to number
 
-        print('########################################')
-        print('pulling '+str(item_count)+' records from the '+tablename+' table in '+instance)
+        #print('########################################')
+        print('pulling '+str(item_count)+' records')
         #print('########################################')
 
         itt = 0
@@ -108,7 +113,10 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                                 #print(index + " -- " + part + " -- " + value)
                                 #ONLY SAVE THE VALUE IF IT'S NEW AND ISN'T A LINK
                                 if value.lower() != saved_val.lower() and part != 'link':
-                                    index_list.append(index + "_" + part)
+                                    part = "_" + part
+                                    if part == '_display_value':
+                                        part = ''
+                                    index_list.append(index + part)
                                     my_list.append(value)
                                     saved_val = value
 
@@ -127,7 +135,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                     print(response.text)
 
         output_df = output_df.reset_index(drop=True)
-        output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
+        #output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
     else:
         print('Error while running stats query')
@@ -136,13 +144,20 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     finish_time = datetime.datetime.now()
     #print('########################################')
     print('REST QUERY COMPLETE')
-    #print('Start: '+str(start_time))
-    #print('End: '+str(finish_time))
+    print('End: '+str(finish_time))
     print('Time Taken: '+str(finish_time - start_time))
     print('########################################')
     #print('')
 
     return output_df
+
+
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+
 
 def update_webservice_tables(source, tablename, fields, filter_fields, start_date, end_date):
 
@@ -160,8 +175,9 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
     if output_df is not None and row_count > 0:
 
         print('slicing output...')
+        start_time = datetime.datetime.now() #need for process time printing
+        print('Start: '+str(start_time))
 
-        
         run_loop = 1
         offset = 0
         max_rows = 500
@@ -178,16 +194,18 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
             slice_range = str(offset+1)+' to '+str(slice_end)
             print('unloading slice '+slice_range)
 
-            #df_slice.to_csv('exports\\'+tablename+'_'+str(offset)+' to '+str(slice_end)+'.csv')
-            
             #SEND THE SLICE TO THE DEV DATABASE
-            #(NEEDS A MORE EFFICIENT BULK UPLOAD METHOD)
-            insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
+            bulk_insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
 
             #RUN MERGE SCRIPT
             #sql_filename = source + '_' + tablename
             #sqlfile = get_sql_query(sql_filename, swd)
             #query_database2(sql_filename, sqlfile, 2)
 
+            print('--------------------------')
 
             offset += max_rows
+
+        finish_time = datetime.datetime.now()
+        print('End: '+str(finish_time))
+        print('Time Taken: '+str(finish_time - start_time))
