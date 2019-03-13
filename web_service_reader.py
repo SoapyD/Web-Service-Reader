@@ -33,6 +33,21 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
     start_date = start_date.strftime('%Y%m%d%H%M%S')
     end_date = end_date.strftime('%Y%m%d%H%M%S')
 
+    #THESE ARE THE FIELDS USED
+    fields_string = "sysparm_fields="
+
+    use_or = 0
+    for item in fields:
+        
+        if use_or == 1:
+            #^NQ which I think means OR
+            fields_string += "%2C"
+
+        fields_string += item
+        use_or = 1
+
+    #print(fields_string)
+
     #THESE ARE THE CLOSED FILTERS
     filter_string = "sysparm_query="
 
@@ -81,7 +96,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                 print('returning records '+str(offset_itt)+" to "+str(offset_itt+query_limit)) 
 
                 #SEND OFF THE REQUEST
-                url = instance+"/api/now/table/"+tablename+"?sysparm_display_value=all&"+filter_string+"&"+fields+limit+offset
+                url = instance+"/api/now/table/"+tablename+"?sysparm_display_value=all&"+filter_string+"&"+fields_string+limit+offset
                 response = r.get(url, auth=(username, password))
 
                 if response.status_code == 200:
@@ -162,6 +177,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 def update_webservice_tables(source, tablename, fields, filter_fields, start_date, end_date):
 
     output_df = pd.DataFrame()
+    max_rows = 500
 
     if source == 'HE':
         output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
@@ -180,8 +196,10 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
 
         run_loop = 1
         offset = 0
-        max_rows = 500
+        
         print(str(row_count)+' rows to slice. max slice size is '+str(max_rows))
+
+        print('--------------------------')
 
         while run_loop == 1:
             slice_end = offset+max_rows
@@ -197,10 +215,25 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
             #SEND THE SLICE TO THE DEV DATABASE
             bulk_insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
 
+
+            #RUN CHECK SCRIPT, WHICH CHECKS FOR ALL QUERIED FIELDS AND ADDS THEM IF THEY'RE MISSING
+            #NULL FIELDS IN A QUERY DON'T RETURN ANY DATA, THIS IS HERE TO ENSURE THE QUERIES RUN PROPERLY
+            #print("RUNNING QUERY... check staging table for fields")
+
+            sqlfile = ""
+            for item in fields:
+                sqlfile += "IF COL_LENGTH('dbo.stg', '"+item+"') IS NULL "
+                sqlfile += "BEGIN "
+                sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
+                sqlfile += "END; "
+
+            query_database2('Add missing field', sqlfile, 2)
+
             #RUN MERGE SCRIPT
-            #sql_filename = source + '_' + tablename
-            #sqlfile = get_sql_query(sql_filename, swd)
-            #query_database2(sql_filename, sqlfile, 2)
+            #print("RUNNING QUERY... merge to main table")
+            sql_filename = source + '_' + tablename
+            sqlfile = get_sql_query(sql_filename, path+'\\sql\\')
+            query_database2('merge to main table', sqlfile, 2)
 
             print('--------------------------')
 

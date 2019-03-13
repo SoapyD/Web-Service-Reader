@@ -1,5 +1,5 @@
 def return_field_list(tablename):
-	fields = "sysparm_fields="
+	fields = ''
 	filter_fields = ''
 
 	##########################################################################
@@ -8,57 +8,45 @@ def return_field_list(tablename):
 	##########################################################################
 	##########################################################################
 
-	if tablename == 'incident2':
-		fields += "number"+"%2C"
-		fields += "company"+"%2C"
-		fields += "short_description"+"%2C"
-		fields += "priority"+"%2C"
-		fields += "state"+"%2C"
-		fields += "contact_type"+"%2C"
-		fields += "category"+"%2C"
-		fields += "subcategory"+"%2C"
-		fields += "u_first_fix"+"%2C"
-		fields += "assignment_group"
-
-		filter_fields = ['closed_at','sys_updated_on']
-
 	if tablename == 'incident':
-		fields += "number"+"%2C"
-		fields += "company"+"%2C"
-		fields += "short_description"+"%2C"
-		fields += "priority"+"%2C"
-		fields += "state"+"%2C"
-		fields += "contact_type"+"%2C"
-		fields += "category"+"%2C"
-		fields += "subcategory"+"%2C"
-		fields += "u_first_fix"+"%2C"
-		fields += "assignment_group"+"%2C"
-		fields += "assigned_to"+"%2C"
-		fields += "close_code"+"%2C"
-		fields += "sys_created_by"+"%2C"
-		fields += "sys_created_on"+"%2C"
-		fields += "resolved_by"+"%2C"
-		fields += "resolved_at"+"%2C"
-		fields += "closed_by"+"%2C"
-		fields += "closed_at"+"%2C"
-		fields += "sys_updated_by"+"%2C"
-		fields += "sys_updated_on"+"%2C"
-		fields += "caller_id"+"%2C"
-		fields += "location"+"%2C"
-		fields += "active"+"%2C"
-		fields += "u_psupplier"+"%2C"
-		fields += "u_3rd_party_reference"+"%2C"
-		fields += "u_resolving_team"+"%2C"
-		fields += "u_fix_code"+"%2C"
-		fields += "u_exception_y_n"+"%2C"
-		fields += "u_exception_reason"+"%2C"
-		fields += "u_lf_comments"+"%2C"
-		fields += "u_agreed"+"%2C"
-		fields += "u_he_comments"+"%2C"
-		fields += "parent_incident"+"%2C"
-		fields += "company"+"%2C"
-		fields += "u_fa"+"%2C"
-		fields += "u_ft"+"%2C"
+		fields = [
+		"number",
+		"company",
+		"short_description",
+		"priority",
+		"state",
+		"contact_type",
+		"category",
+		"subcategory",
+		"u_first_fix",
+		"assignment_group",
+		"assigned_to",
+		"close_code",
+		"sys_created_by",
+		"sys_created_on",
+		"resolved_by",
+		"resolved_at",
+		"closed_by",
+		"closed_at",
+		"sys_updated_by",
+		"sys_updated_on",
+		"caller_id",
+		"location",
+		"active",
+		"u_psupplier",
+		"u_3rd_party_reference",
+		"u_resolving_team",
+		"u_fix_code",
+		"u_exception_y_n",
+		"u_exception_reason",
+		"u_lf_comments",
+		"u_agreed",
+		"u_he_comments",
+		"parent_incident",
+		"company",
+		"u_fa",
+		"u_ft"
+		]
 
 		filter_fields = ['closed_at','sys_updated_on']
 
