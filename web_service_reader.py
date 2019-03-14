@@ -21,9 +21,9 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 
     start_time = datetime.datetime.now() #need for process time printing
 
+    print('--------------------------')
     print("running servicenow extract method for...")
     print(tablename+' table on '+instance)
-    print('')
     print('Start: '+str(start_time))
 
     limit = "&sysparm_limit=0"
@@ -146,22 +146,24 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                     query_count+=1
 
                 else:
-                    print('Error while running table extract query')
-                    print(response.text)
+                    #print('Error while running table extract query')
+                    raise ValueError('Error while running table extract query. Response reads: '+response.text)
+                    #print(response.text)
 
         output_df = output_df.reset_index(drop=True)
         output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
     else:
-        print('Error while running stats query')
-        print(response.text)
+        #print('Error while running stats query')
+        raise ValueError('Error while running stats query. Response reads: '+response.text)
+        #print(response.text)
 
     finish_time = datetime.datetime.now()
     #print('########################################')
     print('REST QUERY COMPLETE')
     print('End: '+str(finish_time))
     print('Time Taken: '+str(finish_time - start_time))
-    print('########################################')
+    print('--------------------------')
     #print('')
 
     return output_df
@@ -237,23 +239,101 @@ def merge_with_database(output_df, source_type, source, tablename, fields):
 ###################################################################################################################
 ###################################################################################################################
 
+def get_heat_data(source, tablename, start_date, end_date):
+
+    start_time = datetime.datetime.now() #need for process time printing
+    print('Start: '+str(start_time))
+
+    output_df = pd.DataFrame()
+
+    itt_start = start_date
+    itt_end = start_date + datetime.timedelta(hours=24)
+    if itt_end > end_date:
+        itt_end = end_date
+
+    print('--------------------------')
+
+    run_loop = 1
+    while run_loop == 1:
+
+        if itt_end >= end_date: #check to see if the loop is over yet
+            itt_end = end_date
+            run_loop = 0  
+  
+        start_date_str = itt_start.strftime('%Y-%m-%d %H:%M:%S')
+        end_date_str = itt_end.strftime('%Y-%m-%d %H:%M:%S')
+
+        sql_filename = source + '_' + tablename
+        
+        print('running query: '+sql_filename+" between "+start_date_str+" and "+end_date_str)
+
+        sqlfile = get_sql_query(sql_filename, path+'\\sql\\')
+        sqlfile = sqlfile.replace("_@start", start_date_str)
+        sqlfile = sqlfile.replace("_@end", end_date_str)
+
+        new_df = query_database(sqlfile, 0)
+        print(str(new_df.shape[0])+" row returned")
+        print('--------------------------')
+
+        frames = [output_df, new_df]
+        output_df = pd.concat(frames, sort=False)
+
+        #ADVANCE THE DATE FILTER VALUES
+        itt_start = itt_end
+        itt_end = itt_end + datetime.timedelta(hours=24)
+
+    output_df.to_csv('exports\\'+source+'_'+tablename+'.csv') 
+
+    finish_time = datetime.datetime.now()
+    print('End: '+str(finish_time))
+    print('Time Taken: '+str(finish_time - start_time))
+
+    return output_df
+
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
 
 def update_webservice_tables(source, tablename, fields, filter_fields, start_date, end_date):
 
     output_df = pd.DataFrame()
 
     source_type = ''
+    errors = 0
 
-    #GET DATA FROM SOURCE
-    if source == 'HE':
-        output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
-        source_type = 'service now'
-    if source == 'FSA':    
-        output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date)
-        source_type = 'service now'
-    if source == 'MHCLG':    
-        output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
-        source_type = 'service now'
+    try:
+        #GET DATA FROM SOURCE
+        if source == 'HE':
+            output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
+            source_type = 'service now'
+        if source == 'FSA':    
+            output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date)
+            source_type = 'service now'
+        if source == 'MHCLG':    
+            output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
+            source_type = 'service now'
+        if source == 'CROYDON':    
+            output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date)
+            source_type = 'service now'
+        if source == 'HEAT':
+            output_df = get_heat_data(source, tablename, start_date, end_date)
+
+    except ValueError as e:
+        print("###ERROR TRYING TO EXTRACT DATA###")
+        print(e)
+        errors += 1
 
     #MERGE DATA WITH MAIN DATABASE TABLE
-    merge_with_database(output_df, source_type, source, tablename, fields)
+    if errors == 0:
+        try:
+            merge_with_database(output_df, source_type, source, tablename, fields)
+        except:
+            print("###ERROR TRYING TO MERGE TO MAIN TABLE###")
+            #print(ValueError)
+            errors += 1
+    else:
+        errors += 1
+
+    return errors

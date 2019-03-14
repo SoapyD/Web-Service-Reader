@@ -81,6 +81,7 @@ def return_field_list(tablename):
 	if tablename == 'sc_req_item':
 
 		fields = [
+		"sys_id",
 		"number",
 		"short_description",
 		"state",
