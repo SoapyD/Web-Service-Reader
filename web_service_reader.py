@@ -10,7 +10,7 @@ exec(open("return_field_list.py").read())
 
 from datetime import datetime as d
 import datetime
-import time
+#import time
 import requests as r
 import json
 import pandas as pd
@@ -150,7 +150,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                     print(response.text)
 
         output_df = output_df.reset_index(drop=True)
-        #output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
+        output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
     else:
         print('Error while running stats query')
@@ -173,18 +173,9 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 ###################################################################################################################
 ###################################################################################################################
 
+def merge_with_database(output_df, source_type, source, tablename, fields):
 
-def update_webservice_tables(source, tablename, fields, filter_fields, start_date, end_date):
-
-    output_df = pd.DataFrame()
     max_rows = 500
-
-    if source == 'HE':
-        output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
-    if source == 'FSA':    
-        output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date)
-    if source == 'MHCLG':    
-        output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
 
     row_count = output_df.shape[0] #GET THE ROW COUNT
     #IF THERE#S BEEN ANY RESULTING DF RETURNED
@@ -198,7 +189,6 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
         offset = 0
         
         print(str(row_count)+' rows to slice. max slice size is '+str(max_rows))
-
         print('--------------------------')
 
         while run_loop == 1:
@@ -215,22 +205,20 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
             #SEND THE SLICE TO THE DEV DATABASE
             bulk_insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
 
-
             #RUN CHECK SCRIPT, WHICH CHECKS FOR ALL QUERIED FIELDS AND ADDS THEM IF THEY'RE MISSING
             #NULL FIELDS IN A QUERY DON'T RETURN ANY DATA, THIS IS HERE TO ENSURE THE QUERIES RUN PROPERLY
-            #print("RUNNING QUERY... check staging table for fields")
+            
+            if source_type == 'service now':
+                sqlfile = ""
+                for item in fields:
+                    sqlfile += "IF COL_LENGTH('dbo.stg', '"+item+"') IS NULL "
+                    sqlfile += "BEGIN "
+                    sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
+                    sqlfile += "END; "
 
-            sqlfile = ""
-            for item in fields:
-                sqlfile += "IF COL_LENGTH('dbo.stg', '"+item+"') IS NULL "
-                sqlfile += "BEGIN "
-                sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
-                sqlfile += "END; "
-
-            query_database2('Add missing field', sqlfile, 2)
+                query_database2('Add missing field', sqlfile, 2)
 
             #RUN MERGE SCRIPT
-            #print("RUNNING QUERY... merge to main table")
             sql_filename = source + '_' + tablename
             sqlfile = get_sql_query(sql_filename, path+'\\sql\\')
             query_database2('merge to main table', sqlfile, 2)
@@ -242,3 +230,30 @@ def update_webservice_tables(source, tablename, fields, filter_fields, start_dat
         finish_time = datetime.datetime.now()
         print('End: '+str(finish_time))
         print('Time Taken: '+str(finish_time - start_time))
+
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+
+
+def update_webservice_tables(source, tablename, fields, filter_fields, start_date, end_date):
+
+    output_df = pd.DataFrame()
+
+    source_type = ''
+
+    #GET DATA FROM SOURCE
+    if source == 'HE':
+        output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
+        source_type = 'service now'
+    if source == 'FSA':    
+        output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date)
+        source_type = 'service now'
+    if source == 'MHCLG':    
+        output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
+        source_type = 'service now'
+
+    #MERGE DATA WITH MAIN DATABASE TABLE
+    merge_with_database(output_df, source_type, source, tablename, fields)

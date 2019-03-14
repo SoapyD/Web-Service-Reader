@@ -4,6 +4,24 @@ def return_field_list(tablename):
 
 	##########################################################################
 	##########################################################################
+	################################SYS USER
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'sys_user':
+		fields = [
+		"sys_id",
+		"name",
+		"email",
+		'vip',
+		"sys_created_on",
+		"sys_updated_on"
+		]
+
+		filter_fields = ['sys_created_on','sys_updated_on']
+
+	##########################################################################
+	##########################################################################
 	################################INCIDENTS
 	##########################################################################
 	##########################################################################
@@ -18,7 +36,9 @@ def return_field_list(tablename):
 		"contact_type",
 		"category",
 		"subcategory",
-		"u_first_fix",
+		"u_first_fix", #HE
+		"u_first_time_fix_nonsla", #FSA
+		"u_first_time_fix", #MHCLG
 		"assignment_group",
 		"assigned_to",
 		"close_code",
@@ -45,69 +65,75 @@ def return_field_list(tablename):
 		"parent_incident",
 		"company",
 		"u_fa",
-		"u_ft"
+		"u_ft",
+		"u_project_related",
+		"reassignment_count"
 		]
 
 		filter_fields = ['closed_at','sys_updated_on']
 
 	##########################################################################
 	##########################################################################
-	################################INCIDENTS
+	################################SC REQ ITEM
 	##########################################################################
 	##########################################################################
 
 	if tablename == 'sc_req_item':
 
-		fields += "number"+ "%2C"
-		fields += "short_description"+"%2C"
-		fields += "state"+"%2C"
-		fields += "stage"+"%2C"
-		fields += "contact_type"+"%2C"
-		fields += "cat_item"+"%2C"
-		fields += "assignment_group"+"%2C"
-		fields += "assigned_to"+"%2C"
-		fields += "approval"+"%2C"
-		fields += "due_date"+"%2C"
-		fields += "sys_created_by"+"%2C"
-		fields += "sys_created_on"+"%2C"
-		fields += "closed_by"+"%2C"
-		fields += "closed_at"+"%2C"
-		fields += "sys_updated_by"+"%2C"
-		fields += "sys_updated_on"+"%2C"
-		fields += "active"+"%2C"
-		fields += "request"+"%2C"
-		fields += "company"+"%2C"
+		fields = [
+		"number",
+		"short_description",
+		"state",
+		"stage",
+		"contact_type",
+		"cat_item",
+		"assignment_group",
+		"assigned_to",
+		"approval",
+		"due_date",
+		"sys_created_by",
+		"sys_created_on",
+		"closed_by",
+		"closed_at",
+		"sys_updated_by",
+		"sys_updated_on",
+		"active",
+		"request",
+		"company"
+		]
 
 		filter_fields = ['closed_at','sys_updated_on']
 
 	##########################################################################
 	##########################################################################
-	################################INCIDENTS
+	################################TASK SLA
 	##########################################################################
 	##########################################################################
 
 	if tablename == 'task_sla':
 
 	    #SELECT THE FIELDS WE WANT TO SEE FROM INCIDENTS
-	    fields += "sys_id"+"%2C"
-	    fields += "task"+"%2C"
-	    fields += "sla"+"%2C"
-	    fields += "stage"+"%2C"
-	    fields += "start_time"+"%2C"
-	    fields += "planned_end_time"+"%2C"
-	    fields += "end_time"+"%2C"
-	    fields += "duration"+"%2C"
-	    fields += "percentage"+"%2C"
-	    fields += "time_left"+"%2C"
-	    fields += "business_duration"+"%2C"
-	    fields += "business_percentage"+"%2C"
-	    fields += "business_time_left"+"%2C"
-	    fields += "has_breached"+"%2C"
-	    fields += "active"+"%2C"
-	    fields += "sys_created_by"+"%2C"
-	    fields += "sys_created_on"+"%2C"
-	    fields += "sys_updated_by"+"%2C"
-	    fields += "sys_updated_on"+"%2C"
+	    fields = [
+	    "sys_id",
+	    "task",
+	    "sla",
+	    "stage",
+	    "start_time",
+	    "planned_end_time",
+	    "end_time",
+	    "duration",
+	    "percentage",
+	    "time_left",
+	    "business_duration",
+	    "business_percentage",
+	    "business_time_left",
+	    "has_breached",
+	    "active",
+	    "sys_created_by",
+	    "sys_created_on",
+	    "sys_updated_by",
+	    "sys_updated_on"
+	   	]
 
 	    filter_fields = ['sys_created_on','sys_updated_on']
 

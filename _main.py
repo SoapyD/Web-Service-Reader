@@ -13,9 +13,20 @@ end_date = now
 
 #start_date = datetime.datetime(2019, 1, 1, 00, 00, 00)
 #end_date = datetime.datetime(2019, 2, 1, 23, 59, 59)
-#start_date = datetime.datetime(2018, 11, 1)
-#end_date = datetime.datetime(2019, 1, 1)
+start_date = datetime.datetime(2018, 11, 1)
+end_date = datetime.datetime(2019, 1, 1)
 print(str(start_date) + " to " + str(end_date))
+###############################################################################INCIDENTS
+#GET THE TABLE FIELDS
+tablename = 'sys_user'
+return_info = return_field_list(tablename)
+fields = return_info[0]
+filter_fields = return_info[1]
+#QUERY THE TABLE DATA
+update_webservice_tables('HE', tablename, fields, filter_fields, start_date, end_date)
+update_webservice_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
+update_webservice_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
+
 ###############################################################################INCIDENTS
 #GET THE TABLE FIELDS
 tablename = 'incident'
@@ -23,7 +34,7 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-update_webservice_tables('HE', tablename, fields, filter_fields, start_date, end_date)
+#update_webservice_tables('HE', tablename, fields, filter_fields, start_date, end_date)
 #update_webservice_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
 #update_webservice_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
 
