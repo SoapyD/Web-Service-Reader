@@ -6,7 +6,6 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 exec(open(base_path+"_passwords\\_master.py").read()) #load the master password file
 exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
 
-exec(open("return_field_list.py").read())
 
 from datetime import datetime as d
 import datetime
@@ -151,7 +150,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                     #print(response.text)
 
         output_df = output_df.reset_index(drop=True)
-        output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
+        #output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
     else:
         #print('Error while running stats query')
@@ -168,172 +167,9 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 
     return output_df
 
-
 ###################################################################################################################
 ###################################################################################################################
 ###################################################################################################################
 ###################################################################################################################
 ###################################################################################################################
 
-def merge_with_database(output_df, source_type, source, tablename, fields):
-
-    max_rows = 500
-
-    row_count = output_df.shape[0] #GET THE ROW COUNT
-    #IF THERE#S BEEN ANY RESULTING DF RETURNED
-    if output_df is not None and row_count > 0:
-
-        print('slicing output...')
-        start_time = datetime.datetime.now() #need for process time printing
-        print('Start: '+str(start_time))
-
-        run_loop = 1
-        offset = 0
-        
-        print(str(row_count)+' rows to slice. max slice size is '+str(max_rows))
-        print('--------------------------')
-
-        while run_loop == 1:
-            slice_end = offset+max_rows
-            if slice_end >= row_count:
-                slice_end = row_count
-                run_loop = 0
-
-            #SLICE THE DF
-            df_slice = output_df.iloc[offset:slice_end]
-            slice_range = str(offset+1)+' to '+str(slice_end)
-            print('unloading slice '+slice_range)
-
-            #SEND THE SLICE TO THE DEV DATABASE
-            bulk_insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
-
-            #RUN CHECK SCRIPT, WHICH CHECKS FOR ALL QUERIED FIELDS AND ADDS THEM IF THEY'RE MISSING
-            #NULL FIELDS IN A QUERY DON'T RETURN ANY DATA, THIS IS HERE TO ENSURE THE QUERIES RUN PROPERLY
-            
-            if source_type == 'service now':
-                sqlfile = ""
-                for item in fields:
-                    sqlfile += "IF COL_LENGTH('dbo.stg', '"+item+"') IS NULL "
-                    sqlfile += "BEGIN "
-                    sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
-                    sqlfile += "END; "
-
-                query_database2('Add missing field', sqlfile, 2)
-
-            #RUN MERGE SCRIPT
-            sql_filename = source + '_' + tablename
-            sqlfile = get_sql_query(sql_filename, path+'\\sql\\')
-            query_database2('merge to main table', sqlfile, 2)
-
-            print('--------------------------')
-
-            offset += max_rows
-
-        finish_time = datetime.datetime.now()
-        print('End: '+str(finish_time))
-        print('Time Taken: '+str(finish_time - start_time))
-
-###################################################################################################################
-###################################################################################################################
-###################################################################################################################
-###################################################################################################################
-###################################################################################################################
-
-def get_heat_data(source, tablename, start_date, end_date):
-
-    start_time = datetime.datetime.now() #need for process time printing
-    print('Start: '+str(start_time))
-
-    output_df = pd.DataFrame()
-
-    itt_start = start_date
-    itt_end = start_date + datetime.timedelta(hours=24)
-    if itt_end > end_date:
-        itt_end = end_date
-
-    print('--------------------------')
-
-    run_loop = 1
-    while run_loop == 1:
-
-        if itt_end >= end_date: #check to see if the loop is over yet
-            itt_end = end_date
-            run_loop = 0  
-  
-        start_date_str = itt_start.strftime('%Y-%m-%d %H:%M:%S')
-        end_date_str = itt_end.strftime('%Y-%m-%d %H:%M:%S')
-
-        sql_filename = source + '_' + tablename
-        
-        print('running query: '+sql_filename+" between "+start_date_str+" and "+end_date_str)
-
-        sqlfile = get_sql_query(sql_filename, path+'\\sql\\')
-        sqlfile = sqlfile.replace("_@start", start_date_str)
-        sqlfile = sqlfile.replace("_@end", end_date_str)
-
-        new_df = query_database(sqlfile, 0)
-        print(str(new_df.shape[0])+" row returned")
-        print('--------------------------')
-
-        frames = [output_df, new_df]
-        output_df = pd.concat(frames, sort=False)
-
-        #ADVANCE THE DATE FILTER VALUES
-        itt_start = itt_end
-        itt_end = itt_end + datetime.timedelta(hours=24)
-
-    output_df.to_csv('exports\\'+source+'_'+tablename+'.csv') 
-
-    finish_time = datetime.datetime.now()
-    print('End: '+str(finish_time))
-    print('Time Taken: '+str(finish_time - start_time))
-
-    return output_df
-
-###################################################################################################################
-###################################################################################################################
-###################################################################################################################
-###################################################################################################################
-###################################################################################################################
-
-def update_webservice_tables(source, tablename, fields, filter_fields, start_date, end_date):
-
-    output_df = pd.DataFrame()
-
-    source_type = ''
-    errors = 0
-
-    try:
-        #GET DATA FROM SOURCE
-        if source == 'HE':
-            output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
-            source_type = 'service now'
-        if source == 'FSA':    
-            output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date)
-            source_type = 'service now'
-        if source == 'MHCLG':    
-            output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
-            source_type = 'service now'
-        if source == 'CROYDON':    
-            output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date)
-            source_type = 'service now'
-        if source == 'HEAT':
-            output_df = get_heat_data(source, tablename, start_date, end_date)
-
-    except ValueError as e:
-        print("###ERROR TRYING TO EXTRACT DATA###")
-        print(e)
-        errors += 1
-
-    #MERGE DATA WITH MAIN DATABASE TABLE
-    if errors == 0:
-        try:
-            merge_with_database(output_df, source_type, source, tablename, fields)
-        except:
-            print("###ERROR TRYING TO MERGE TO MAIN TABLE###")
-            #print(ValueError)
-            errors += 1
-    else:
-        errors += 1
-
-    return errors

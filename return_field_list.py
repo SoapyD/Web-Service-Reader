@@ -28,6 +28,7 @@ def return_field_list(tablename):
 
 	if tablename == 'incident':
 		fields = [
+		"sys_id",
 		"number",
 		"company",
 		"short_description",
