@@ -75,6 +75,34 @@ def return_field_list(tablename):
 
 	##########################################################################
 	##########################################################################
+	################################REQUEST
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'sc_request':
+
+		fields = [
+		"sys_id",
+		"number",
+		"request_state",
+		"stage",
+		"contact_type",
+		"sys_created_by",
+		"sys_created_on",
+		"closed_by",
+		"closed_at",
+		"due_date",
+		"requested_for",
+		"sys_updated_by", #LastModBy
+		"sys_updated_on", #LastModDateTime
+		"active",
+		"company"
+		]
+
+		filter_fields = ['closed_at','sys_updated_on']
+
+	##########################################################################
+	##########################################################################
 	################################SC REQ ITEM
 	##########################################################################
 	##########################################################################
@@ -105,6 +133,111 @@ def return_field_list(tablename):
 		]
 
 		filter_fields = ['closed_at','sys_updated_on']
+
+
+	##########################################################################
+	##########################################################################
+	################################SC_TASK
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'sc_task':
+
+	    #SELECT THE FIELDS WE WANT TO SEE FROM INCIDENTS
+	    fields = [
+		"sys_id",
+	    "number",
+	    "company",
+	    "short_description",
+	    "priority",
+	    "state",
+	    "assignment_group",
+	    "assigned_to",
+		"sys_created_by",
+	    "sys_created_on",
+	    "closed_by",
+	    "closed_at",
+	    "sys_updated_by", #LastModBy
+	    "sys_updated_on", #LastModDateTime
+		"active",
+	    "request",
+	    "request_item"
+	   	]
+
+	    filter_fields = ['sys_created_on','sys_updated_on']
+
+
+	##########################################################################
+	##########################################################################
+	################################PROBLEM
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'problem':
+
+	    #SELECT THE FIELDS WE WANT TO SEE FROM INCIDENTS
+	    fields = [
+	    "sys_id",
+	    "number",
+	    "company",
+	    "location",
+	    "short_description",
+	    "priority",
+	    "state",
+	    "contact_type",
+	    "u_category",
+	    "u_subcategory",
+	    "assignment_group",
+	    "assigned_to",
+	    #ASSIGNED TO EMAIL
+	    "u_date_problem_closed", #DATE PROBLEM RESOLVED
+	    "sys_created_by",
+	    "sys_created_on",
+	    "closed_by",
+	    "closed_at",
+	    "sys_updated_by", #LastModBy
+	    "sys_updated_on", #LastModDateTime
+	    "active",
+	    "work_notes",
+	    "u_exception_y_n",
+	    "u_exception_reason", #CODE LOOKUP
+	    "u_lf_comments",
+	    "u_exception_agreed",
+	    "u_he_comments",
+	    "u_problem_source"
+	    ]
+
+	    filter_fields = ['closed_at','sys_updated_on']
+
+	##########################################################################
+	##########################################################################
+	################################PROBLEM TASK
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'problem_task':
+
+	    #SELECT THE FIELDS WE WANT TO SEE FROM INCIDENTS
+	    fields = [
+	    "sys_id",
+	    "number",
+	    "short_description",
+	    "priority",
+	    "state",
+	    "assignment_group",
+	    "assigned_to",
+	    #ASSIGNED TO EMAIL
+	    "sys_created_by",
+	    "sys_created_on",
+	    "closed_by",
+	    "closed_at", 
+	    "sys_updated_by", #LastModBy
+	    "sys_updated_on", #LastModDateTime
+	    "active",
+	    "problem"
+	    ]
+
+	    filter_fields = ['closed_at','sys_updated_on']
 
 	##########################################################################
 	##########################################################################
@@ -138,6 +271,7 @@ def return_field_list(tablename):
 	   	]
 
 	    filter_fields = ['sys_created_on','sys_updated_on']
+
 
 
 	return_info = [fields, filter_fields]

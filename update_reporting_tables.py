@@ -21,9 +21,17 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
         if source == 'CROYDON':    
             output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date)
             source_type = 'service_now'
+
         if source == 'HEAT':
-            source_type = 'heat'
+            source_type = 'live'
             output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+        if source == 'LFLIVEEXTRACT':
+            source_type = 'live'
+            output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+        if source == 'TELEPHONYEXTRACT':
+            source_type = 'live'
+            output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+
 
     except ValueError as e:
         print("###ERROR TRYING TO EXTRACT DATA###")

@@ -35,9 +35,10 @@ def get_heat_data(source_type, source, tablename, start_date, end_date):
         
         print('running query: '+sql_filename+" between "+start_date_str+" and "+end_date_str)
 
-        sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'\\')
+        sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'_extract\\')
         sqlfile = sqlfile.replace("_@start", start_date_str)
         sqlfile = sqlfile.replace("_@end", end_date_str)
+        #print(sqlfile)
 
         new_df = query_database(sqlfile, 0)
         print(str(new_df.shape[0])+" row returned")
@@ -50,7 +51,7 @@ def get_heat_data(source_type, source, tablename, start_date, end_date):
         itt_start = itt_end
         itt_end = itt_end + datetime.timedelta(hours=24)
 
-    #output_df.to_csv('exports\\'+source+'_'+tablename+'.csv') 
+    output_df.to_csv('exports\\'+source+'_'+tablename+'.csv') 
 
     finish_time = datetime.datetime.now()
     print('End: '+str(finish_time))

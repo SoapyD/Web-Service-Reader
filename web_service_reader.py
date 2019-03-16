@@ -62,6 +62,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 
     #FORMAT THE URL TO RETURN THE NUMBER OF RECORDS THAT MATCH THE ABOVE FILTER CRITERIA
     url = instance+"/api/now/stats/"+tablename+"?sysparm_count=true&"+filter_string
+    
     #RETURN THE STAT DATA FROM THE FORMATTED URL
     response = r.get(url, auth=(username, password))
 
