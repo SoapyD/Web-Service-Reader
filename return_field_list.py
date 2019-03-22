@@ -75,6 +75,72 @@ def return_field_list(tablename):
 
 	##########################################################################
 	##########################################################################
+	################################INCIDENT TASK
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'incident_task':
+		fields = [
+			'sys_id',
+		    "number",
+		    "short_description",
+		    "description",
+		    "priority",
+		    "state",
+		    "assignment_group",
+		    "assigned_to",
+		    "location",
+		    "business_duration",
+		    "u_psupplier",
+		    "u_pref",
+		    "incident",
+		    "sys_created_by",
+		    "sys_created_on",
+		    "closed_by",
+		    "closed_at",
+		    "sys_updated_by",
+		    "sys_updated_on",
+		    "company"
+		]
+
+		filter_fields = ['closed_at','sys_updated_on']
+
+	##########################################################################
+	##########################################################################
+	################################INCIDENT ALERTS (HE SPECIFIC TABLE)
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'incident_alert':
+		fields = [
+			'sys_id',
+			"number",
+			"u_priority",
+			"state",
+			"short_description",
+			"assignment_group",
+			"assigned_to",
+			"resolution_notes",
+			"summary",
+			"u_number_of_staff_affected",
+			"u_root_cause",
+			"lessons_learned",
+		    "sys_created_by",
+			"sys_created_on",
+			"resolved_by",
+			"resolved_at",
+		    "closed_by",
+			"closed_at",
+			"sys_updated_by",
+		    "sys_updated_on",
+			"source_incident"
+		]
+
+		filter_fields = ['closed_at','sys_updated_on']
+
+
+	##########################################################################
+	##########################################################################
 	################################REQUEST
 	##########################################################################
 	##########################################################################
@@ -165,6 +231,73 @@ def return_field_list(tablename):
 	   	]
 
 	    filter_fields = ['sys_created_on','sys_updated_on']
+
+
+	##########################################################################
+	##########################################################################
+	################################CHANGE REQUEST
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'change_request':
+		fields = [
+	    	"sys_id",
+			"number",
+			"company",
+			"short_description",
+			"priority",
+			"state",
+			"contact_type",
+			"category",
+			"u_subcategory",
+			"approval",
+			"assignment_group",
+			"assigned_to",
+			"requested_by",
+			"location",
+			"due_date",
+		    "sys_created_by",
+			"sys_created_on",
+		    "closed_by",
+			"closed_at",
+			"sys_updated_by",
+		    "sys_updated_on",
+		    "active"
+		]
+
+		filter_fields = ['closed_at','sys_updated_on']
+
+
+	##########################################################################
+	##########################################################################
+	################################CHANGE TASK
+	##########################################################################
+	##########################################################################
+
+	if tablename == 'change_task':
+		fields = [
+	    	"sys_id",
+			"number",
+			"parent",
+			"change_request",
+			"priority",
+			"state",
+			"short_description",
+			"assigned_to",
+			"assignment_group",
+			"due_date",
+		    "sys_created_by",
+			"sys_created_on",
+		    "closed_by",
+			"closed_at",
+			"sys_updated_by",
+		    "sys_updated_on",
+		    "active"
+		]
+
+
+		filter_fields = ['closed_at','sys_updated_on']
+
 
 
 	##########################################################################

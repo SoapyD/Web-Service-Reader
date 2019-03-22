@@ -10,17 +10,20 @@ print('########################################')
 
 start_time = datetime.datetime.now() #need for process time printing
 
+
+end_database = 2
 now = d.now()
-start_date = now - datetime.timedelta(hours=4.0)
+start_date = now - datetime.timedelta(hours=2.0)
 end_date = now
 
-start_date = datetime.datetime(2019, 3, 16, 12, 00, 00)
-end_date = datetime.datetime(2019, 3, 16, 14, 00, 00)
+#start_date = datetime.datetime(2019, 3, 16, 12, 00, 00)
+#end_date = datetime.datetime(2019, 3, 16, 14, 00, 00)
 #start_date = datetime.datetime(2019, 3, 14)
 #end_date = datetime.datetime(2019, 3, 15)
 
 print(str(start_date) + " to " + str(end_date))
 errors = 0
+
 
 
 ##############################################################################################################################################################
@@ -38,10 +41,10 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################INCIDENTS
 #GET THE TABLE FIELDS
@@ -50,10 +53,28 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+
+###############################################################################INCIDENTS TASK
+#GET THE TABLE FIELDS
+tablename = 'incident_task'
+return_info = return_field_list(tablename)
+fields = return_info[0]
+filter_fields = return_info[1]
+#QUERY THE TABLE DATA
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+
+###############################################################################INCIDENTS ALERT
+#GET THE TABLE FIELDS
+tablename = 'incident_alert'
+return_info = return_field_list(tablename)
+fields = return_info[0]
+filter_fields = return_info[1]
+#QUERY THE TABLE DATA
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################SC_TASK
 #GET THE TABLE FIELDS
@@ -62,10 +83,10 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################SC_REQ_ITEMS
 #GET THE TABLE FIELDS
@@ -74,10 +95,10 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################SC_TASK
 #GET THE TABLE FIELDS
@@ -86,10 +107,28 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+
+###############################################################################CHANGE REQUEST
+#GET THE TABLE FIELDS
+tablename = 'change_request'
+return_info = return_field_list(tablename)
+fields = return_info[0]
+filter_fields = return_info[1]
+#QUERY THE TABLE DATA
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+
+###############################################################################CHANGE TASK
+#GET THE TABLE FIELDS
+tablename = 'change_task'
+return_info = return_field_list(tablename)
+fields = return_info[0]
+filter_fields = return_info[1]
+#QUERY THE TABLE DATA
+errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################PROBLEM
 #GET THE TABLE FIELDS
@@ -98,10 +137,10 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################PROBLEM
 #GET THE TABLE FIELDS
@@ -110,12 +149,10 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
-
-
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################TASK_SLAS
 #GET THE TABLE FIELDS
@@ -124,25 +161,10 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date)
-errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date)
-
-
-
-
-
-############Service Now
-#DONE #incident
-#DONE #sc_request
-#DONE #sc req item
-#DONE #task sla
-#DONE #sc task
-#DONE #problem
-#DONE #problem task
-
-#incident task
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 
 ##############################################################################################################################################################
@@ -152,28 +174,27 @@ errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date,
 ##############################################################################################################################################################
 
 ###HEAT
-errors += update_tables('HEAT', 'incident', None, None, start_date, end_date)
-errors += update_tables('HEAT', 'organizationalunit', None, None, start_date, end_date)
-errors += update_tables('HEAT', 'change', None, None, start_date, end_date)
-errors += update_tables('HEAT', 'problem', None, None, start_date, end_date)
-errors += update_tables('HEAT', 'task', None, None, start_date, end_date)
-errors += update_tables('HEAT', 'servicerequest', None, None, start_date, end_date)
+#errors += update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
+#errors += update_tables('HEAT', 'organizationalunit', None, None, start_date, end_date, end_database)
+#errors += update_tables('HEAT', 'change', None, None, start_date, end_date, end_database)
+#errors += update_tables('HEAT', 'problem', None, None, start_date, end_date, end_database)
+#errors += update_tables('HEAT', 'task', None, None, start_date, end_date, end_database)
+#errors += update_tables('HEAT', 'servicerequest', None, None, start_date, end_date, end_database)
 
 ###LFLIVEEXTRACT
-errors += update_tables('LFLIVEEXTRACT', 'session', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'completedsurvey', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'completedsurveyresponse', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'sessionincident', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'fsa_sessionincident', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'he_sessionincident', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'mhclg_sessionincident', None, None, start_date, end_date)
-errors += update_tables('LFLIVEEXTRACT', 'sessionpostback', None, None, start_date, end_date)
+#errors += update_tables('LFLIVEEXTRACT', 'session', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'completedsurvey', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'completedsurveyresponse', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'sessionincident', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'fsa_sessionincident', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'he_sessionincident', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'mhclg_sessionincident', None, None, start_date, end_date, end_database)
+#errors += update_tables('LFLIVEEXTRACT', 'sessionpostback', None, None, start_date, end_date, end_database)
 
 
 ###TELEPHONYEXTRACT
-#errors += update_tables('TELEPHONYEXTRACT', 'telephony', None, None, start_date, end_date)
-
-
+#NEED A DELETION METHOD HERE TOO
+#errors += update_tables('TELEPHONYEXTRACT', 'telephony', None, None, start_date, end_date, end_database)
 
 
 

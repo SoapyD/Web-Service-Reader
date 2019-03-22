@@ -1,6 +1,6 @@
 
 
-def update_tables(source, tablename, fields, filter_fields, start_date, end_date):
+def update_tables(source, tablename, fields, filter_fields, start_date, end_date, end_database):
 
     output_df = pd.DataFrame()
 
@@ -41,7 +41,7 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
     #MERGE DATA WITH MAIN DATABASE TABLE
     if errors == 0:
         try:
-            merge_with_database(output_df, source_type, source, tablename, fields)
+            merge_with_database(output_df, source_type, source, tablename, fields, end_database)
         except:
             print("###ERROR TRYING TO MERGE TO MAIN TABLE###")
             #print(ValueError)
@@ -58,7 +58,7 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
 ###################################################################################################################
 
 
-def merge_with_database(output_df, source_type, source, tablename, fields):
+def merge_with_database(output_df, source_type, source, tablename, fields, end_database):
 
     max_rows = 500
 
@@ -88,7 +88,7 @@ def merge_with_database(output_df, source_type, source, tablename, fields):
             print('unloading slice '+slice_range)
 
             #SEND THE SLICE TO THE DEV DATABASE
-            bulk_insert_to_database(df_slice, 2, 'stg', filename='rows '+slice_range, runtype='replace')
+            bulk_insert_to_database(df_slice, end_database, 'stg', filename='rows '+slice_range, runtype='replace')
 
             #RUN CHECK SCRIPT, WHICH CHECKS FOR ALL QUERIED FIELDS AND ADDS THEM IF THEY'RE MISSING
             #NULL FIELDS IN A QUERY DON'T RETURN ANY DATA, THIS IS HERE TO ENSURE THE QUERIES RUN PROPERLY
@@ -101,12 +101,12 @@ def merge_with_database(output_df, source_type, source, tablename, fields):
                     sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
                     sqlfile += "END; "
 
-                query_database2('Add missing field', sqlfile, 2)
+                query_database2('Add missing field', sqlfile, end_database)
 
             #RUN MERGE SCRIPT
             sql_filename = source + '_' + tablename
             sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'\\')
-            query_database2('merge to main table', sqlfile, 2)
+            query_database2('merge to main table', sqlfile, end_database)
 
             print('--------------------------')
 
