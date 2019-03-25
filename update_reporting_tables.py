@@ -34,8 +34,8 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
 
 
     except ValueError as e:
-        print("###ERROR TRYING TO EXTRACT DATA###")
-        print(e)
+        u_print("###ERROR TRYING TO EXTRACT DATA###")
+        u_print(e)
         errors += 1
 
     #MERGE DATA WITH MAIN DATABASE TABLE
@@ -43,12 +43,13 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
         try:
             merge_with_database(output_df, source_type, source, tablename, fields, end_database)
         except:
-            print("###ERROR TRYING TO MERGE TO MAIN TABLE###")
-            #print(ValueError)
+            u_print("###ERROR TRYING TO MERGE TO MAIN TABLE###")
+            #u_print(ValueError)
             errors += 1
     else:
         errors += 1
 
+    u_print('') #ADD GAP TO PROCESS
     return errors
 
 ###################################################################################################################
@@ -66,15 +67,15 @@ def merge_with_database(output_df, source_type, source, tablename, fields, end_d
     #IF THERE#S BEEN ANY RESULTING DF RETURNED
     if output_df is not None and row_count > 0:
 
-        print('slicing output...')
-        start_time = datetime.datetime.now() #need for process time printing
-        print('Start: '+str(start_time))
+        u_print('slicing output...')
+        start_time = datetime.datetime.now() #need for process time u_printing
+        u_print('Start: '+str(start_time))
 
         run_loop = 1
         offset = 0
         
-        print(str(row_count)+' rows to slice. max slice size is '+str(max_rows))
-        print('--------------------------')
+        u_print(str(row_count)+' rows to slice. max slice size is '+str(max_rows))
+        u_print('--------------------------')
 
         while run_loop == 1:
             slice_end = offset+max_rows
@@ -85,7 +86,7 @@ def merge_with_database(output_df, source_type, source, tablename, fields, end_d
             #SLICE THE DF
             df_slice = output_df.iloc[offset:slice_end]
             slice_range = str(offset+1)+' to '+str(slice_end)
-            print('unloading slice '+slice_range)
+            u_print('unloading slice '+slice_range)
 
             #SEND THE SLICE TO THE DEV DATABASE
             bulk_insert_to_database(df_slice, end_database, 'stg', filename='rows '+slice_range, runtype='replace')
@@ -108,10 +109,10 @@ def merge_with_database(output_df, source_type, source, tablename, fields, end_d
             sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'\\')
             query_database2('merge to main table', sqlfile, end_database)
 
-            print('--------------------------')
+            u_print('--------------------------')
 
             offset += max_rows
 
         finish_time = datetime.datetime.now()
-        print('End: '+str(finish_time))
-        print('Time Taken: '+str(finish_time - start_time))
+        u_print('End: '+str(finish_time))
+        u_print('Time Taken: '+str(finish_time - start_time))

@@ -4,11 +4,13 @@ exec(open("web_service_reader.py").read())
 exec(open("sql_database_reader.py").read())
 exec(open("return_field_list.py").read())
 
-print('########################################')
-print('RUNNING SERVICE EXTRACT PROCESS')
-print('########################################')
 
-start_time = datetime.datetime.now() #need for process time printing
+
+u_print('########################################')
+u_print('RUNNING SERVICE EXTRACT PROCESS')
+u_print('########################################')
+
+start_time = datetime.datetime.now() #need for process time u_printing
 
 
 end_database = 2
@@ -21,7 +23,7 @@ end_date = now
 #start_date = datetime.datetime(2019, 3, 14)
 #end_date = datetime.datetime(2019, 3, 15)
 
-print(str(start_date) + " to " + str(end_date))
+u_print(str(start_date) + " to " + str(end_date))
 errors = 0
 
 
@@ -53,7 +55,7 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #errors += update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #errors += update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
 #errors += update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
@@ -128,7 +130,7 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#errors += update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################PROBLEM
 #GET THE TABLE FIELDS
@@ -174,7 +176,7 @@ filter_fields = return_info[1]
 ##############################################################################################################################################################
 
 ###HEAT
-#errors += update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
+errors += update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
 #errors += update_tables('HEAT', 'organizationalunit', None, None, start_date, end_date, end_database)
 #errors += update_tables('HEAT', 'change', None, None, start_date, end_date, end_database)
 #errors += update_tables('HEAT', 'problem', None, None, start_date, end_date, end_database)
@@ -199,11 +201,13 @@ filter_fields = return_info[1]
 
 
 finish_time = datetime.datetime.now()
-print('')
-print('########################################')
-print('PROCESS COMPLETE')
-print('Number of Errors: '+str(errors))
-print('Start: '+str(start_time))
-print('End: '+str(finish_time))
-print('Time Taken: '+str(finish_time - start_time))
-print('########################################')
+u_print('')
+u_print('########################################')
+u_print('PROCESS COMPLETE')
+u_print('Number of Errors: '+str(errors))
+u_print('Start: '+str(start_time))
+u_print('End: '+str(finish_time))
+u_print('Time Taken: '+str(finish_time - start_time))
+u_print('########################################')
+
+save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", errors)

@@ -9,8 +9,8 @@ exec(open(base_path+"Functions\\functions.py").read()) #load the master password
 
 def get_heat_data(source_type, source, tablename, start_date, end_date):
 
-    start_time = datetime.datetime.now() #need for process time printing
-    print('Start: '+str(start_time))
+    start_time = datetime.datetime.now() #need for process time u_printing
+    u_print('Start: '+str(start_time))
 
     output_df = pd.DataFrame()
 
@@ -19,7 +19,7 @@ def get_heat_data(source_type, source, tablename, start_date, end_date):
     if itt_end > end_date:
         itt_end = end_date
 
-    print('--------------------------')
+    u_print('--------------------------')
 
     run_loop = 1
     while run_loop == 1:
@@ -33,16 +33,16 @@ def get_heat_data(source_type, source, tablename, start_date, end_date):
 
         sql_filename = source + '_' + tablename
         
-        print('running query: '+sql_filename+" between "+start_date_str+" and "+end_date_str)
+        u_print('running query: '+sql_filename+" between "+start_date_str+" and "+end_date_str)
 
         sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'_extract\\')
         sqlfile = sqlfile.replace("_@start", start_date_str)
         sqlfile = sqlfile.replace("_@end", end_date_str)
-        #print(sqlfile)
+        #u_print(sqlfile)
 
         new_df = query_database(sqlfile, 0)
-        print(str(new_df.shape[0])+" row returned")
-        print('--------------------------')
+        u_print(str(new_df.shape[0])+" row returned")
+        u_print('--------------------------')
 
         frames = [output_df, new_df]
         output_df = pd.concat(frames, sort=False)
@@ -54,8 +54,8 @@ def get_heat_data(source_type, source, tablename, start_date, end_date):
     output_df.to_csv('exports\\'+source+'_'+tablename+'.csv') 
 
     finish_time = datetime.datetime.now()
-    print('End: '+str(finish_time))
-    print('Time Taken: '+str(finish_time - start_time))
+    u_print('End: '+str(finish_time))
+    u_print('Time Taken: '+str(finish_time - start_time))
 
     return output_df
 

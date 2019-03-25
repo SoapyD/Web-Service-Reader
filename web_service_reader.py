@@ -4,7 +4,7 @@ path = os.getcwd() #get the current path
 string_pos = path.index('Python') #find the python folder
 base_path = path[:string_pos]+'Python\\' #create a base filepath string
 exec(open(base_path+"_passwords\\_master.py").read()) #load the master password file
-exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
+exec(open(base_path+"Functions\\functions.py").read()) #load the functions
 
 
 from datetime import datetime as d
@@ -18,12 +18,12 @@ import sys
 
 def get_servicenow_webservice_data(source, instance, username, password, tablename, fields, filter_fields, start_date, end_date):
 
-    start_time = datetime.datetime.now() #need for process time printing
+    start_time = datetime.datetime.now() #need for process time u_printing
 
-    print('--------------------------')
-    print("running servicenow extract method for...")
-    print(tablename+' table on '+instance)
-    print('Start: '+str(start_time))
+    u_print('--------------------------')
+    u_print("running servicenow extract method for...")
+    u_print(tablename+' table on '+instance)
+    u_print('Start: '+str(start_time))
 
     limit = "&sysparm_limit=0"
     offset = "&sysparm_offset=0"
@@ -45,7 +45,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
         fields_string += item
         use_or = 1
 
-    #print(fields_string)
+    #u_print(fields_string)
 
     #THESE ARE THE CLOSED FILTERS
     filter_string = "sysparm_query="
@@ -70,14 +70,14 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
 
     #if the stats query worked, run the next part of the process 
     if response.status_code == 200:
-        #PULL AND PRINT THE TICKET NUMBER FROM THE RETURNED DATA
+        #PULL AND u_print THE TICKET NUMBER FROM THE RETURNED DATA
         json_text = response.json()
         item_count = json_text['result']['stats']['count']
         item_count = int(item_count) #conver returned string to number
 
-        #print('########################################')
-        print('pulling '+str(item_count)+' records')
-        #print('########################################')
+        #u_print('########################################')
+        u_print('pulling '+str(item_count)+' records')
+        #u_print('########################################')
 
         itt = 0
         total_itt = 0
@@ -93,7 +93,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                 limit = "&sysparm_limit="+str(query_limit)
                 offset = "&sysparm_offset="+str(offset_itt)        
                 
-                print('returning records '+str(offset_itt)+" to "+str(offset_itt+query_limit)) 
+                u_print('returning records '+str(offset_itt)+" to "+str(offset_itt+query_limit)) 
 
                 #SEND OFF THE REQUEST
                 url = instance+"/api/now/table/"+tablename+"?sysparm_display_value=all&"+filter_string+"&"+fields_string+limit+offset
@@ -125,7 +125,7 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                                 value = str(test[part])
                                 if value == "None":
                                     value = ""
-                                #print(index + " -- " + part + " -- " + value)
+                                #u_print(index + " -- " + part + " -- " + value)
                                 #ONLY SAVE THE VALUE IF IT'S NEW AND ISN'T A LINK
                                 if value.lower() != saved_val.lower() and part != 'link':
                                     part = "_" + part
@@ -146,25 +146,25 @@ def get_servicenow_webservice_data(source, instance, username, password, tablena
                     query_count+=1
 
                 else:
-                    #print('Error while running table extract query')
+                    #u_print('Error while running table extract query')
                     raise ValueError('Error while running table extract query. Response reads: '+response.text)
-                    #print(response.text)
+                    #u_print(response.text)
 
         output_df = output_df.reset_index(drop=True)
         #output_df.to_csv('exports\\'+source+'_'+tablename+'.csv')
 
     else:
-        #print('Error while running stats query')
+        #u_print('Error while running stats query')
         raise ValueError('Error while running stats query. Response reads: '+response.text)
-        #print(response.text)
+        #u_print(response.text)
 
     finish_time = datetime.datetime.now()
-    #print('########################################')
-    print('REST QUERY COMPLETE')
-    print('End: '+str(finish_time))
-    print('Time Taken: '+str(finish_time - start_time))
-    print('--------------------------')
-    #print('')
+    #u_print('########################################')
+    u_print('REST QUERY COMPLETE')
+    u_print('End: '+str(finish_time))
+    u_print('Time Taken: '+str(finish_time - start_time))
+    u_print('--------------------------')
+    #u_print('')
 
     return output_df
 
