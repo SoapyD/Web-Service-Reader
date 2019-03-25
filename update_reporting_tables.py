@@ -5,7 +5,9 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
     output_df = pd.DataFrame()
 
     source_type = ''
-    errors = 0
+
+    global error_count
+    errors = error_count
 
     try:
         #GET DATA FROM SOURCE
@@ -35,22 +37,15 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
 
     except ValueError as e:
         u_print("###ERROR TRYING TO EXTRACT DATA###")
-        u_print(e)
-        errors += 1
+        u_print(str(e))
+        error_count += 1
 
     #MERGE DATA WITH MAIN DATABASE TABLE
-    if errors == 0:
-        try:
-            merge_with_database(output_df, source_type, source, tablename, fields, end_database)
-        except:
-            u_print("###ERROR TRYING TO MERGE TO MAIN TABLE###")
-            #u_print(ValueError)
-            errors += 1
-    else:
-        errors += 1
+    if errors == error_count:
+        merge_with_database(output_df, source_type, source, tablename, fields, end_database)
 
     u_print('') #ADD GAP TO PROCESS
-    return errors
+
 
 ###################################################################################################################
 ###################################################################################################################
@@ -89,29 +84,31 @@ def merge_with_database(output_df, source_type, source, tablename, fields, end_d
             u_print('unloading slice '+slice_range)
 
             #SEND THE SLICE TO THE DEV DATABASE
+            global error_count
+            errors = error_count
             bulk_insert_to_database(df_slice, end_database, 'stg', filename='rows '+slice_range, runtype='replace')
 
-            #RUN CHECK SCRIPT, WHICH CHECKS FOR ALL QUERIED FIELDS AND ADDS THEM IF THEY'RE MISSING
-            #NULL FIELDS IN A QUERY DON'T RETURN ANY DATA, THIS IS HERE TO ENSURE THE QUERIES RUN PROPERLY
-            
-            if source_type == 'service_now':
-                sqlfile = ""
-                for item in fields:
-                    sqlfile += "IF COL_LENGTH('dbo.stg', '"+item+"') IS NULL "
-                    sqlfile += "BEGIN "
-                    sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
-                    sqlfile += "END; "
+            if (errors == error_count): #IF NO ERRORS HAVE BEEN ADDED, THEN PROCEEED
+                #RUN CHECK SCRIPT, WHICH CHECKS FOR ALL QUERIED FIELDS AND ADDS THEM IF THEY'RE MISSING
+                #NULL FIELDS IN A QUERY DON'T RETURN ANY DATA, THIS IS HERE TO ENSURE THE QUERIES RUN PROPERLY
+                if source_type == 'service_now':
+                    sqlfile = ""
+                    for item in fields:
+                        sqlfile += "IF COL_LENGTH('dbo.stg', '"+item+"') IS NULL "
+                        sqlfile += "BEGIN "
+                        sqlfile += "ALTER TABLE dbo.stg ADD "+item+" varchar(MAX) "
+                        sqlfile += "END; "
 
-                query_database2('Add missing field', sqlfile, end_database)
+                    query_database2('Add missing field', sqlfile, end_database)
 
-            #RUN MERGE SCRIPT
-            sql_filename = source + '_' + tablename
-            sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'\\')
-            query_database2('merge to main table', sqlfile, end_database)
+                #RUN MERGE SCRIPT
+                sql_filename = source + '_' + tablename
+                sqlfile = get_sql_query(sql_filename, path+'\\sql\\'+source_type+'\\')
+                query_database2('merge to main table', sqlfile, end_database)
 
-            u_print('--------------------------')
+                u_print('--------------------------')
 
-            offset += max_rows
+                offset += max_rows
 
         finish_time = datetime.datetime.now()
         u_print('End: '+str(finish_time))
