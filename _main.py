@@ -20,8 +20,8 @@ end_date = now
 
 #start_date = datetime.datetime(2019, 3, 16, 12, 00, 00)
 #end_date = datetime.datetime(2019, 3, 16, 14, 00, 00)
-#start_date = datetime.datetime(2019, 3, 14)
-#end_date = datetime.datetime(2019, 3, 15)
+#start_date = datetime.datetime(2018, 1, 1)
+#end_date = datetime.datetime(2019, 4, 1)
 
 u_print(str(start_date) + " to " + str(end_date))
 #errors = 0
@@ -43,7 +43,7 @@ return_info = return_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
