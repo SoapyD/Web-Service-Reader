@@ -46,7 +46,7 @@ filter_fields = return_info[1]
 update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################INCIDENTS
 #GET THE TABLE FIELDS
@@ -58,7 +58,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################INCIDENTS TASK
 #GET THE TABLE FIELDS
@@ -88,7 +88,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################SC_REQ_ITEMS
 #GET THE TABLE FIELDS
@@ -100,7 +100,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################SC_TASK
 #GET THE TABLE FIELDS
@@ -112,7 +112,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################CHANGE REQUEST
 #GET THE TABLE FIELDS
@@ -142,7 +142,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################PROBLEM
 #GET THE TABLE FIELDS
@@ -154,7 +154,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################TASK_SLAS
 #GET THE TABLE FIELDS
@@ -166,7 +166,7 @@ filter_fields = return_info[1]
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 
 ##############################################################################################################################################################
