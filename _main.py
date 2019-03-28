@@ -1,7 +1,14 @@
 
+import os
+path = os.getcwd() #get the current path
+string_pos = path.index('Python') #find the python folder
+base_path = path[:string_pos]+'Python\\' #create a base filepath string
+exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
+
+
 exec(open("update_reporting_tables.py").read())
 #exec(open("web_service_reader.py").read()) #this has now been moved to the functions folder
-exec(open("sql_database_reader.py").read())
+#exec(open("sql_database_reader.py").read())
 #exec(open("return_field_list.py").read())
 
 global error_count
