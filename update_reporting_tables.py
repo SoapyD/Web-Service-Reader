@@ -26,14 +26,22 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
 
         if source == 'HEAT':
             source_type = 'live'
-            output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+            #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+            sql_filepath = path+'\\sql\\'+source_type+'_extract\\'
+            sql_filename = source + '_' + tablename
+            output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
         if source == 'LFLIVEEXTRACT':
             source_type = 'live'
-            output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+            #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+            sql_filepath = path+'\\sql\\'+source_type+'_extract\\'
+            sql_filename = source + '_' + tablename
+            output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
         if source == 'TELEPHONYEXTRACT':
             source_type = 'live'
-            output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
-
+            #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+            sql_filepath = path+'\\sql\\'+source_type+'_extract\\'
+            sql_filename = source + '_' + tablename
+            output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
 
     except ValueError as e:
         u_print("###ERROR TRYING TO EXTRACT DATA###")
