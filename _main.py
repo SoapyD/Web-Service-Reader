@@ -1,8 +1,8 @@
 
 exec(open("update_reporting_tables.py").read())
-exec(open("web_service_reader.py").read())
+#exec(open("web_service_reader.py").read()) #this has now been moved to the functions folder
 exec(open("sql_database_reader.py").read())
-exec(open("return_field_list.py").read())
+#exec(open("return_field_list.py").read())
 
 global error_count
 
@@ -39,7 +39,7 @@ u_print(str(start_date) + " to " + str(end_date))
 ###############################################################################SYS USER
 #GET THE TABLE FIELDS
 tablename = 'sys_user'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -51,7 +51,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################INCIDENTS
 #GET THE TABLE FIELDS
 tablename = 'incident'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -63,7 +63,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################INCIDENTS TASK
 #GET THE TABLE FIELDS
 tablename = 'incident_task'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -72,7 +72,7 @@ filter_fields = return_info[1]
 ###############################################################################INCIDENTS ALERT
 #GET THE TABLE FIELDS
 tablename = 'incident_alert'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -81,7 +81,7 @@ update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_
 ###############################################################################SC_TASK
 #GET THE TABLE FIELDS
 tablename = 'sc_request'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -93,7 +93,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################SC_REQ_ITEMS
 #GET THE TABLE FIELDS
 tablename = 'sc_req_item'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -105,7 +105,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################SC_TASK
 #GET THE TABLE FIELDS
 tablename = 'sc_task'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -117,7 +117,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################CHANGE REQUEST
 #GET THE TABLE FIELDS
 tablename = 'change_request'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -126,7 +126,7 @@ update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_
 ###############################################################################CHANGE TASK
 #GET THE TABLE FIELDS
 tablename = 'change_task'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -135,7 +135,7 @@ update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_
 ###############################################################################PROBLEM
 #GET THE TABLE FIELDS
 tablename = 'problem'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -147,7 +147,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################PROBLEM
 #GET THE TABLE FIELDS
 tablename = 'problem_task'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
@@ -159,7 +159,7 @@ update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date,
 ###############################################################################TASK_SLAS
 #GET THE TABLE FIELDS
 tablename = 'task_sla'
-return_info = return_field_list(tablename)
+return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
