@@ -6,6 +6,7 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
 
 
+exec(open("query_source_data.py").read())
 exec(open("update_reporting_tables.py").read())
 #exec(open("web_service_reader.py").read()) #this has now been moved to the functions folder
 #exec(open("sql_database_reader.py").read())
