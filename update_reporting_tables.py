@@ -2,7 +2,7 @@
 
 def update_tables(source, tablename, fields, filter_fields, start_date, end_date, end_database):
 
-    #import numpy as np
+    import numpy as np
 
     output_df = pd.DataFrame()
 
@@ -51,11 +51,11 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
         error_count += 1
 
     #RELOCATED TO MERGE FUNCTION AS IT MAKES THINGS MORE UNIVERSAL
-    #if source_type == 'service_now':
-    #    for field in fields:
-    #        if field not in output_df.columns:
-    #            output_df[field] = np.nan #add the missing field
-    #            output_df[field+'_value'] = np.nan #add a corresponding value field
+    if source_type == 'service_now':
+        for field in fields:
+            if field not in output_df.columns:
+                output_df[field] = np.nan #add the missing field
+                output_df[field+'_value'] = np.nan #add a corresponding value field
 
     #MERGE DATA WITH MAIN DATABASE TABLE
     if errors == error_count:
