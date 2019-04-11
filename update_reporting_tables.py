@@ -1,15 +1,12 @@
 
-
-def update_tables(source, tablename, fields, filter_fields, start_date, end_date, end_database):
+def query_source_data(source, tablename, fields, filter_fields, start_date, end_date):
 
     import numpy as np
+    global error_count
 
     output_df = pd.DataFrame()
 
     source_type = ''
-
-    global error_count
-    errors = error_count
 
     try:
         #GET DATA FROM SOURCE
@@ -55,7 +52,29 @@ def update_tables(source, tablename, fields, filter_fields, start_date, end_date
         for field in fields:
             if field not in output_df.columns:
                 output_df[field] = np.nan #add the missing field
-                output_df[field+'_value'] = np.nan #add a corresponding value field
+                output_df[field+'_value'] = np.nan #add a corresponding value field  
+
+    return_info = {}
+    return_info[0] = source_type
+    return_info[1] = output_df
+
+    return return_info  
+
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+###################################################################################################################
+
+def update_tables(source, tablename, fields, filter_fields, start_date, end_date, end_database):
+
+    global error_count
+    errors = error_count
+
+    return_info = query_source_data(source, tablename, fields, filter_fields, start_date, end_date)
+
+    source_type = return_info[0]
+    output_df = return_info[1]
 
     #MERGE DATA WITH MAIN DATABASE TABLE
     if errors == error_count:
