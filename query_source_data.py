@@ -1,5 +1,5 @@
 
-def query_source_data(source, tablename, fields, filter_fields, start_date, end_date):
+def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True):
 
     import numpy as np
     global error_count
@@ -11,16 +11,16 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
     try:
         #GET DATA FROM SOURCE
         if source == 'HE':
-            output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date)
+            output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
         if source == 'FSA':    
-            output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date)
+            output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
         if source == 'MHCLG':    
-            output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date)
+            output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
         if source == 'CROYDON':    
-            output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date)
+            output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
 
         if source == 'HEAT':
@@ -48,7 +48,7 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
         error_count += 1
 
     #RELOCATED TO MERGE FUNCTION AS IT MAKES THINGS MORE UNIVERSAL
-    if source_type == 'service_now':
+    if source_type == 'service_now' and run_extract == True:
         for field in fields:
             if field not in output_df.columns:
                 output_df[field] = np.nan #add the missing field
