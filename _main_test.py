@@ -23,7 +23,7 @@ start_time = datetime.datetime.now() #need for process time u_printing
 
 end_database = 1
 now = d.now()
-start_date = now - datetime.timedelta(hours=2.0)
+start_date = now - datetime.timedelta(hours=4000.0)
 end_date = now
 
 #start_date = datetime.datetime(2019, 3, 16, 12, 00, 00)
@@ -52,20 +52,24 @@ fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+update_tables('HE_TEST', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
+#update_tables('DEV', tablename, fields, filter_fields, start_date, end_date, end_database)
 
-###############################################################################SC_TASK
+###############################################################################INCIDENT
 #GET THE TABLE FIELDS
-tablename = 'sc_task'
+tablename = 'incident'
 return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
 #update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#update_tables('HE_TEST', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
 #update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
+#update_tables('DEV', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 ###############################################################################CHANGE REQUEST
 #GET THE TABLE FIELDS
@@ -74,7 +78,10 @@ return_info = return_servicenow_field_list(tablename)
 fields = return_info[0]
 filter_fields = return_info[1]
 #QUERY THE TABLE DATA
-update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
+
+
+#update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
 
 
 finish_time = datetime.datetime.now()
@@ -88,4 +95,4 @@ u_print('End: '+str(finish_time))
 u_print('Time Taken: '+str(finish_time - start_time))
 u_print('########################################')
 
-#save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader")
+#save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')

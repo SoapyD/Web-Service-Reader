@@ -1,3 +1,10 @@
+import os
+path = os.getcwd() #get the current path
+string_pos = path.index('Python') #find the python folder
+base_path = path[:string_pos]+'Python\\' #create a base filepath string
+
+this_dir = base_path+"Web-Service-Reader\\"
+
 
 def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True):
 
@@ -13,6 +20,9 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
         if source == 'HE':
             output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
+        if source == 'HE_TEST':
+            output_df = get_servicenow_webservice_data(source, he_test_instancename, he_test_username, he_test_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
+            source_type = 'service_now'
         if source == 'FSA':    
             output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
@@ -22,23 +32,27 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
         if source == 'CROYDON':    
             output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
+        if source == 'DEV':    
+            output_df = get_servicenow_webservice_data(source, dev_instancename, dev_username, dev_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
+            source_type = 'service_now'
+
 
         if source == 'HEAT':
             source_type = 'live'
             #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
-            sql_filepath = path+'\\sql\\'+source_type+'_extract\\'
+            sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
             sql_filename = source + '_' + tablename
             output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
         if source == 'LFLIVEEXTRACT':
             source_type = 'live'
             #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
-            sql_filepath = path+'\\sql\\'+source_type+'_extract\\'
+            sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
             sql_filename = source + '_' + tablename
             output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
         if source == 'TELEPHONYEXTRACT':
             source_type = 'live'
             #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
-            sql_filepath = path+'\\sql\\'+source_type+'_extract\\'
+            sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
             sql_filename = source + '_' + tablename
             output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
 
