@@ -6,6 +6,8 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
 
 
+exec(open("run_process_stack.py").read())
+exec(open("ready_process.py").read())
 exec(open("query_source_data.py").read())
 exec(open("update_reporting_tables.py").read())
 #exec(open("web_service_reader.py").read()) #this has now been moved to the functions folder
@@ -21,160 +23,33 @@ u_print('########################################')
 start_time = datetime.datetime.now() #need for process time u_printing
 
 
-end_database = 1
+db = 1
+database = ''
+ 
+staging_tablename='stg_web_service'
+delete_staging=True
+
 now = d.now()
 start_date = now - datetime.timedelta(hours=2.0)
 end_date = now
 
-#start_date = datetime.datetime(2019, 3, 16, 12, 00, 00)
-#end_date = datetime.datetime(2019, 3, 16, 14, 00, 00)
-#start_date = datetime.datetime(2018, 1, 1)
-#end_date = datetime.datetime(2019, 4, 1)
+#start_date = datetime.datetime(2019, 4, 20)
+#end_date = datetime.datetime(2019, 5, 1)
+#start_date = datetime.datetime(2017, 1, 1)
+#end_date = datetime.datetime(2019, 5, 1)
 
 u_print(str(start_date) + " to " + str(end_date))
 #errors = 0
 
+time_type = 'weeks'
+#time_type = 'days'
+time_unit = 1
+
+run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+#run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 
-##############################################################################################################################################################
-##############################################################################################################################################################
-###############################################################################SERVICE NOW
-##############################################################################################################################################################
-##############################################################################################################################################################
 
-
-
-###############################################################################SYS USER
-#GET THE TABLE FIELDS
-tablename = 'sys_user'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################INCIDENTS
-#GET THE TABLE FIELDS
-tablename = 'incident'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################INCIDENTS TASK
-#GET THE TABLE FIELDS
-tablename = 'incident_task'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################INCIDENTS ALERT
-#GET THE TABLE FIELDS
-tablename = 'incident_alert'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################SC_TASK
-#GET THE TABLE FIELDS
-tablename = 'sc_request'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################SC_REQ_ITEMS
-#GET THE TABLE FIELDS
-tablename = 'sc_req_item'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################SC_TASK
-#GET THE TABLE FIELDS
-tablename = 'sc_task'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################CHANGE REQUEST
-#GET THE TABLE FIELDS
-tablename = 'change_request'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################CHANGE TASK
-#GET THE TABLE FIELDS
-tablename = 'change_task'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################PROBLEM
-#GET THE TABLE FIELDS
-tablename = 'problem'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################PROBLEM
-#GET THE TABLE FIELDS
-tablename = 'problem_task'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
-
-###############################################################################TASK_SLAS
-#GET THE TABLE FIELDS
-tablename = 'task_sla'
-return_info = return_servicenow_field_list(tablename)
-fields = return_info[0]
-filter_fields = return_info[1]
-#QUERY THE TABLE DATA
-#update_tables('HE', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('FSA', tablename, fields, filter_fields, start_date, end_date, end_database)
-#update_tables('MHCLG', tablename, fields, filter_fields, start_date, end_date, end_database)
-update_tables('CROYDON', tablename, fields, filter_fields, start_date, end_date, end_database)
 
 
 ##############################################################################################################################################################
@@ -219,4 +94,4 @@ u_print('End: '+str(finish_time))
 u_print('Time Taken: '+str(finish_time - start_time))
 u_print('########################################')
 
-save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')
+#save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')
