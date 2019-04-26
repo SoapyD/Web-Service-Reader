@@ -35,8 +35,8 @@ end_date = now
 
 #start_date = datetime.datetime(2019, 4, 20)
 #end_date = datetime.datetime(2019, 5, 1)
-#start_date = datetime.datetime(2017, 1, 1)
-#end_date = datetime.datetime(2019, 5, 1)
+#start_date = datetime.datetime(2019, 4, 25)
+#end_date = datetime.datetime(2019, 4, 26)
 
 u_print(str(start_date) + " to " + str(end_date))
 #errors = 0

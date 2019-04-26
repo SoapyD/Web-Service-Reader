@@ -23,6 +23,10 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 		u_print('-------------------------------------------')
 		u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
 
+		#STOP THE LOOP IF THE TEMP END IF OVER THE ACTUAL END DATE
+		if temp_end >= end_date:
+			run_loop = False
+
 		if temp_end > end_date:
 			temp_end = end_date
 
@@ -32,8 +36,5 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 		temp_start = temp_end
 		temp_end = temp_end + time_add
 
-		#STOP THE LOOP IF THE TEMP END IF OVER THE ACTUAL END DATE
-		if temp_end > end_date:
-			run_loop = False
 
 		u_print('-------------------------------------------')
