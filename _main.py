@@ -35,18 +35,18 @@ end_date = now
 
 #start_date = datetime.datetime(2019, 4, 20)
 #end_date = datetime.datetime(2019, 5, 1)
-#start_date = datetime.datetime(2019, 1, 1)
-#end_date = datetime.datetime(2019, 5, 1)
+start_date = datetime.datetime(2019, 4, 1)
+end_date = datetime.datetime(2019, 6, 1)
 
 u_print(str(start_date) + " to " + str(end_date))
 #errors = 0
 
-#time_type = 'weeks'
-time_type = 'days'
+time_type = 'weeks'
+#time_type = 'days'
 time_unit = 1
 
-run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
-#run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+#run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 
 
@@ -94,4 +94,4 @@ u_print('End: '+str(finish_time))
 u_print('Time Taken: '+str(finish_time - start_time))
 u_print('########################################')
 
-save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')
+#save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')

@@ -11,19 +11,19 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	staging_tablename = staging_tablename + '_TEST'
 	delete_staging=False
 
-	tablename = 'change_request'
+	tablename = 'problem'
 	
 	source = 'HE'
-	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 	source = 'FSA'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	
 	source = 'MHCLG'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 	source = 'CROYDON'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 
 def run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging):
