@@ -36,7 +36,7 @@ INSERT INTO @Temp_Table
 SELECT 
 	sys_id,
 	[number],
-	'mhclg' AS system,
+	'croydon' AS system,
 	LEFT(short_description,500) AS subject,
 	CONVERT(INT,priority_value) AS priority,
 	state AS status,

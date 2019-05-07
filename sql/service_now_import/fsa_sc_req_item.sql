@@ -36,7 +36,7 @@ INSERT INTO @Temp_Table
 SELECT 
 	sys_id,
 	[number],
-	'he' AS system,
+	'fsa' AS system,
 	--businessunit,
 	LEFT(short_description,500) AS subject,
 	--isvip,

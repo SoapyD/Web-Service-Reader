@@ -25,29 +25,36 @@ start_time = datetime.datetime.now() #need for process time u_printing
 
 db = 1
 database = ''
- 
+
+###############################################################################MAIN PROCESS
+
 staging_tablename='stg_web_service'
 delete_staging=True
 
 now = d.now()
 start_date = now - datetime.timedelta(hours=2.0)
 end_date = now
+#start_date = datetime.datetime(2019, 5, 1)
+#end_date = datetime.datetime(2019, 5, 4)
 
-#start_date = datetime.datetime(2019, 4, 20)
-#end_date = datetime.datetime(2019, 5, 1)
-#start_date = datetime.datetime(2019, 4, 1)
-#end_date = datetime.datetime(2019, 6, 1)
-
-u_print(str(start_date) + " to " + str(end_date))
-#errors = 0
-
-time_type = 'weeks'
-#time_type = 'days'
+time_type = 'days'
 time_unit = 1
 
 run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
-#run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
+
+############################################################################### PROCESS
+
+staging_tablename = staging_tablename + '_TEST'
+delete_staging=False
+
+start_date = datetime.datetime(2017, 1, 1)
+end_date = datetime.datetime(2019, 6, 1)
+
+time_type = 'weeks'
+time_unit = 4
+
+#run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 
 
