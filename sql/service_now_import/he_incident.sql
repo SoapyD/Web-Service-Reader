@@ -51,26 +51,26 @@ DECLARE @Temp_Table TABLE(
 INSERT INTO @Temp_Table
 SELECT 
 	sys_id,
-	number,
+	LEFT(number,100),
 	'he' AS system,
 	'Historic England' AS company,
-	location,
+	LEFT(location,100),
 	--caller_id AS customer,
 	CASE WHEN caller_id_value = '' THEN NULL ELSE caller_id_value END as customer_id,
-	short_description AS subject,
+	LEFT(short_description,255) AS subject,
 	priority_value AS priority,
-	state AS status,
-	contact_type AS source,
-	category,
-	subcategory,
+	LEFT(state,40) AS status,
+	LEFT(contact_type,40) AS source,
+	LEFT(category,60),
+	LEFT(subcategory,60),
 	CASE WHEN LOWER(u_first_fix) = 'true' THEN 1 ELSE 0 END as fcr,
-	assignment_group AS ownerteam,
-	assigned_to AS owner,
-	sys_created_by AS createdby,
+	LEFT(assignment_group,100) AS ownerteam,
+	LEFT(assigned_to,100) AS owner,
+	LEFT(sys_created_by,100) AS createdby,
 	CONVERT(DATETIME,[sys_created_on]) as createddatetime,
-	resolved_by AS resolvedby,
+	LEFT(resolved_by,100) AS resolvedby,
 	CASE WHEN ISNULL([resolved_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[resolved_at]) END as resolveddatetime,
-	closed_by AS closedby,
+	LEFT(closed_by,100) AS closedby,
 	CASE WHEN ISNULL([closed_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[closed_at]) END as closeddatetime,
 	sys_updated_by AS lastmodby,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as lastmoddatetime,
@@ -79,18 +79,18 @@ SELECT
         ELSE 'Failure'
     END as typeofincident,
 	active,
-	u_psupplier AS thirdpartysupplier,
-	u_3rd_party_reference AS thirdpartyreference,
-	u_resolving_team AS resolvingteam,
-	u_fix_code AS fixcode,
+	LEFT(u_psupplier,100) AS thirdpartysupplier,
+	LEFT(u_3rd_party_reference,100) AS thirdpartyreference,
+	LEFT(u_resolving_team,100) AS resolvingteam,
+	LEFT(u_fix_code,50) AS fixcode,
 	LEFT(u_exception_y_n,100) AS exception,
 	LEFT(u_exception_reason,30) AS exceptionreason,
 	LEFT(u_lf_comments,200) AS lfcomments,
 	u_agreed AS exceptionagreed,
 	LEFT(u_he_comments,200) AS hecomments,
 	--CASE WHEN parent_incident = '' THEN NULL ELSE parent_incident END as parentincident,
-	u_fa AS failedaccuracy,
-	u_ft AS failedtimeliness,
+	LEFT(u_fa,10)AS failedaccuracy,
+	LEFT(u_ft,10) AS failedtimeliness,
 
 	CASE WHEN parent_incident_value = '' THEN NULL ELSE parent_incident_value END as parentincident_id,
 	CASE WHEN rfc_value = '' THEN NULL ELSE rfc_value END as changerequest_id,
@@ -100,8 +100,16 @@ SELECT
 FROM 
 	[dbo].[stg] stg;
 
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
 
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
+
+
 MERGE [dbo].[he_incident] target
 Using @Temp_Table source
 ON (
@@ -246,3 +254,4 @@ source.changerequest_id,
 source.problem_id,
 source.reassignmentcount
 );
+/**/

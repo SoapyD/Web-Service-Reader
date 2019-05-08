@@ -60,6 +60,13 @@ SELECT
 FROM 
 [dbo].[stg] stg;
 
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
+
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
 MERGE [dbo].[mhclg_sc_task] target
 Using @Temp_Table source

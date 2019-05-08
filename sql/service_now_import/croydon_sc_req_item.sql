@@ -67,6 +67,13 @@ FROM
 [dbo].[stg] stg;
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
 
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
+
 MERGE [dbo].[croydon_sc_req_item] target
 Using @Temp_Table source
 ON (

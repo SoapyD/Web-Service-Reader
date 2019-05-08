@@ -20,8 +20,6 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 
 	while run_loop == True:
 
-		u_print('-------------------------------------------')
-		u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
 
 		#STOP THE LOOP IF THE TEMP END IF OVER THE ACTUAL END DATE
 		if temp_end >= end_date:
@@ -30,6 +28,9 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 		if temp_end > end_date:
 			temp_end = end_date
 
+		u_print('-------------------------------------------')
+		u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
+		
 		update_tables(source, tablename, fields, filter_fields, temp_start, temp_end, db, database, staging_tablename, delete_staging)
 
 		#ITTERATE THE DATE RANGE

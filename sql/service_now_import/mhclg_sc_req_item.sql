@@ -35,37 +35,44 @@ DECLARE @Temp_Table TABLE(
 INSERT INTO @Temp_Table
 SELECT 
 	sys_id,
-	[number],
+	LEFT([number],150),
 	'mhclg' AS system,
 	--businessunit,
 	LEFT(short_description,500) AS subject,
 	--isvip,
 	priority_value AS priority,
-	state AS status,
-	stage,
-	contact_type AS source,
-	assignment_group AS ownerteam,
-	assigned_to AS owner,
+	LEFT(state,40) AS status,
+	LEFT(stage,50),
+	LEFT(contact_type,50) AS source,
+	LEFT(assignment_group,100) AS ownerteam,
+	LEFT(assigned_to,100) AS owner,
 	--owneremail,
 	case WHEN ISNULL([due_date],'') = '' THEN NULL WHEN ISDATE(due_date) = 1 THEN CONVERT(DATETIME,due_date) ELSE NULL END AS duedatetime,
-	sys_created_by AS createdby,
+	LEFT(sys_created_by,100) AS createdby,
 	CONVERT(DATETIME,[sys_created_on]) as createddatetime,
-	closed_by AS closedby,
+	LEFT(closed_by,100) AS closedby,
 	CASE WHEN ISNULL([closed_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[closed_at]) END as closeddatetime,
-	sys_updated_by AS lastmodby,
+	LEFT(sys_updated_by,100) AS lastmodby,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
 	--caller_id AS customer,
 	--location,
 	active,
-	approval,
+	LEFT(approval,50),
 	--category,
-	cat_item AS subcategory,
+	LEFT(cat_item,200) AS subcategory,
 	cat_item_value AS subcategory_id,
-	request AS requestnumber,
+	LEFT(request,30) AS requestnumber,
 	request_value AS requestnumber_id
 FROM 
 [dbo].[stg] stg;
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
+
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
 
 MERGE [dbo].[mhclg_sc_req_item] target
 Using @Temp_Table source

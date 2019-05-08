@@ -48,7 +48,9 @@ run_process_stack(start_date, end_date, time_type, time_unit, db, database, stag
 staging_tablename = staging_tablename + '_TEST'
 delete_staging=False
 
-start_date = datetime.datetime(2017, 1, 1)
+#start_date = datetime.datetime(2018, 4, 6)
+#end_date = datetime.datetime(2018, 4, 7)
+start_date = datetime.datetime(2018, 5, 1)
 end_date = datetime.datetime(2019, 6, 1)
 
 time_type = 'weeks'
