@@ -40,7 +40,6 @@ DECLARE @Temp_Table TABLE(
 	duedate DATETIME,
 	reassignmentcount INT,
 	changerequest_id CHAR(32)
-
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -49,18 +48,18 @@ SELECT
 	'he' AS system,
 	LEFT(short_description,500) AS subject,
 	CONVERT(INT,priority_value) AS priority,
-	state AS status,
-	contact_type AS source,
-	u_category AS category,
-	u_subcategory AS subcategory,
-	assignment_group AS ownerteam,
-	assigned_to AS owner,
+	LEFT(state,40) AS status,
+	LEFT(contact_type,50) AS source,
+	LEFT(u_category,100) AS category,
+	LEFT(u_subcategory,100) AS subcategory,
+	LEFT(assignment_group,100) AS ownerteam,
+	LEFT(assigned_to,100) AS owner,
 	CASE WHEN ISNULL([u_date_problem_closed],'') = '' THEN NULL ELSE CONVERT(DATETIME,[u_date_problem_closed]) END as dateproblemresovled,
-	sys_created_by AS createdby,
+	LEFT(sys_created_by,100) AS createdby,
 	CONVERT(DATETIME,[sys_created_on]) as createddatetime,
-	closed_by AS closedby,
+	LEFT(closed_by,100) AS closedby,
 	CASE WHEN ISNULL([closed_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[closed_at]) END as closeddatetime,
-	sys_updated_by AS lastmodby,
+	LEFT(sys_updated_by,100) AS lastmodby,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
 	active,
 	NULL AS problemsource,
@@ -73,8 +72,8 @@ SELECT
 
 	approval,
 	--business_duration,
-	known_error,
-	urgency,
+	LEFT(known_error,10),
+	LEFT(urgency,30),
 	CASE WHEN ISNULL(work_around,'') = '' THEN NULL ELSE work_around END AS work_around,
 	CASE WHEN ISNULL(expected_start,'') = '' THEN NULL ELSE CONVERT(DATETIME,expected_start) END as expected_start,
 	CASE WHEN ISNULL(work_start,'') = '' THEN NULL ELSE CONVERT(DATETIME,work_start) END as work_start,

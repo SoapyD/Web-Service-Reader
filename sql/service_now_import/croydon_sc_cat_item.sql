@@ -11,7 +11,7 @@ DECLARE @Temp_Table TABLE(
 INSERT INTO @Temp_Table
 SELECT 
 	sys_id,
-	category,
+	LEFT(category,100),
 	CONVERT(DATETIME,[sys_created_on]) as createddatetime,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime
 FROM 

@@ -42,11 +42,11 @@ SELECT
 	--WHEN CHARINDEX('historicengland', requestoremail) > 0 THEN 'Historic England'
 	--ELSE 'Other'
 	--END AS businessunit,
-	short_description AS subject,
+	LEFT(short_description,255) AS subject,
 	ISNULL(u_priority_value, NULL) AS priority,
-	state,
-	assignment_group AS ownerteam,
-	assigned_to AS owner,
+	LEFT(state,50),
+	LEFT(assignment_group,100) AS ownerteam,
+	LEFT(assigned_to,100) AS owner,
 
 	LEFT(lessons_learned,250),
 	LEFT(resolution_notes,250),
@@ -54,13 +54,13 @@ SELECT
 	LEFT(u_number_of_staff_affected,250),
 	LEFT(u_root_cause,250),
 
-	sys_created_by AS createdby,
+	LEFT(sys_created_by,100) AS createdby,
 	CONVERT(DATETIME,[sys_created_on]) as createddatetime,
-	resolved_by AS resolvedby,
+	LEFT(resolved_by,100) AS resolvedby,
 	CASE WHEN ISNULL([resolved_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[resolved_at]) END as resolveddatetime,
-	closed_by AS closedby,
+	LEFT(closed_by,100) AS closedby,
 	CASE WHEN ISNULL([closed_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[closed_at]) END as closeddatetime,
-	sys_updated_by AS lastmodby,
+	LEFT(sys_updated_by,100) AS lastmodby,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
 
 	source_incident,
