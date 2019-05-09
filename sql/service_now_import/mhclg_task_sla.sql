@@ -38,12 +38,32 @@ SELECT
 	CASE WHEN [start_time] = '' THEN NULL ELSE CONVERT(DATETIME,[start_time]) END as starttime,
 	CASE WHEN [planned_end_time] = '' THEN NULL ELSE CONVERT(DATETIME,[planned_end_time]) END as breachtime,
 	CASE WHEN [end_time] = '' THEN NULL ELSE CONVERT(DATETIME,[end_time]) END as stoptime,
-	DATEDIFF(second,convert(date,'1970-01-01'),duration_value) as duration,
+	CASE 
+		WHEN duration_value = '' THEN ''
+		WHEN ISDATE(CONVERT(varchar,CONVERT(DATE,duration_value),103)) = 1 THEN 
+		DATEDIFF(minute,convert(date,'1970-01-01'),duration_value) * 60 
+		ELSE NULL 
+	END as duration,
 	CONVERT(FLOAT,REPLACE([percentage], ',', '')) AS percentage,
-	DATEDIFF(second,convert(date,'1970-01-01'),time_left_value) as time_left,
-	DATEDIFF(second,convert(date,'1970-01-01'),business_duration_value) AS business_duration,
+	CASE 
+		WHEN time_left_value = '' THEN ''
+		WHEN ISDATE(CONVERT(varchar,CONVERT(DATE,time_left_value),103)) = 1 THEN 
+		DATEDIFF(minute,convert(date,'1970-01-01'),time_left_value) * 60 
+		ELSE NULL 
+	END as time_left,	
+	CASE 
+		WHEN business_duration_value = '' THEN ''
+		WHEN ISDATE(CONVERT(varchar,CONVERT(DATE,business_duration_value),103)) = 1 THEN 
+		DATEDIFF(minute,convert(date,'1970-01-01'),business_duration_value) * 60 
+		ELSE NULL 
+	END as business_duration,
 	CONVERT(FLOAT,REPLACE([business_percentage], ',', '')) AS business_percentage,
-	DATEDIFF(second,convert(date,'1970-01-01'),business_time_left_value) AS business_time_left,
+	CASE 
+		WHEN business_time_left_value = '' THEN ''
+		WHEN ISDATE(CONVERT(varchar,CONVERT(DATE,business_time_left_value),103)) = 1 THEN 
+		DATEDIFF(minute,convert(date,'1970-01-01'),business_time_left_value) * 60 
+		ELSE NULL 
+	END as business_time_left,	
 	[has_breached],
 	active,
 	LEFT(sys_created_by,100) AS createdby,

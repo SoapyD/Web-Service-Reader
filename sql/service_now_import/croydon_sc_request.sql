@@ -37,7 +37,13 @@ SELECT
 	request_state AS requeststate,
 	LEFT(stage,50),
 	--source,
-	due_date AS duedate,
+	--CASE WHEN ISDATE (due_date)=1 THEN CONVERT(DATETIME,[due_date]) ELSE NULL END AS duedate,
+	CASE 
+		WHEN due_date = '' THEN ''
+		WHEN ISDATE(CONVERT(varchar,CONVERT(DATE,due_date),103)) = 1 THEN 
+		CONVERT(DATETIME,[due_date])
+		ELSE NULL 
+	END as duedate,
 	LEFT(requested_for,100) AS requestor,
 	requested_for_value AS requestor_id,
 	--requestoremail,

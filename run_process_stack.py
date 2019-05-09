@@ -12,16 +12,16 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	
 	source = 'HE'
-	tablename = 'incident'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	tablename = 'sc_request'
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 	source = 'FSA'
-	tablename = 'sc_req_item'
+	tablename = 'task_sla'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	
 	source = 'MHCLG'
 	tablename = 'sc_req_item'
-	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	tablename = 'problem'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	tablename = 'problem_task'
@@ -141,7 +141,7 @@ def run_process_stack(start_date, end_date, time_type, time_unit, db, database, 
 	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	tablename = 'problem_task'
 	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
-	tablename = 'task_sla'
-	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	#tablename = 'task_sla'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	tablename = 'sc_cat_item'
 	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
