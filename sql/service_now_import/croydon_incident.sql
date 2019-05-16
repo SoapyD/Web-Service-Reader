@@ -49,7 +49,7 @@ SELECT
 	LEFT(contact_type,40) AS source,
 	LEFT(category,60),
 	LEFT(subcategory,60),
-	CASE WHEN LOWER([u_first_time_fix]) = 'true' THEN 1 ELSE 0 END as fcr,
+	CASE WHEN LOWER([u_first_time_fix]) = 'Yes' THEN 1 ELSE 0 END as fcr,
 	LEFT(assignment_group,100) AS ownerteam,
 	LEFT(assigned_to,100) AS owner,
 	LEFT(sys_created_by,100) AS createdby,
