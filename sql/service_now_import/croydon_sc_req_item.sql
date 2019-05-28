@@ -43,7 +43,7 @@ SELECT
 	priority_value AS priority,
 	LEFT(state,40) AS status,
 	LEFT(stage,50),
-	LEFT(contact_type,50) AS source,
+	'Self Service' as source, --LEFT(contact_type,50) AS source,
 	LEFT(assignment_group,100) AS ownerteam,
 	LEFT(assigned_to,100) AS owner,
 	--owneremail,

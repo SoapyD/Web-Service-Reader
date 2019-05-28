@@ -34,7 +34,7 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 	source = 'CROYDON'
-	tablename = 'incident'
+	tablename = 'sc_req_item'
 	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
 
