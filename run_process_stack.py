@@ -29,9 +29,14 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	source = 'CROYDON'
 	tablename = 'incident'
-	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 	tablename = 'problem_task'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+
+	source = 'CROYDON'
+	tablename = 'incident'
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
+
 
 
 def run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging):
