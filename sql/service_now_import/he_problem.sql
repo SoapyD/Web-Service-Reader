@@ -62,7 +62,7 @@ SELECT
 	LEFT(sys_updated_by,100) AS lastmodby,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
 	active,
-	NULL AS problemsource,
+	'' AS problemsource,
 	work_notes AS worknotes,
 	LEFT(u_exception_y_n,100) AS exception,
 	LEFT(u_exception_reason,30) AS exceptionreason,
