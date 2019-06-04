@@ -49,7 +49,7 @@ SELECT
 	priority_value AS priority,
 	LEFT(state,40) AS status,
 	LEFT(contact_type,40) AS source,
-	LEFT(category,60),
+	LEFT(cmdb_ci,60), --category
 	LEFT(subcategory,60),
 	CASE WHEN LOWER([u_first_time_fix]) = 'true' THEN 1 ELSE 0 END as fcr,
 	LEFT(assignment_group,100) AS ownerteam,

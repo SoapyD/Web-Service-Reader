@@ -34,11 +34,11 @@ delete_staging=True
 now = d.now()
 start_date = now - datetime.timedelta(hours=2.0)
 end_date = now
-#start_date = datetime.datetime(2019, 1, 1)
-#end_date = datetime.datetime(2019, 6, 1)
+start_date = datetime.datetime(2019, 5, 1)
+end_date = datetime.datetime(2019, 6, 1)
 
 time_type = 'days'
-time_unit = 1
+time_unit = 28
 
 run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging)
 
@@ -48,8 +48,8 @@ run_process_stack(start_date, end_date, time_type, time_unit, db, database, stag
 staging_tablename = staging_tablename + '_TEST'
 delete_staging=False
 
-start_date = datetime.datetime(2019, 4, 1)
-end_date = datetime.datetime(2019, 6, 1)
+start_date = datetime.datetime(2018, 1, 1)
+end_date = datetime.datetime(2019, 6, 5)
 #start_date = datetime.datetime(2019, 5, 1)
 #end_date = datetime.datetime(2019, 6, 1)
 
