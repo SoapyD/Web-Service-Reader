@@ -52,7 +52,8 @@ SELECT
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
 	active,
 	LEFT(u_problem_source,40) AS problemsource,
-	work_notes AS worknotes,
+	--work_notes AS worknotes,
+	REPLACE(work_notes,'\n',CHAR(10)) AS worknotes,
 
 	approval,
 	--business_duration,
