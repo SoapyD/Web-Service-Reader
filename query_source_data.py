@@ -6,7 +6,7 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 this_dir = base_path+"Web-Service-Reader\\"
 
 
-def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True):
+def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True, reference_list=None):
 
     import numpy as np
     global error_count
@@ -22,46 +22,45 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
 
         #GET DATA FROM SOURCE
         if source == 'HE':
-            #output_df = get_servicenow_webservice_data(source, he_instancename, he_username, he_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
             instancename = he_instancename
             username = he_username
             password = he_password
         if source == 'HE_TEST':
-            #output_df = get_servicenow_webservice_data(source, he_test_instancename, he_test_username, he_test_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
             instancename = he_test_instancename
             username = he_test_username
             password = he_test_password
         if source == 'FSA':    
-            #output_df = get_servicenow_webservice_data(source, fsa_instancename, fsa_username, fsa_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
             instancename = fsa_instancename
             username = fsa_username
             password = fsa_password
         if source == 'MHCLG':    
-            #output_df = get_servicenow_webservice_data(source, mhclg_instancename, mhclg_username, mhclg_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
             instancename = mhclg_instancename
             username = mhclg_username
             password = mhclg_password
         if source == 'CROYDON':    
-            #output_df = get_servicenow_webservice_data(source, croydon_instancename, croydon_username, croydon_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
             instancename = croydon_instancename
             username = croydon_username
             password = croydon_password
         if source == 'DEV':    
-            #output_df = get_servicenow_webservice_data(source, dev_instancename, dev_username, dev_password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
             source_type = 'service_now'
             instancename = dev_instancename
             username = dev_username
             password = dev_password
 
         if source_type == 'service_now':
-            output_df = get_servicenow_webservice_data(source, instancename, username, password, tablename, fields, filter_fields, start_date, end_date, run_extract=run_extract)
+            output_df = get_servicenow_webservice_data(source, instancename, username, password, tablename, fields, filter_fields, start_date, end_date, 
+                run_extract=run_extract, reference_list=reference_list)
 
 
+        #THESE ARE ALL OUT OF DATE
+        ##############################################################################################
+        ##############################################################################################
+        ##############################################################################################
         if source == 'HEAT':
             source_type = 'live'
             #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
@@ -80,6 +79,10 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
             sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
             sql_filename = source + '_' + tablename
             output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
+
+        ##############################################################################################
+        ##############################################################################################
+        ##############################################################################################
 
     except ValueError as e:
         u_print("###ERROR TRYING TO EXTRACT DATA###")
