@@ -1,5 +1,6 @@
 
-def ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging):
+def ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging,
+	print_internal=False, print_details=False):
 
 	return_info = return_servicenow_field_list(tablename)
 	fields = return_info[0]
@@ -15,6 +16,13 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 	temp_start = start_date
 	temp_end = start_date + time_add
 
+	if print_internal == True:
+		u_print('-------------------------------------------')
+	
+	u_print("UPDATING: "+source+"_"+tablename) #need to at least print whats being updated
+	
+	if print_internal == True:
+		u_print('')
 
 	run_loop = True
 
@@ -28,14 +36,14 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 		if temp_end > end_date:
 			temp_end = end_date
 
-		u_print('-------------------------------------------')
-		u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
+		if print_internal == True:
+			u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
 		
-		update_tables(source, tablename, fields, filter_fields, temp_start, temp_end, db, database, staging_tablename, delete_staging)
+		update_tables(source, tablename, fields, filter_fields, temp_start, temp_end, db, database, staging_tablename, delete_staging, print_details=print_details)
 
 		#ITTERATE THE DATE RANGE
 		temp_start = temp_end
 		temp_end = temp_end + time_add
 
-
+	if print_internal == True:
 		u_print('-------------------------------------------')

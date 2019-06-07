@@ -6,7 +6,7 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 this_dir = base_path+"Web-Service-Reader\\"
 
 
-def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True, reference_list=None):
+def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True, reference_list=None, print_details=False):
 
     import numpy as np
     global error_count
@@ -54,7 +54,7 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
 
         if source_type == 'service_now':
             output_df = get_servicenow_webservice_data(source, instancename, username, password, tablename, fields, filter_fields, start_date, end_date, 
-                run_extract=run_extract, reference_list=reference_list)
+                run_extract=run_extract, reference_list=reference_list, print_details=print_details)
 
 
         #THESE ARE ALL OUT OF DATE
