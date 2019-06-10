@@ -28,7 +28,7 @@ SELECT
 	sys_id,
 	[number],
 	'croydon' AS system,
-	'Croydon' AS company,
+	'London Borough of Croydon' AS company,
 	--CASE
 	--WHEN CHARINDEX('english-heritage', requestoremail) > 0 THEN 'English Heritage'
 	--WHEN CHARINDEX('historicengland', requestoremail) > 0 THEN 'Historic England'

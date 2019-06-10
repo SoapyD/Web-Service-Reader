@@ -39,7 +39,7 @@ SELECT
 	sys_id,
 	LEFT(number,100),
 	'croydon' AS system,
-	'Croydon' AS company,
+	'London Borough of Croydon' AS company,
 	LEFT(location,100),
 	--caller_id AS customer,
 	caller_id_value AS customer_id,

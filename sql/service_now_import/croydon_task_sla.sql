@@ -31,7 +31,7 @@ INSERT INTO @Temp_Table
 SELECT 
 	sys_id,
 	'croydon' AS system,
-	'Croydon' AS company,
+	'London Borough of Croydon' AS company,
 	LEFT(sla,50) AS [sladefinition],
 	sla_value AS sladefinition_id,
 	LEFT(stage,50),
