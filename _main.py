@@ -36,11 +36,9 @@ print_details = False
 now = d.now()
 start_date = now - datetime.timedelta(hours=2.0)
 end_date = now
-#start_date = datetime.datetime(2019, 6, 1)
-#end_date = datetime.datetime(2019, 6, 8)
 
 time_type = 'days'
-time_unit = 28
+time_unit = 1
 
 run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
@@ -52,11 +50,11 @@ delete_staging=False
 
 #start_date = datetime.datetime(2017, 1, 1)
 #end_date = datetime.datetime(2019, 6, 6)
-start_date = datetime.datetime(2019, 6, 6)
-end_date = datetime.datetime(2019, 6, 7)
+start_date = datetime.datetime(2019, 4, 1)
+end_date = datetime.datetime(2019, 6, 18)
 
-time_type = 'days'
-time_unit = 1
+time_type = 'weeks'
+time_unit = 4
 
 #run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
