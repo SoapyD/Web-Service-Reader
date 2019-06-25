@@ -13,16 +13,16 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	
 	source = 'HE'
-	tablename = 'problem'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'incident'
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 
 	source = 'FSA'
-	tablename = 'problem'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'incident'
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	
 	source = 'MHCLG'
-	tablename = 'sc_req_item'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'incident'
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	tablename = 'problem'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	tablename = 'problem_task'
@@ -30,7 +30,7 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	source = 'CROYDON'
 	tablename = 'incident'
-	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	tablename = 'problem'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 

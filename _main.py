@@ -50,8 +50,8 @@ delete_staging=False
 
 #start_date = datetime.datetime(2017, 1, 1)
 #end_date = datetime.datetime(2019, 6, 6)
-start_date = datetime.datetime(2019, 4, 1)
-end_date = datetime.datetime(2019, 6, 18)
+start_date = datetime.datetime(2019, 6, 24)
+end_date = datetime.datetime(2019, 6, 26)
 
 time_type = 'weeks'
 time_unit = 4
