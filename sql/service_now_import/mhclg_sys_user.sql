@@ -25,7 +25,7 @@ SELECT
 	LEFT(email,150),
 	LEFT(vip,10),
 	LEFT(location,100),
-	LEFT(businessunit,200),
+	LEFT(company,200) AS businessunit,
 	CONVERT(DATETIME,[sys_created_on]) as createddatetime,
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime
 FROM 
