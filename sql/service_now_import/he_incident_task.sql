@@ -23,7 +23,8 @@ DECLARE @Temp_Table TABLE(
 	closedby NVARCHAR(100),
 	closeddatetime DATETIME,
 	lastmodby NVARCHAR(100),
-	lastmoddatetime DATETIME
+	lastmoddatetime DATETIME,
+	failedtimeliness NVARCHAR(10)	
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -48,7 +49,8 @@ SELECT
 	LEFT(closed_by,100) AS closedby,
 	CASE WHEN ISNULL([closed_at],'') = '' THEN NULL ELSE CONVERT(DATETIME,[closed_at]) END as closeddatetime,
 	LEFT(sys_updated_by,100) AS lastmodby,
-	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime
+	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
+	LEFT(u_ft,10) AS failedtimeliness
 FROM 
 [dbo].[stg] stg;
 
@@ -89,7 +91,8 @@ target.createddatetime = source.createddatetime,
 target.closedby = source.closedby,
 target.closeddatetime = source.closeddatetime,
 target.lastmodby = source.lastmodby,
-target.lastmoddatetime = source.lastmoddatetime
+target.lastmoddatetime = source.lastmoddatetime,
+target.failedtimeliness = SOURCE.failedtimeliness
 WHEN NOT MATCHED BY TARGET
 THEN INSERT 
 (
@@ -114,7 +117,8 @@ createddatetime,
 closedby,
 closeddatetime,
 lastmodby,
-lastmoddatetime
+lastmoddatetime,
+failedtimeliness
 )
 VALUES (
 source.sys_id,
@@ -138,5 +142,6 @@ source.createddatetime,
 source.closedby,
 source.closeddatetime,
 source.lastmodby,
-source.lastmoddatetime
+source.lastmoddatetime,
+SOURCE.failedtimeliness
 );
