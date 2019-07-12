@@ -30,7 +30,7 @@ database = ''
 
 staging_tablename='stg_web_service'
 delete_staging=True
-print_internal = False
+print_internal = True
 print_details = False
 
 now = d.now()

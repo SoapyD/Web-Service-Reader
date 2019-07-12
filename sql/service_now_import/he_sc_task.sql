@@ -27,7 +27,8 @@ DECLARE @Temp_Table TABLE(
 	requestnumber NVARCHAR(30),
 	request_id CHAR(32),
 	requestitemnumber NVARCHAR(30),
-	requestitem_id CHAR(32)
+	requestitem_id CHAR(32),
+	failedtimeliness NVARCHAR(10)	
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -56,7 +57,8 @@ SELECT
 	request AS requestnumber,
 	request_value AS request_id,
 	request_item AS requestitemnumber,
-	request_item_value AS requestitem_id
+	request_item_value AS requestitem_id,
+	LEFT(u_ft,10) AS failedtimeliness
 FROM 
 [dbo].[stg] stg;
 
@@ -101,7 +103,8 @@ TARGET.active = SOURCE.active,
 TARGET.requestnumber = SOURCE.requestnumber,
 TARGET.request_id = SOURCE.request_id,
 TARGET.requestitemnumber = SOURCE.requestitemnumber,
-TARGET.requestitem_id = SOURCE.requestitem_id
+TARGET.requestitem_id = SOURCE.requestitem_id,
+TARGET.failedtimeliness = SOURCE.failedtimeliness
 WHEN NOT MATCHED BY TARGET
 THEN INSERT 
 (
@@ -130,7 +133,8 @@ active,
 requestnumber,
 request_id,
 requestitemnumber,
-requestitem_id
+requestitem_id,
+failedtimeliness
 )
 VALUES (
 SOURCE.[sys_id],
@@ -158,5 +162,6 @@ SOURCE.active,
 SOURCE.requestnumber,
 SOURCE.request_id,
 SOURCE.requestitemnumber,
-SOURCE.requestitem_id
+SOURCE.requestitem_id,
+SOURCE.failedtimeliness
 );
