@@ -30,7 +30,7 @@ database = ''
 
 staging_tablename='stg_web_service'
 delete_staging=True
-print_internal = True
+print_internal = False
 print_details = False
 
 now = d.now()
@@ -50,7 +50,7 @@ delete_staging=False
 
 #start_date = datetime.datetime(2017, 1, 1)
 #end_date = datetime.datetime(2019, 6, 6)
-start_date = datetime.datetime(2019, 7, 1)
+start_date = datetime.datetime(2019, 6, 1)
 end_date = datetime.datetime(2019, 8, 1)
 
 time_type = 'weeks'
