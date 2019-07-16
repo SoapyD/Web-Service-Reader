@@ -1,17 +1,23 @@
 --set language british;
 DECLARE 
 @start_date DATETIME = CONVERT(DATETIME,'_@start'),
-@end_date DATETIME = CONVERT(DATETIME,'_@end')
-/*@start_date DATETIME = CONVERT(DATETIME,'01/01/2019'),
-@end_date DATETIME = CONVERT(DATETIME,'02/01/2019')*/
+@end_date DATETIME = CONVERT(DATETIME,'_@end'),
+@offset INT = _@offset,
+@max_rows INT = _@max_rows
+/*
+@start_date DATETIME = CONVERT(DATETIME,'01/01/2019'),
+@end_date DATETIME = CONVERT(DATETIME,'02/01/2019'),
+@offset FLOAT = 0,
+@max_rows FLOAT = 10
+*/
 ;
 
 SET NOCOUNT ON
 SET ANSI_WARNINGS OFF
 
-SELECT
-    ser.recid,
-    ser.ServiceReqNumber,
+SELECT_
+    ser.RecID,
+    convert(INT,ser.ServiceReqNumber) as ServiceReqNumber,
     ser.IsVIP,
     ser.Subject,
     ser.Status,
@@ -35,13 +41,16 @@ SELECT
     rep_esc.[TotalRunningDuration] AS response_totalrunningduration,
 
     ser.ResolutionEscLink_RecID,
-    res_esc.L1DateTime,
+    --CONVERT(DATETIME,res_esc.L1DateTime) AS L1DateTime,
+    FORMAT(res_esc.L1DateTime,'yyyy-MM-dd HH:mm:ss') AS L1DateTime,
     res_esc.L1Passed,
-    res_esc.L2DateTime,
-    res_esc.L2Passed,
-    res_esc.L3DateTime,
+    --CONVERT(DATETIME,res_esc.L2DateTime) AS L2DateTime,
+    FORMAT(res_esc.L2DateTime,'yyyy-MM-dd HH:mm:ss') AS L2DateTime,
+    res_esc.L2Passed, 
+    --CONVERT(DATETIME,res_esc.L3DateTime) AS L3DateTime,
+    FORMAT(res_esc.L3DateTime,'yyyy-MM-dd HH:mm:ss') AS L3DateTime,
     res_esc.L3Passed,
-    res_esc.BreachDateTime,
+    FORMAT(res_esc.BreachDateTime,'yyyy-MM-dd HH:mm:ss') AS BreachDateTime,
     res_esc.BreachPassed,
     res_esc.TargetClockDuration,
     res_esc.[TotalRunningDuration],
@@ -72,3 +81,9 @@ WHERE
     res_esc.CreatedDateTime BETWEEN @start_date AND @end_date
     OR
     res_esc.LastModDateTime BETWEEN @start_date AND @end_date
+
+ORDER BY_ ServiceReqNumber
+
+OFFSET @offset ROWS
+
+FETCH NEXT @max_rows ROWS ONLY

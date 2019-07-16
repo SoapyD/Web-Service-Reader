@@ -16,8 +16,8 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	tablename = 'incident_task'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	tablename = 'change_task'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
-	tablename = 'sc_task'
+	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'sc_req_item'
 	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)	
 
 	source = 'FSA'
@@ -38,6 +38,19 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	tablename = 'problem'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 
+
+	#update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
+	source = 'HEAT'
+	tablename = 'incident'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'servicereq'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'organizationalunit'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'problem'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'change'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 
 
 def run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=False, print_details=False):

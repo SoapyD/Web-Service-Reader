@@ -1,8 +1,8 @@
-set language british;
+--set language british;
 /*CREATE A TEMP TABLE THEN INSERT IT INTO THE PERMENTANT TABLE*/
-/*CREATE TABLE heat_servicerequest (*/
+/*CREATE TABLE heat_servicereq (*/
 DECLARE @Temp_Table TABLE(
-recid NVARCHAR(100) PRIMARY KEY, 
+recid CHAR(32) PRIMARY KEY, 
 number NVARCHAR(100),
 system NVARCHAR(100),
 company NVARCHAR(150),
@@ -23,11 +23,11 @@ closedby NVARCHAR(100),
 closeddatetime DATETIME,
 lastmodby NVARCHAR(100),
 lastmoddatetime DATETIME,
-responseesclink NVARCHAR(100),
+responseesclink CHAR(32),
 response_breachpassed NVARCHAR(10),
 response_targetclockduration FLOAT,
 response_totalrunningduration FLOAT,
-resolutionesclink NVARCHAR(100),
+resolutionesclink CHAR(32),
 breachstatus int,
 l1datetime DATETIME,
 l1passed NVARCHAR(10),
@@ -39,7 +39,7 @@ breachdatetime DATETIME,
 breachpassed NVARCHAR(10),
 targetclockduration FLOAT,
 totalrunningduration FLOAT,
-profilelink_recid NVARCHAR(100),
+profilelink_recid CHAR(32),
 location NVARCHAR(100),
 customer NVARCHAR(100)
 );
@@ -51,7 +51,7 @@ ServiceReqNumber,
 OrganizationalUnit AS company,
 businessunit,
 isvip,
-subject,
+REPLACE(REPLACE(REPLACE(subject,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS subject,
 status,
 source,
 service,
@@ -88,8 +88,15 @@ DisplayName AS customer
 FROM 
 [dbo].[stg] stg;
 
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
+
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
-MERGE [dbo].[heat_servicerequest] target
+MERGE [dbo].[heat_servicereq] target
 Using @Temp_Table source
 ON (
 target.recid = source.recid

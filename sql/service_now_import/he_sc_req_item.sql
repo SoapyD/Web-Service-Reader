@@ -29,7 +29,8 @@ DECLARE @Temp_Table TABLE(
 	subcategory NVARCHAR(200),
 	subcategory_id CHAR(32),
 	requestnumber NVARCHAR(30),
-	requestnumber_id CHAR(32)
+	requestnumber_id CHAR(32),
+	failedtimeliness NVARCHAR(10)
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -60,7 +61,8 @@ SELECT
 	LEFT(cat_item,200) AS subcategory,
 	cat_item_value AS subcategory_id,
 	request AS requestnumber,
-	request_value AS requestnumber_id
+	request_value AS requestnumber_id,
+	LEFT(u_ft,10) AS failedtimeliness
 FROM 
 [dbo].[stg] stg;
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
@@ -107,7 +109,8 @@ TARGET.approval = SOURCE.approval,
 TARGET.subcategory = SOURCE.subcategory,
 TARGET.subcategory_id = SOURCE.subcategory_id,
 TARGET.requestnumber = SOURCE.requestnumber,
-TARGET.requestnumber_id = SOURCE.requestnumber_id
+TARGET.requestnumber_id = SOURCE.requestnumber_id,
+TARGET.failedtimeliness = SOURCE.failedtimeliness
 WHEN NOT MATCHED BY TARGET
 THEN INSERT 
 (
@@ -138,7 +141,8 @@ approval,
 subcategory,
 subcategory_id,
 requestnumber,
-requestnumber_id
+requestnumber_id,
+failedtimeliness
 )
 VALUES (
 SOURCE.sys_id,
@@ -168,5 +172,6 @@ SOURCE.approval,
 SOURCE.subcategory,
 SOURCE.subcategory_id,
 SOURCE.requestnumber,
-SOURCE.requestnumber_id
+SOURCE.requestnumber_id,
+SOURCE.failedtimeliness
 );

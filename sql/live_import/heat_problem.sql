@@ -1,8 +1,8 @@
-set language british;
+--set language british;
 /*CREATE A TEMP TABLE THEN INSERT IT INTO THE PERMENTANT TABLE*/
 /*CREATE TABLE heat_problem (*/
 DECLARE @Temp_Table TABLE(
-    rec_id NVARCHAR(100) PRIMARY KEY,
+    rec_id CHAR(32) PRIMARY KEY,
     number NVARCHAR(100),
     system NVARCHAR(100),
     company NVARCHAR(150),
@@ -22,8 +22,8 @@ DECLARE @Temp_Table TABLE(
     closeddatetime DATETIME,
     LastModBy NVARCHAR(100),
     LastModDateTime DATETIME,
-    ResolutionEscLink NVARCHAR(100),
-    ProfileLink_RecID NVARCHAR(100),
+    ResolutionEscLink CHAR(32),
+    ProfileLink_RecID CHAR(32),
     breachstatus INT,
     L1DateTime DATETIME,
     L1Passed NVARCHAR(10),
@@ -43,7 +43,7 @@ SELECT
     OrgUnitName AS company,
     EmployeeLocation AS location,
     DisplayName AS customer,
-    subject,
+    REPLACE(REPLACE(REPLACE(subject,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS subject,
     priority,
     status,
     source,
@@ -68,9 +68,16 @@ SELECT
     L3Passed,
     CASE WHEN ISNULL([BreachDateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[BreachDateTime]) END as BreachTime,
     BreachPassed,
-    worknotes
+    REPLACE(REPLACE(worknotes,'\n',CHAR(10)),'\r',CHAR(13)) AS subject
 FROM 
 [dbo].[stg] stg;
+
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
 
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
 MERGE [dbo].[heat_problem] target

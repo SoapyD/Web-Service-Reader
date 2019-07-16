@@ -29,9 +29,9 @@ database = ''
 ###############################################################################MAIN PROCESS
 
 staging_tablename='stg_web_service'
-delete_staging=True
-print_internal = False
-print_details = False
+delete_staging = True
+print_internal = True
+print_details = True
 
 now = d.now()
 start_date = now - datetime.timedelta(hours=2.0)
@@ -48,10 +48,14 @@ run_process_stack(start_date, end_date, time_type, time_unit, db, database, stag
 staging_tablename = staging_tablename + '_TEST'
 delete_staging=False
 
-#start_date = datetime.datetime(2017, 1, 1)
-#end_date = datetime.datetime(2019, 6, 6)
-start_date = datetime.datetime(2019, 6, 1)
-end_date = datetime.datetime(2019, 8, 1)
+start_date = datetime.datetime(2017, 1, 1)
+end_date = datetime.datetime(2019, 7, 17)
+#start_date = datetime.datetime(2019, 7, 1)
+#end_date = datetime.datetime(2019, 7, 10)
+#now = d.now()
+#start_date = now - datetime.timedelta(hours=2.0)
+#end_date = now
+
 
 time_type = 'weeks'
 time_unit = 4
@@ -68,11 +72,13 @@ time_unit = 4
 
 ###HEAT
 #update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
-#update_tables('HEAT', 'organizationalunit', None, None, start_date, end_date, end_database)
-#update_tables('HEAT', 'change', None, None, start_date, end_date, end_database)
-#update_tables('HEAT', 'problem', None, None, start_date, end_date, end_database)
-#update_tables('HEAT', 'task', None, None, start_date, end_date, end_database)
 #update_tables('HEAT', 'servicerequest', None, None, start_date, end_date, end_database)
+#update_tables('HEAT', 'organizationalunit', None, None, start_date, end_date, end_database)
+#update_tables('HEAT', 'problem', None, None, start_date, end_date, end_database)
+
+#update_tables('HEAT', 'change', None, None, start_date, end_date, end_database)
+#update_tables('HEAT', 'task', None, None, start_date, end_date, end_database)
+#HEAT EMPLOYEE
 
 ###LFLIVEEXTRACT
 #update_tables('LFLIVEEXTRACT', 'session', None, None, start_date, end_date, end_database)

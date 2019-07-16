@@ -1,8 +1,8 @@
-set language british;
+--set language british;
 /*CREATE A TEMP TABLE THEN INSERT IT INTO THE PERMENTANT TABLE*/
 /*CREATE TABLE heat_incident (*/
 DECLARE @Temp_Table TABLE(
-rec_id NVARCHAR(100) PRIMARY KEY,
+rec_id CHAR(32) PRIMARY KEY,
 number NVARCHAR(100),
 system NVARCHAR(100),
 company NVARCHAR(150),
@@ -35,11 +35,11 @@ closeddatetime DATETIME,
 lastmodby NVARCHAR(100),
 lastmoddatetime DATETIME,
 typeofincident NVARCHAR(20),
-responseesclink NVARCHAR(100),
+responseesclink CHAR(32),
 response_breachpassed NVARCHAR(10),
 response_targetclockduration FLOAT,
 response_totalrunningduration FLOAT,
-resolutionesclink NVARCHAR(100),
+resolutionesclink CHAR(32),
 breachstatus int,
 l1datetime DATETIME,
 l1passed NVARCHAR(10),
@@ -54,7 +54,7 @@ totalrunningduration FLOAT,
 profilelink_recid NVARCHAR(100),
 location NVARCHAR(100),
 customer NVARCHAR(100),
-resolution NVARCHAR(500)
+resolution NTEXT NULL
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -64,7 +64,7 @@ SELECT
     AA_OrgUnitName AS company,
     AA_BusinessUnit AS businessunit,
     isvip,
-    subject,
+    REPLACE(REPLACE(REPLACE(REPLACE(subject,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)),'\\','') AS subject,
     priority,
     status,
     source,
@@ -110,9 +110,17 @@ SELECT
     ProfileLink_RecID,
     location,
     customer,
-    LEFT(resolution,500) AS resolution
+    REPLACE(REPLACE(REPLACE(REPLACE(resolution,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)),'\\','') AS resolution
+
 FROM 
 [dbo].[stg] stg;
+
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
 
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
 MERGE [dbo].[heat_incident] target

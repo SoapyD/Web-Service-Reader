@@ -1,8 +1,8 @@
-set language british;
+--set language british;
 /*CREATE A TEMP TABLE THEN INSERT IT INTO THE PERMENTANT TABLE*/
 /*CREATE TABLE heat_change (*/
 DECLARE @Temp_Table TABLE(
-	recid nvarchar(200) primary key,
+	recid char(32) primary key,
 	number nvarchar(100),
 	businessunit nvarchar(100),
 	company nvarchar(150),
@@ -13,16 +13,16 @@ DECLARE @Temp_Table TABLE(
 	risklevel nvarchar(20),
 	priority int,
 	status nvarchar(30),
-	cancellationreason nvarchar(200),
+	cancellationreason nvarchar(MAX),
 	service nvarchar(50),
 	category nvarchar(50),
 	subcategory nvarchar(50),
 	subject nvarchar(500),
-	description nvarchar(500),
+	description nvarchar(MAX),
 	justification nvarchar(500),
-	reason nvarchar(500),
-	aa_backoutplan nvarchar(500),
-	aa_testplan nvarchar(500),
+	reason nvarchar(MAX),
+	aa_backoutplan nvarchar(MAX),
+	aa_testplan nvarchar(MAX),
 	aa_whotesting nvarchar(500),
 	primarysystemname nvarchar(50),
 	primarysystemowner nvarchar(50),
@@ -35,7 +35,7 @@ DECLARE @Temp_Table TABLE(
 	scheduledstartdate datetime,
 	scheduledenddate datetime,
 	startdatetime datetime,
-	enddatetime  datetime,
+	enddatetime datetime,
 	cmapprovedby nvarchar(50),
 	cmapproveddatetime datetime,
 	createdby nvarchar(50),
@@ -47,7 +47,7 @@ DECLARE @Temp_Table TABLE(
 );
 INSERT INTO @Temp_Table
 SELECT 
-	recid,
+	RecID,
 	ChangeNumber AS number,
 	businessunit,
 	OrgUnitName AS company,
@@ -62,12 +62,12 @@ SELECT
 	service,
 	category,
 	subcategory,
-	subject,
-	description,
+	REPLACE(REPLACE(REPLACE(subject,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS subject,
+	REPLACE(REPLACE(REPLACE(description,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS description,
 	justification,
-	reason,
-	aa_backoutplan,
-	aa_testplan,
+	REPLACE(REPLACE(REPLACE(reason,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS reason,
+	REPLACE(REPLACE(REPLACE(aa_backoutplan,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS aa_backoutplan,
+	REPLACE(REPLACE(REPLACE(aa_testplan,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)) AS aa_testplan,
 	aa_whotesting,
 	primarysystemname,
 	primarysystemowner,
@@ -77,20 +77,27 @@ SELECT
 	sponsor,
 	implementationresult,
 	toschedule,
-	CASE WHEN scheduledstartdate IS NULL THEN NULL ELSE CONVERT(DATETIME,scheduledstartdate) END AS scheduledstartdate,
-	CASE WHEN scheduledenddate IS NULL THEN NULL ELSE CONVERT(DATETIME,scheduledenddate) END AS scheduledenddate,
-	CASE WHEN startdatetime IS NULL THEN NULL ELSE CONVERT(DATETIME,startdatetime) END AS startdatetime,
-	CASE WHEN enddatetime IS NULL THEN NULL ELSE CONVERT(DATETIME,enddatetime) END AS enddatetime,
+	CASE WHEN ISNULL(scheduledstartdate,'') = '' THEN NULL ELSE CONVERT(DATETIME,scheduledstartdate) END AS scheduledstartdate,
+	CASE WHEN ISNULL(scheduledenddate,'') = '' THEN NULL ELSE CONVERT(DATETIME,scheduledenddate) END AS scheduledenddate,
+	CASE WHEN ISNULL(startdatetime,'') = '' THEN NULL ELSE CONVERT(DATETIME,startdatetime) END AS startdatetime,
+	CASE WHEN ISNULL(enddatetime,'') = '' THEN NULL ELSE CONVERT(DATETIME,enddatetime) END AS enddatetime,
 	cmapprovedby,
-	CASE WHEN cmapproveddatetime IS NULL THEN NULL ELSE CONVERT(DATETIME,cmapproveddatetime) END AS cmapproveddatetime,
+	CASE WHEN ISNULL(cmapproveddatetime,'') = '' THEN NULL ELSE CONVERT(DATETIME,cmapproveddatetime) END AS cmapproveddatetime,
 	createdby,
-	CASE WHEN createddatetime IS NULL THEN NULL ELSE CONVERT(DATETIME,createddatetime) END AS createddatetime,
+	CASE WHEN ISNULL(createddatetime,'') = '' THEN NULL ELSE CONVERT(DATETIME,createddatetime) END AS createddatetime,
 	lastmodby,
-	CASE WHEN lastmoddatetime IS NULL THEN NULL ELSE CONVERT(DATETIME,lastmoddatetime) END AS lastmoddatetime,
+	CASE WHEN ISNULL(lastmoddatetime,'') = '' THEN NULL ELSE CONVERT(DATETIME,lastmoddatetime) END AS lastmoddatetime,
 	closedby,
-	CASE WHEN closeddatetime IS NULL THEN NULL ELSE CONVERT(DATETIME,closeddatetime) END AS closeddatetime
+	CASE WHEN ISNULL(closeddatetime,'') = '' THEN NULL ELSE CONVERT(DATETIME,closeddatetime) END AS closeddatetime
 FROM 
 [dbo].[stg] stg;
+
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
 
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
 MERGE [dbo].[heat_change] target

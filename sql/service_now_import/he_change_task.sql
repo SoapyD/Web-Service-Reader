@@ -21,7 +21,8 @@ DECLARE @Temp_Table TABLE(
 	lastmoddatetime DATETIME,
 	active NVARCHAR(20),
 	changerequest NVARCHAR(20),
-	changerequest_id CHAR(32)
+	changerequest_id CHAR(32),
+	failedtimeliness NVARCHAR(10)
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -48,7 +49,8 @@ SELECT
 	CASE WHEN ISNULL([sys_updated_on],'') = '' THEN NULL ELSE CONVERT(DATETIME,[sys_updated_on]) END as LastModDateTime,
 	active,
 	change_request,
-	change_request_value
+	change_request_value,
+	LEFT(u_failed_timeliness,10) AS failedtimeliness
 FROM 
 [dbo].[stg] stg;
 
@@ -86,7 +88,8 @@ TARGET.lastmodby = SOURCE.lastmodby,
 TARGET.lastmoddatetime = SOURCE.lastmoddatetime,
 TARGET.active = SOURCE.active,
 TARGET.changerequest = SOURCE.changerequest,
-TARGET.changerequest_id = SOURCE.changerequest_id
+TARGET.changerequest_id = SOURCE.changerequest_id,
+TARGET.failedtimeliness = SOURCE.failedtimeliness
 WHEN NOT MATCHED BY TARGET
 THEN INSERT 
 (
@@ -108,7 +111,8 @@ lastmodby,
 lastmoddatetime,
 active,
 changerequest,
-changerequest_id
+changerequest_id,
+failedtimeliness
 )
 VALUES (
 SOURCE.sys_id,
@@ -129,5 +133,6 @@ SOURCE.lastmodby,
 SOURCE.lastmoddatetime,
 SOURCE.active,
 SOURCE.changerequest,
-SOURCE.changerequest_id
+SOURCE.changerequest_id,
+SOURCE.failedtimeliness
 );

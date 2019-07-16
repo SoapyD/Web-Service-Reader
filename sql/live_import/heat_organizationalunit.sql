@@ -1,12 +1,12 @@
-set language british;
+--set language british;
 /*CREATE A TEMP TABLE THEN INSERT IT INTO THE PERMENTANT TABLE*/
 /*CREATE TABLE heat_organizationalunit (*/
 DECLARE @Temp_Table TABLE(
-	recid NVARCHAR(150) PRIMARY KEY,
+	recid CHAR(32) PRIMARY KEY,
 	name NVARCHAR(100),
 	aliasname NVARCHAR(100),
 	parentlinkcategory NVARCHAR(100),
-	parentlinkrecid NVARCHAR(150),
+	parentlinkrecid CHAR(32),
 	depth INT,
 	supportingsite NVARCHAR(100),
 	accountmanagername NVARCHAR(100),
@@ -35,6 +35,13 @@ SELECT
 	CASE WHEN ISNULL([LastModDateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[LastModDateTime]) END as LastModDateTime
 FROM 
 	[dbo].[stg] stg;
+
+DECLARE @table_count FLOAT;
+SET @table_count = (select COUNT(*) from @Temp_Table)
+IF @table_count = 0
+BEGIN
+THROW 50000, 'TEMP TABLE EMPTY', 1;
+END
 
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
 MERGE [dbo].[heat_organizationalunit] target

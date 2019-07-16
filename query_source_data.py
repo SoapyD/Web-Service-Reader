@@ -58,27 +58,26 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
 
 
         #THESE ARE ALL OUT OF DATE
+        #update 15-07-19, now use correct chunking method for large datasets
+        #however they still need a method of generating a count for the data check
+        #method
         ##############################################################################################
         ##############################################################################################
         ##############################################################################################
         if source == 'HEAT':
             source_type = 'live'
-            #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
-            sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
-            sql_filename = source + '_' + tablename
-            output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
+
         if source == 'LFLIVEEXTRACT':
             source_type = 'live'
-            #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
-            sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
-            sql_filename = source + '_' + tablename
-            output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
+
         if source == 'TELEPHONYEXTRACT':
             source_type = 'live'
-            #output_df = get_heat_data(source_type, source, tablename, start_date, end_date)
+
+        if source_type == 'live':
             sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
             sql_filename = source + '_' + tablename
-            output_df = sql_query_parser(sql_filepath, sql_filename, tablename, start_date, end_date)
+            output_df = sql_query_parser_2(sql_filepath, sql_filename, tablename, start_date, end_date, 
+                print_details=print_details)
 
         ##############################################################################################
         ##############################################################################################
