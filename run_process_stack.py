@@ -13,12 +13,12 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	
 	source = 'HE'
-	tablename = 'incident_task'
-	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
-	tablename = 'change_task'
+	tablename = 'incident'
 	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
+	tablename = 'change_task'
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	tablename = 'sc_req_item'
-	ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)	
+	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)	
 
 	source = 'FSA'
 	tablename = 'incident'
@@ -39,9 +39,9 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 
 
-	#update_tables('HEAT', 'incident', None, None, start_date, end_date, end_database)
-	source = 'HEAT'
-	tablename = 'incident'
+	#update_tables('HEATSM', 'incident', None, None, start_date, end_date, end_database)
+	source = 'HEATSM'
+	tablename = 'Incident'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)
 	tablename = 'servicereq'
 	#ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=print_internal, print_details=print_details)

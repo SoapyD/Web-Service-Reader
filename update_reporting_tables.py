@@ -5,15 +5,18 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 this_dir = base_path+"Web-Service-Reader\\"
 
 
-def update_tables(source, tablename, fields, filter_fields, start_date, end_date, db, database, staging_tablename, delete_staging, print_details=False):
+def update_tables(source, tablename, start_date, end_date, db, database, staging_tablename, delete_staging, print_details=False):
 
     global error_count
     errors = error_count
 
-    return_info = query_source_data(source, tablename, fields, filter_fields, start_date, end_date, print_details=print_details)
+    return_info = query_source_data(source, tablename, start_date, end_date, print_details=print_details)
 
     source_type = return_info[0]
     output_df = return_info[1]
+    fields = return_info[2]
+    filter_fields = return_info[3]
+    filter_mirror_fields = return_info[4]
 
     #MERGE DATA WITH MAIN DATABASE TABLE
     if errors == error_count:

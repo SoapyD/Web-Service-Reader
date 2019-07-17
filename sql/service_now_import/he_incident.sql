@@ -47,7 +47,8 @@ DECLARE @Temp_Table TABLE(
 	changerequest_id CHAR(32),
 	problem_id CHAR(32),
 	reassignmentcount INT,
-	reopencount INT
+	reopencount INT,
+	causecode NVARCHAR(150)
 );
 INSERT INTO @Temp_Table
 SELECT 
@@ -97,7 +98,8 @@ SELECT
 	CASE WHEN rfc_value = '' THEN NULL ELSE rfc_value END as changerequest_id,
 	CASE WHEN problem_id_value = '' THEN NULL ELSE problem_id_value END as problem_id,
 	reassignment_count,
-	reopen_count AS reopencount
+	reopen_count AS reopencount,
+	close_code as causecode
 
 FROM 
 	[dbo].[stg] stg;
@@ -163,7 +165,8 @@ target.parentincident_id = source.parentincident_id,
 target.changerequest_id = source.changerequest_id,
 target.problem_id = source.problem_id,
 target.reassignmentcount = source.reassignmentcount,
-target.reopencount = source.reopencount
+target.reopencount = source.reopencount,
+target.causecode = SOURCE.causecode
 
 WHEN NOT MATCHED BY TARGET
 THEN INSERT 
@@ -211,7 +214,8 @@ parentincident_id,
 changerequest_id,
 problem_id,
 reassignmentcount,
-reopencount
+reopencount,
+causecode
 )
 VALUES (
 source.sys_id,
@@ -257,6 +261,7 @@ source.parentincident_id,
 source.changerequest_id,
 source.problem_id,
 source.reassignmentcount,
-source.reopencount
+source.reopencount,
+SOURCE.causecode
 );
 /**/

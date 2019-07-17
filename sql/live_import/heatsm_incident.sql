@@ -1,6 +1,6 @@
 --set language british;
 /*CREATE A TEMP TABLE THEN INSERT IT INTO THE PERMENTANT TABLE*/
-/*CREATE TABLE heat_incident (*/
+/*CREATE TABLE heatsm_incident (*/
 DECLARE @Temp_Table TABLE(
 rec_id CHAR(32) PRIMARY KEY,
 number NVARCHAR(100),
@@ -36,24 +36,8 @@ lastmodby NVARCHAR(100),
 lastmoddatetime DATETIME,
 typeofincident NVARCHAR(20),
 responseesclink CHAR(32),
-response_breachpassed NVARCHAR(10),
-response_targetclockduration FLOAT,
-response_totalrunningduration FLOAT,
 resolutionesclink CHAR(32),
-breachstatus int,
-l1datetime DATETIME,
-l1passed NVARCHAR(10),
-l2datetime DATETIME,
-l2passed NVARCHAR(10),
-l3datetime DATETIME,
-l3passed NVARCHAR(10),
-breachdatetime DATETIME,
-breachpassed NVARCHAR(10),
-targetclockduration FLOAT,
-totalrunningduration FLOAT,
 profilelink_recid NVARCHAR(100),
-location NVARCHAR(100),
-customer NVARCHAR(100),
 resolution NTEXT NULL
 );
 INSERT INTO @Temp_Table
@@ -64,7 +48,7 @@ SELECT
     AA_OrgUnitName AS company,
     AA_BusinessUnit AS businessunit,
     isvip,
-    REPLACE(REPLACE(REPLACE(REPLACE(subject,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)),'\\','') AS subject,
+    LEFT(REPLACE(REPLACE(REPLACE(REPLACE(subject,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)),'\\',''),255) AS subject,
     priority,
     status,
     source,
@@ -92,25 +76,9 @@ SELECT
     CASE WHEN ISNULL([LastModDateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[LastModDateTime]) END as LastModDateTime,
     typeofincident,
     [ResponseEscLink_RecID],
-    response_breached,
-    CASE WHEN ISNULL(response_targetclockduration,'') = '' THEN NULL ELSE CONVERT(FLOAT, response_targetclockduration) END AS response_targetclockduration,
-    CASE WHEN ISNULL(response_totalrunningduration,'') = '' THEN NULL ELSE CONVERT(FLOAT, response_totalrunningduration) END AS response_totalrunningduration,
     ResolutionEscLink_RecID,
-    NULL as breachstatus,
-    CASE WHEN ISNULL([L1DateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[L1DateTime]) END as L1DateTime,
-    L1Passed,
-    CASE WHEN ISNULL([L2DateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[L2DateTime]) END as L2DateTime,
-    L2Passed,
-    CASE WHEN ISNULL([L3DateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[L3DateTime]) END as L3DateTime,
-    L3Passed,
-    CASE WHEN ISNULL([BreachDateTime],'') = '' THEN NULL ELSE CONVERT(DATETIME,[BreachDateTime]) END as BreachTime,
-    BreachPassed,
-    CASE WHEN ISNULL(targetclockduration,'') = '' THEN NULL ELSE CONVERT(FLOAT, targetclockduration) END AS targetclockduration,
-    CASE WHEN ISNULL(totalrunningduration,'') = '' THEN NULL ELSE CONVERT(FLOAT, totalrunningduration) END AS totalrunningduration,
     ProfileLink_RecID,
-    location,
-    customer,
-    REPLACE(REPLACE(REPLACE(REPLACE(resolution,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)),'\\','') AS resolution
+    LEFT(REPLACE(REPLACE(REPLACE(REPLACE(resolution,'\n',CHAR(10)),'\r',CHAR(13)),'\t',CHAR(9)),'\\',''),255) AS resolution
 
 FROM 
 [dbo].[stg] stg;
@@ -123,7 +91,7 @@ THROW 50000, 'TEMP TABLE EMPTY', 1;
 END
 
 /*MERGE THE TEMP TABLE WITH THE CLOSED INCIDENTS TABLE*/
-MERGE [dbo].[heat_incident] target
+MERGE [dbo].[heatsm_incident] target
 Using @Temp_Table source
 ON (
 target.rec_id = source.rec_id
@@ -165,24 +133,8 @@ target.LastModBy = source.LastModBy,
 target.LastModDateTime = source.LastModDateTime,
 target.typeofincident = source.typeofincident,
 target.ResponseEscLink = source.ResponseEscLink,
-target.response_BreachPassed = source.response_BreachPassed,
-target.response_targetclockduration = source.response_targetclockduration,
-target.response_totalrunningduration = source.response_totalrunningduration,
 target.ResolutionEscLink = source.ResolutionEscLink,
-target.breachstatus = source.breachstatus,
-target.L1DateTime = source.L1DateTime,
-target.L1Passed = source.L1Passed,
-target.L2DateTime = source.L2DateTime,
-target.L2Passed = source.L2Passed,
-target.L3DateTime = source.L3DateTime,
-target.L3Passed = source.L3Passed,
-target.BreachDateTime = source.BreachDateTime,
-target.BreachPassed = source.BreachPassed,
-target.targetclockduration = source.targetclockduration,
-target.totalrunningduration = source.totalrunningduration,
 target.ProfileLink_RecID = source.ProfileLink_RecID,
-target.location = source.location,
-target.customer = source.customer,
 TARGET.resolution = SOURCE.resolution
 WHEN NOT MATCHED BY TARGET
 THEN INSERT 
@@ -221,24 +173,8 @@ LastModBy,
 LastModDateTime,
 typeofincident,
 ResponseEscLink,
-response_BreachPassed,
-response_targetclockduration,
-response_totalrunningduration,
 ResolutionEscLink,
-breachstatus,
-L1DateTime,
-L1Passed,
-L2DateTime,
-L2Passed,
-L3DateTime,
-L3Passed,
-BreachDateTime,
-BreachPassed,
-targetclockduration,
-totalrunningduration,
 ProfileLink_RecID,
-location,
-customer,
 resolution
 )
 VALUES (
@@ -276,23 +212,7 @@ source.LastModBy,
 source.LastModDateTime,
 source.typeofincident,
 source.ResponseEscLink,
-source.response_BreachPassed,
-source.response_targetclockduration,
-source.response_totalrunningduration,
 source.ResolutionEscLink,
-source.breachstatus,
-source.L1DateTime,
-source.L1Passed,
-source.L2DateTime,
-source.L2Passed,
-source.L3DateTime,
-source.L3Passed,
-source.BreachDateTime,
-source.BreachPassed,
-source.targetclockduration,
-source.totalrunningduration,
 source.ProfileLink_RecID,
-source.location,
-source.customer,
 SOURCE.resolution
 );

@@ -6,10 +6,14 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 this_dir = base_path+"Web-Service-Reader\\"
 
 
-def query_source_data(source, tablename, fields, filter_fields, start_date, end_date, run_extract=True, reference_list=None, print_details=False):
+def query_source_data(source, tablename, start_date, end_date, run_extract=True, reference_list=None, print_details=False):
 
     import numpy as np
     global error_count
+
+    fields = []
+    filter_fields = []
+    filter_mirror_fields = []
 
     output_df = pd.DataFrame()
 
@@ -53,6 +57,12 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
             password = dev_password
 
         if source_type == 'service_now':
+
+            return_info = return_servicenow_field_list(tablename)
+            fields = return_info[0]
+            filter_fields = return_info[1]
+            filter_mirror_fields = return_info[2]
+
             output_df = get_servicenow_webservice_data(source, instancename, username, password, tablename, fields, filter_fields, start_date, end_date, 
                 run_extract=run_extract, reference_list=reference_list, print_details=print_details)
 
@@ -64,7 +74,7 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
         ##############################################################################################
         ##############################################################################################
         ##############################################################################################
-        if source == 'HEAT':
+        if source == 'HEATSM':
             source_type = 'live'
 
         if source == 'LFLIVEEXTRACT':
@@ -74,10 +84,18 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
             source_type = 'live'
 
         if source_type == 'live':
-            sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
-            sql_filename = source + '_' + tablename
-            output_df = sql_query_parser_2(sql_filepath, sql_filename, tablename, start_date, end_date, 
-                print_details=print_details)
+            #sql_filepath = this_dir+'\\sql\\'+source_type+'_extract\\'
+            #sql_filename = source + '_' + tablename
+            #output_df = sql_query_parser_2(sql_filepath, sql_filename, tablename, start_date, end_date, 
+            #    print_details=print_details)
+
+            return_info = return_heat_field_list(tablename)
+            fields = return_info[0]
+            filter_fields = return_info[1]
+            filter_mirror_fields = return_info[2]            
+
+            output_df = sql_query_parser_3(source, tablename, fields, filter_fields, start_date, end_date, 
+                run_extract=run_extract, print_details=print_details)            
 
         ##############################################################################################
         ##############################################################################################
@@ -98,6 +116,9 @@ def query_source_data(source, tablename, fields, filter_fields, start_date, end_
     return_info = {}
     return_info[0] = source_type
     return_info[1] = output_df
+    return_info[2] = fields
+    return_info[3] = filter_fields
+    return_info[4] = filter_mirror_fields
 
     return return_info  
 

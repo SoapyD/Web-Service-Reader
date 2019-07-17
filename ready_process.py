@@ -2,11 +2,6 @@
 def ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging,
 	print_internal=False, print_details=False):
 
-	return_info = return_servicenow_field_list(tablename)
-	fields = return_info[0]
-	filter_fields = return_info[1]
-	filter_mirror_fields = return_info[2]
-
 	if time_type == 'days':
 		time_add = datetime.timedelta(days=time_unit)
 	if time_type == 'weeks':
@@ -39,7 +34,7 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 		if print_internal == True:
 			u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
 		
-		update_tables(source, tablename, fields, filter_fields, temp_start, temp_end, db, database, staging_tablename, delete_staging, print_details=print_details)
+		update_tables(source, tablename, temp_start, temp_end, db, database, staging_tablename, delete_staging, print_details=print_details)
 
 		#ITTERATE THE DATE RANGE
 		temp_start = temp_end
