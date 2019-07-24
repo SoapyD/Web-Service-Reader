@@ -15,6 +15,15 @@ def process_stack_subprocess(source, tablename, start_date, end_date, time_type,
 		u_print("ERROR: Data import could not be run")
 
 
+####### #######  #####  #######             ######  ######  #######  #####  #######  #####   #####  
+   #    #       #     #    #                #     # #     # #     # #     # #       #     # #     # 
+   #    #       #          #                #     # #     # #     # #       #       #       #       
+   #    #####    #####     #       #####    ######  ######  #     # #       #####    #####   #####  
+   #    #             #    #                #       #   #   #     # #       #             #       # 
+   #    #       #     #    #                #       #    #  #     # #     # #       #     # #     # 
+   #    #######  #####     #                #       #     # #######  #####  #######  #####   #####  
+
+
 def run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=False, print_details=False):
 
 	if print_internal == True:
@@ -24,6 +33,172 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	user_picked_fields = None
 	#user_picked_fields = ['sys_id','number','causecode','lastmoddatetime']
 
+#     # ####### 
+#     # #       
+#     # #       
+####### #####   
+#     # #       
+#     # #       
+#     # ####### 
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################HE
+##############################################################################################################################################################
+##############################################################################################################################################################
+	
+	source = 'HE'
+	tablename = 'sys_user'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident_alert'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_req_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'task_sla'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_cat_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+
+
+
+#######  #####     #    
+#       #     #   # #   
+#       #        #   #  
+#####    #####  #     # 
+#             # ####### 
+#       #     # #     # 
+#        #####  #     # 
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################FSA
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+	source = 'FSA'
+	tablename = 'sys_user'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_req_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'task_sla'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_cat_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+
+
+
+#     # #     #  #####  #        #####  
+##   ## #     # #     # #       #     # 
+# # # # #     # #       #       #       
+#  #  # ####### #       #       #  #### 
+#     # #     # #       #       #     # 
+#     # #     # #     # #       #     # 
+#     # #     #  #####  #######  #####  
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################MHCLG
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+	source = 'MHCLG'
+	tablename = 'sys_user'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_req_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'task_sla'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_cat_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+
+
+ #####  ######  ####### #     # ######  ####### #     # 
+#     # #     # #     #  #   #  #     # #     # ##    # 
+#       #     # #     #   # #   #     # #     # # #   # 
+#       ######  #     #    #    #     # #     # #  #  # 
+#       #   #   #     #    #    #     # #     # #   # # 
+#     # #    #  #     #    #    #     # #     # #    ## 
+ #####  #     # #######    #    ######  ####### #     # 
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################CROYDON
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+	source = 'CROYDON'
+	tablename = 'sys_user'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'incident_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_req_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_request'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'change_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'problem_task'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'task_sla'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
+	tablename = 'sc_cat_item'
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 
 
 #     # #######    #    ####### 
@@ -46,17 +221,17 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	tablename = 'servicereq'
 	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'problem'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'change'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'pir'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'organizationalunit'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'employee'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'task'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 
 
 
@@ -76,23 +251,23 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	source = 'LFLIVEEXTRACT'
 	tablename = 'session'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'sessionincident'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'he_sessionincident'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'fsa_sessionincident'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'mhclg_sessionincident'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'croydon_sessionincident'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'sessionpostback'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'completedsurvey'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	tablename = 'completedsurveyresponse'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 
 
 
@@ -112,9 +287,20 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	source = 'TELEPHONYEXTRACT'
 	tablename = 'call'
-	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details))
+	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 
 
+
+
+
+
+#     # ####### #     #             ######  ######  #######  #####  #######  #####   #####  
+##    # #       #  #  #             #     # #     # #     # #     # #       #     # #     # 
+# #   # #       #  #  #             #     # #     # #     # #       #       #       #       
+#  #  # #####   #  #  #    #####    ######  ######  #     # #       #####    #####   #####  
+#   # # #       #  #  #             #       #   #   #     # #       #             #       # 
+#    ## #       #  #  #             #       #    #  #     # #     # #       #     # #     # 
+#     # #######  ## ##              #       #     # #######  #####  #######  #####   #####  
 
 
 def run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=False, print_details=False):
