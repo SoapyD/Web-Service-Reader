@@ -34,127 +34,172 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	#user_picked_fields = ['sys_id','number','causecode','lastmoddatetime']
 
 
-#     # #######    #    ####### 
-#     # #         # #      #    
-#     # #        #   #     #    
-####### #####   #     #    #    
-#     # #       #######    #    
-#     # #       #     #    #    
-#     # ####### #     #    #    
+#     # ####### 
+#     # #       
+#     # #       
+####### #####   
+#     # #       
+#     # #       
+#     # ####### 
 
 ##############################################################################################################################################################
 ##############################################################################################################################################################
-###############################################################################HEAT
+###############################################################################HE
 ##############################################################################################################################################################
 ##############################################################################################################################################################
-
-	source = 'HEATSM'
-	tablename = 'incident'
-	#generate_merge_query(source, tablename, user_picked_fields)
+	
+	source = 'HE'
+	tablename = 'sys_user'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'servicereq'
+	tablename = 'incident'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'incident_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'incident_alert'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_request'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_req_item'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'change_request'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'change_task'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 	tablename = 'problem'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'change'
+	tablename = 'problem_task'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'pir'
+	tablename = 'task_sla'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'organizationalunit'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	#tablename = 'frs_data_escalation_watch'
-	tablename = 'employee'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'task'
+	tablename = 'sc_cat_item'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
 
-#       ####### #       ### #     # ####### 
-#       #       #        #  #     # #       
-#       #       #        #  #     # #       
-#       #####   #        #  #     # #####   
-#       #       #        #   #   #  #       
-#       #       #        #    # #   #       
-####### #       ####### ###    #    ####### 
+#######  #####     #    
+#       #     #   # #   
+#       #        #   #  
+#####    #####  #     # 
+#             # ####### 
+#       #     # #     # 
+#        #####  #     # 
 
 ##############################################################################################################################################################
 ##############################################################################################################################################################
-###############################################################################LFLIVEEXTRACT
+###############################################################################FSA
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
-	source = 'LFLIVEEXTRACT'
-	tablename = 'session'
+	source = 'FSA'
+	tablename = 'sys_user'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'sessionincident'
+	tablename = 'incident'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'he_sessionincident'
+	tablename = 'incident_task'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'fsa_sessionincident'
+	tablename = 'sc_request'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'mhclg_sessionincident'
+	tablename = 'sc_req_item'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'croydon_sessionincident'
+	tablename = 'sc_task'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'sessionpostback'
+	tablename = 'change_request'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'completedsurvey'
+	tablename = 'change_task'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'completedsurveyresponse'
+	tablename = 'problem'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'problem_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'task_sla'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_cat_item'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
 
-	source = 'LFLIVEEXTRACTNEW'
-	tablename = 'session'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'sessionincident'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'he_sessionincident'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'fsa_sessionincident'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'mhclg_sessionincident'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'croydon_sessionincident'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'sessionpostback'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'completedsurvey'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-	tablename = 'completedsurveyresponse'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
-
-
-
-####### ####### #       ####### ######  #     # ####### #     # #     # 
-   #    #       #       #       #     # #     # #     # ##    #  #   #  
-   #    #       #       #       #     # #     # #     # # #   #   # #   
-   #    #####   #       #####   ######  ####### #     # #  #  #    #    
-   #    #       #       #       #       #     # #     # #   # #    #    
-   #    #       #       #       #       #     # #     # #    ##    #    
-   #    ####### ####### ####### #       #     # ####### #     #    #  
+#     # #     #  #####  #        #####  
+##   ## #     # #     # #       #     # 
+# # # # #     # #       #       #       
+#  #  # ####### #       #       #  #### 
+#     # #     # #       #       #     # 
+#     # #     # #     # #       #     # 
+#     # #     #  #####  #######  #####  
 
 ##############################################################################################################################################################
 ##############################################################################################################################################################
-###############################################################################TELEPHONY
+###############################################################################MHCLG
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
-	source = 'TELEPHONYEXTRACT'
-	tablename = 'call'
+	source = 'MHCLG'
+	tablename = 'sys_user'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'incident'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'incident_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_request'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_req_item'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'change_request'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'change_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'problem'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'problem_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'task_sla'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_cat_item'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
-	#DELETE ANY TELEPHONY DATA FOR THE GIVEN RANGE,
-	#THIS NEEDS TO BE DONE AS CALLS ARE PASSED BETWEEN AGENTS IN ODD WAYS WHICH GET REFLECTED IN THE TELEPHONY DATA
-	#THIS WOULD PRODUCE DUPLICATES IN MY DATA WHICH ARE EFFECTIVELY REMOVED FROM THE MAIN DATASOURCE
-	sqlfile = "DELETE FROM TELEPHONYEXTRACT_call WHERE datetime BETWEEN CONVERT(DATE,'@start_date') AND CONVERT(DATE,'@end_date')"
-	sqlfile = sqlfile.replace("@start_date", str(start_date))
-	sqlfile = sqlfile.replace("@end_date", str(end_date))		
-	#print(sqlfile)
-	query_database2('deleting telephony data',sqlfile, db, database)
 
-	#THEN RUN THE UPDATE PROCESS
+
+ #####  ######  ####### #     # ######  ####### #     # 
+#     # #     # #     #  #   #  #     # #     # ##    # 
+#       #     # #     #   # #   #     # #     # # #   # 
+#       ######  #     #    #    #     # #     # #  #  # 
+#       #   #   #     #    #    #     # #     # #   # # 
+#     # #    #  #     #    #    #     # #     # #    ## 
+ #####  #     # #######    #    ######  ####### #     # 
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################CROYDON
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+	source = 'CROYDON'
+	tablename = 'sys_user'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'incident'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'incident_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_request'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_req_item'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'change_request'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'change_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'problem'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'problem_task'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'task_sla'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'sc_cat_item'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
