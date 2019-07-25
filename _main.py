@@ -50,7 +50,7 @@ time_unit = 1
 staging_tablename = staging_tablename + '_TEST'
 delete_staging = False
 print_internal = True
-print_details = True
+print_details = False
 
 start_date = datetime.datetime(2018, 1, 1)
 end_date = datetime.datetime(2019, 8, 1)
