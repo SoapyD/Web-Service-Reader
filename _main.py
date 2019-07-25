@@ -42,7 +42,7 @@ end_date = now
 time_type = 'days'
 time_unit = 1
 
-#run_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
+run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
 
 ############################################################################### PROCESS
@@ -52,8 +52,8 @@ delete_staging = False
 print_internal = True
 print_details = True
 
-start_date = datetime.datetime(2018, 1, 1)
-end_date = datetime.datetime(2019, 8, 1)
+#start_date = datetime.datetime(2018, 1, 1)
+#end_date = datetime.datetime(2019, 8, 1)
 #start_date = datetime.datetime(2018, 3, 12)
 #end_date = datetime.datetime(2019, 3, 26)
 #now = d.now()
@@ -64,7 +64,7 @@ end_date = datetime.datetime(2019, 8, 1)
 time_type = 'weeks'
 time_unit = 2
 
-run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
+#run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 #run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
 
