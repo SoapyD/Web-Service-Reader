@@ -11,18 +11,15 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 	temp_start = start_date
 	temp_end = start_date + time_add
 
-	if print_internal == True:
-		u_print('-------------------------------------------')
+	#if print_internal == True:
+	#	u_print('-------------------------------------------')
 	
 	u_print("UPDATING: "+source+"_"+tablename) #need to at least print whats being updated
-	
-	if print_internal == True:
-		u_print('')
 
 	run_loop = True
 
 	while run_loop == True:
-
+		start_time = datetime.datetime.now() #need for process time u_printing
 
 		#STOP THE LOOP IF THE TEMP END IF OVER THE ACTUAL END DATE
 		if temp_end >= end_date:
@@ -36,12 +33,19 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 		
 		TEST_update_tables(source, tablename, temp_start, temp_end, db, database, staging_tablename, delete_staging, user_picked_fields=user_picked_fields, print_details=print_details)
 
+		if print_internal == True:
+			finish_time = datetime.datetime.now()
+			u_print('Time Taken: '+str(finish_time - start_time))	
+
 		#ITTERATE THE DATE RANGE
 		temp_start = temp_end
 		temp_end = temp_end + time_add
 
 	if print_internal == True:
-		u_print('-------------------------------------------')
+		u_print('')
+
+	#if print_internal == True:
+	#	u_print('-------------------------------------------')
 
 ###################################################################################################################
 ###################################################################################################################
@@ -196,6 +200,7 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 	import numpy as np
 	global error_count
 
+	return_info = {}
 	fields = []
 	filter_fields = []
 	filter_mirror_fields = []
@@ -261,22 +266,22 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 			    run_extract=run_extract, print_details=print_details)      
 
 
-    #IF A ENTIRE DATASETS FIELDS ARE BLANK FOR A CERTAIN FIELD, THAT FIELD ISN'T RETURNED.
-    #IF THIS IS THE CASE THEN THAT FIELD AND IT'S RELATED VALUE FIELD NEED ADDING TO THE DATASET
-	if source_type == 'service_now' and run_extract == True:
-		for field in fields:
-			if field not in output_df.columns:
-				output_df[field] = np.nan #add the missing field
-				output_df[field+'_value'] = np.nan #add a corresponding value field  
+	    #IF A ENTIRE DATASETS FIELDS ARE BLANK FOR A CERTAIN FIELD, THAT FIELD ISN'T RETURNED.
+	    #IF THIS IS THE CASE THEN THAT FIELD AND IT'S RELATED VALUE FIELD NEED ADDING TO THE DATASET
+		if source_type == 'service_now' and run_extract == True:
+			for field in fields:
+				if field not in output_df.columns:
+					output_df[field] = np.nan #add the missing field
+					output_df[field+'_value'] = np.nan #add a corresponding value field  
 
-	return_info = {}
-	return_info[0] = source_type
-	return_info[1] = output_df
-	return_info[2] = fields
-	return_info[3] = filter_fields
-	return_info[4] = filter_mirror_fields
-	return_info[5] = merge_sql
+		return_info[0] = source_type
+		return_info[1] = output_df
+		return_info[2] = fields
+		return_info[3] = filter_fields
+		return_info[4] = filter_mirror_fields
+		return_info[5] = merge_sql
+    #except:
+    #	print("ERROR: Data Query Didn't Work")
+    #	error_count += 1
 
 	return return_info
-    #except:
-   # 	print("didn't work")

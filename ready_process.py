@@ -22,7 +22,10 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 	run_loop = True
 
 	while run_loop == True:
+		start_time = datetime.datetime.now() #need for process time u_printing
 
+		#if print_internal == True:
+		#	u_print('Start: '+str(start_time))
 
 		#STOP THE LOOP IF THE TEMP END IF OVER THE ACTUAL END DATE
 		if temp_end >= end_date:
@@ -40,5 +43,10 @@ def ready_process(source, tablename, start_date, end_date, time_type, time_unit,
 		temp_start = temp_end
 		temp_end = temp_end + time_add
 
-	if print_internal == True:
+		if print_internal == True:
+			finish_time = datetime.datetime.now()
+			#u_print('End: '+str(finish_time))
+			u_print('Time Taken: '+str(finish_time - start_time))	
+
+	if print_internal == True:	
 		u_print('-------------------------------------------')

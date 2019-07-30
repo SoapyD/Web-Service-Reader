@@ -32,7 +32,7 @@ database = ''
 
 staging_tablename='stg_web_service'
 delete_staging = True
-print_internal = False
+print_internal = True
 print_details = False
 
 now = d.now()
@@ -57,8 +57,8 @@ end_date = datetime.datetime(2019, 8, 1)
 #start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
 #end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)
 #now = d.now()
-#start_date = now - datetime.timedelta(hours=2.0)
-#end_date = now + datetime.timedelta(hours=2.0)
+start_date = now - datetime.timedelta(hours=2.0)
+end_date = now + datetime.timedelta(hours=2.0)
 
 
 time_type = 'weeks'
