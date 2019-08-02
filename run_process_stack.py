@@ -7,19 +7,20 @@ def process_stack_subprocess(source, tablename, start_date, end_date, time_type,
 	#	generate_creation_query(source, tablename, user_picked_fields, db, database, print_details=print_details)
 	global error_count
 	
-	#run = True
-	#if run == True:
-	try:
+	
+	total_rows = 0
+	run = True
+	if run == True:
+	#try:
 		TEST_ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal=print_internal, print_details=print_details)
-	except Exception as e:
-		#_print("ERROR: Data import could not be run")
-		try:
-			u_print(e) #seems to error out completely sometimes
-			u_print('')	
-		except:
-			u_print("Couldn't print error reason")
-			u_print('')	
-		error_count += 1
+	#except Exception as e:
+	#	try:
+	#		u_print(e) #seems to error out completely sometimes
+	#		u_print('')	
+	#	except:
+	#		u_print("Couldn't print error reason")
+	#		u_print('')	
+	#	error_count += 1
 
 
 ####### #######  #####  #######             ######  ######  #######  #####  #######  #####   #####  
@@ -40,7 +41,7 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	user_picked_fields = None
 	#user_picked_fields = ['sys_id','fcr']
 
-	source = 'HEATSM'
+	source = 'HE'
 	tablename = 'incident'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 

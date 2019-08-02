@@ -2,6 +2,8 @@
 def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields=None,
 	print_internal=False, print_details=False):
 
+	global output_array
+
 	if time_type == 'days':
 		time_add = datetime.timedelta(days=time_unit)
 	if time_type == 'weeks':
@@ -17,6 +19,8 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 	u_print("UPDATING: "+source+"_"+tablename) #need to at least print whats being updated
 
 	run_loop = True
+	total_rows = 0
+	total_time = datetime.datetime.now() - datetime.datetime.now()
 
 	while run_loop == True:
 		start_time = datetime.datetime.now() #need for process time u_printing
@@ -31,11 +35,14 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 		if print_internal == True:
 			u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
 		
-		TEST_update_tables(source, tablename, temp_start, temp_end, db, database, staging_tablename, delete_staging, user_picked_fields=user_picked_fields, print_details=print_details)
+		query_rows = TEST_update_tables(source, tablename, temp_start, temp_end, db, database, staging_tablename, delete_staging, user_picked_fields=user_picked_fields, print_details=print_details)
+		total_rows += query_rows
 
 		if print_internal == True:
 			finish_time = datetime.datetime.now()
-			u_print('Time Taken: '+str(finish_time - start_time))	
+			time_taken = finish_time - start_time
+			total_time += time_taken
+			u_print(str(query_rows) + ' Rows | Time Taken: '+str(time_taken))	
 
 		#ITTERATE THE DATE RANGE
 		temp_start = temp_end
@@ -44,8 +51,10 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 	if print_internal == True:
 		u_print('')
 
-	#if print_internal == True:
-	#	u_print('-------------------------------------------')
+
+
+	output_array += source + "_" + tablename + ": " +str(total_rows) + " rows | total time: " + str(total_time) + "\n"
+
 
 ###################################################################################################################
 ###################################################################################################################
@@ -72,6 +81,10 @@ def TEST_update_tables(source, tablename, start_date, end_date, db, database, st
         TEST_merge_data(output_df, source_type, source, tablename, fields, db, database, staging_tablename, delete_staging, merge_sql, print_details=print_details)
 
     #u_print('') #ADD GAP TO PROCESS
+
+    row_count = output_df.shape[0]
+
+    return row_count
 
 ###################################################################################################################
 ###################################################################################################################

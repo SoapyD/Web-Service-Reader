@@ -16,6 +16,9 @@ exec(open("generate_queries.py").read())
 #exec(open("sql_database_reader.py").read())
 #exec(open("return_field_list.py").read())
 
+global output_array
+output_array = ''
+
 global error_count
 
 u_print('########################################')
@@ -49,24 +52,25 @@ run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, st
 staging_tablename = staging_tablename + '_TEST'
 delete_staging = False
 print_internal = True
-print_details = True
+print_details = False
 
 
-start_date = datetime.datetime(2018, 1, 1)
+start_date = datetime.datetime(2019, 7, 29)
 end_date = datetime.datetime(2019, 8, 1)
 #start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
 #end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)
 #now = d.now()
-start_date = now - datetime.timedelta(hours=2.0)
-end_date = now + datetime.timedelta(hours=2.0)
+#start_date = now - datetime.timedelta(hours=2.0)
+#end_date = now + datetime.timedelta(hours=2.0)
 
 
-time_type = 'weeks'
-time_unit = 2
+time_type = 'days'
+time_unit = 1
 
 #run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
+#run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
-
+u_print(output_array)
 
 
 finish_time = datetime.datetime.now()
