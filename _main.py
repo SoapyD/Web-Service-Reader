@@ -52,10 +52,10 @@ run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, st
 staging_tablename = staging_tablename + '_TEST'
 delete_staging = False
 print_internal = True
-print_details = False
+print_details = True
 
 
-start_date = datetime.datetime(2019, 7, 22)
+start_date = datetime.datetime(2018, 1, 1)
 end_date = datetime.datetime(2019, 8, 6)
 #start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
 #end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)

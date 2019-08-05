@@ -39,12 +39,23 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	#generate_merge_query(source, tablename, user_picked_fields)	DO NOT DELETE!!!!!!!!
 	user_picked_fields = None
-	user_picked_fields = ['sys_id','number','source']
+	user_picked_fields = ['sys_id','customer_id']
 
-	source = 'CROYDON'
-	tablename = 'sc_req_item'
+	source = 'HE'
+	tablename = 'problem'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
+	source = 'FSA'
+	tablename = 'problem'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+
+	source = 'MHCLG'
+	tablename = 'problem'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+
+	source = 'CROYDON'
+	tablename = 'problem'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
 
