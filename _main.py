@@ -52,26 +52,26 @@ run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, st
 staging_tablename = staging_tablename + '_TEST'
 delete_staging = False
 print_internal = True
-print_details = False
+print_details = True
 
 
 start_date = datetime.datetime(2018, 7, 2) #this is to bakcfill some missing heat incident data
 end_date = datetime.datetime(2019, 8, 7)
 
-start_date = datetime.datetime(2019, 8, 10)
-end_date = datetime.datetime(2019, 8, 13)
+start_date = datetime.datetime(2019, 8, 14)
+end_date = datetime.datetime(2019, 8, 15)
 #start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
 #end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)
 #now = d.now()
-#start_date = now - datetime.timedelta(hours=2.0)
-#end_date = now + datetime.timedelta(hours=2.0)
+start_date = now - datetime.timedelta(hours=2.0)
+end_date = now + datetime.timedelta(hours=2.0)
 
 
 time_type = 'weeks'
 time_unit = 1
 
 #run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
-#un_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
+#run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
 u_print(output_array)
 
