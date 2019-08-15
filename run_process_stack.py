@@ -9,18 +9,18 @@ def process_stack_subprocess(source, tablename, start_date, end_date, time_type,
 	
 	
 	total_rows = 0
-	run = True
-	if run == True:
-	#try:
+	#run = True
+	#if run == True:
+	try:
 		TEST_ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal=print_internal, print_details=print_details)
-	#except Exception as e:
-	#	try:
-	#		u_print(e) #seems to error out completely sometimes
-	#		u_print('')	
-	#	except:
-	#		u_print("Couldn't print error reason")
-	#		u_print('')	
-	#	error_count += 1
+	except Exception as e:
+		try:
+			u_print(e) #seems to error out completely sometimes
+			u_print('')	
+		except:
+			u_print("Couldn't print error reason")
+			u_print('')	
+		error_count += 1
 
 
 ####### #######  #####  #######             ######  ######  #######  #####  #######  #####   #####  
