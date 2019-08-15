@@ -59,7 +59,7 @@ start_date = datetime.datetime(2018, 7, 2) #this is to bakcfill some missing hea
 end_date = datetime.datetime(2019, 8, 7)
 
 start_date = datetime.datetime(2019, 8, 14)
-end_date = datetime.datetime(2019, 8, 15)
+end_date = datetime.datetime(2019, 8, 16)
 #start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
 #end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)
 #now = d.now()
