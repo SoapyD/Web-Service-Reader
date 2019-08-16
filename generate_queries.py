@@ -20,20 +20,11 @@ def generate_creation_query(source, tablename, user_picked_fields=None, db=None,
 	create_sql = generate_create_sql(source, tablename, table_info, selected_fields)
 	#print(create_sql)
 
-
-	#with open('exports\\'+'create_table.sql', 'w') as file:
-	#  file.write(create_sql)
-	#file.close()
-
 	drop_script = "DROP TABLE "+source+"_"+tablename
 
-	#with open('exports\\'+'drop_table.sql', 'w') as file:
-	#  file.write(drop_script)
-	#file.close()
-
 	if db:
-		query_database2('drop table - '+source+"_"+tablename, drop_script, db, database=database, print_details=print_details, ignore_errors=True)
-		query_database2('create table - '+source+"_"+tablename, create_sql, db, database=database, print_details=print_details)
+		query_db_powershell(drop_script, db, database=database, print_details=print_details)
+		query_db_powershell(create_sql, db, database=database, print_details=print_details)
 
 
 ###################################################################################################################
@@ -60,7 +51,7 @@ def generate_drop_query(source, tablename, user_picked_fields=None, db=None, dat
 	#file.close()
 
 	if db:
-		query_database2('drop table - '+source+"_"+tablename, drop_script, db, database=database, print_details=print_details, ignore_errors=True)
+		query_db_powershell(drop_script, db, database=database, print_details=print_details)
 
 
 ###################################################################################################################
