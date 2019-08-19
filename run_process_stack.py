@@ -40,26 +40,10 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	#generate_merge_query(source, tablename, user_picked_fields)	DO NOT DELETE!!!!!!!!
 	user_picked_fields = None
 
-	#user_picked_fields = ['recid','problemlink','masterincidentlink']
-	#source = 'HEATSM'
-	#tablename = 'incident'
-	#process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-
-
-	source = 'TELEPHONYEXTRACT'
-	tablename = 'call'
-	#DELETE ANY TELEPHONY DATA FOR THE GIVEN RANGE,
-	#THIS NEEDS TO BE DONE AS CALLS ARE PASSED BETWEEN AGENTS IN ODD WAYS WHICH GET REFLECTED IN THE TELEPHONY DATA
-	#THIS WOULD PRODUCE DUPLICATES IN MY DATA WHICH ARE EFFECTIVELY REMOVED FROM THE MAIN DATASOURCE
-	sqlfile = "DELETE FROM TELEPHONYEXTRACT_call WHERE datetime BETWEEN CONVERT(DATETIME,'@start_date') AND CONVERT(DATETIME,'@end_date')"
-	sqlfile = sqlfile.replace("@start_date", str(start_date.replace(microsecond=0)))
-	sqlfile = sqlfile.replace("@end_date", str(end_date.replace(microsecond=0)))		
-	#print(sqlfile)
-	query_db_powershell(sqlfile, db, database)
-
-	#THEN RUN THE UPDATE PROCESS
+	user_picked_fields = ['recid','problemlink','masterincidentlink','symptom','technicalresolution']
+	source = 'HEATSM'
+	tablename = 'incident'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-
 
 
 

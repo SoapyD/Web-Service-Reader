@@ -55,11 +55,11 @@ print_internal = True
 print_details = True
 
 
-start_date = datetime.datetime(2018, 7, 2) #this is to bakcfill some missing heat incident data
-end_date = datetime.datetime(2019, 8, 7)
+start_date = datetime.datetime(2018, 7, 23) #this is to bakcfill some missing heat incident data
+end_date = datetime.datetime(2019, 8, 20)
 
-start_date = datetime.datetime(2019, 8, 14)
-end_date = datetime.datetime(2019, 8, 16)
+#start_date = datetime.datetime(2019, 8, 9)
+#end_date = datetime.datetime(2019, 8, 19)
 #start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
 #end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)
 #now = d.now()
