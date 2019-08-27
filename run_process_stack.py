@@ -354,7 +354,8 @@ def run_process_stack_2(start_date, end_date, time_type, time_unit, db, database
 	sqlfile = "DELETE FROM TELEPHONYEXTRACT_call WHERE datetime BETWEEN CONVERT(DATETIME,'@start_date') AND CONVERT(DATETIME,'@end_date')"
 	sqlfile = sqlfile.replace("@start_date", str(start_date.replace(microsecond=0)))
 	sqlfile = sqlfile.replace("@end_date", str(end_date.replace(microsecond=0)))		
-	#print(sqlfile)
+
+	#query_db_powershell(sqlfile, db, database)
 	query_db_powershell(sqlfile, db, database)
 
 	#THEN RUN THE UPDATE PROCESS
