@@ -52,13 +52,13 @@ run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, st
 staging_tablename = staging_tablename + '_TEST'
 delete_staging = False
 print_internal = True
-print_details = False
+print_details = True
 
 
-start_date = datetime.datetime(2018, 1, 1)
+start_date = datetime.datetime(2019, 1, 1)
 end_date = datetime.datetime(2019, 8, 25)
-#start_date = datetime.datetime(2018, 12, 12, 8, 50, 0)
-#end_date = datetime.datetime(2018, 12, 12, 9, 0, 0)
+start_date = datetime.datetime(2018, 1, 12, 1, 0, 0)
+end_date = datetime.datetime(2018, 1, 12, 1, 5, 0)
 #now = d.now()
 #start_date = now - datetime.timedelta(hours=2.0)
 #end_date = now + datetime.timedelta(hours=2.0)

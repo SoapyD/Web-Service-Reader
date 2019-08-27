@@ -97,8 +97,11 @@ def TEST_merge_data(output_df, source_type, source, tablename, fields, db, datab
     sql_filepath = this_dir+'\\sql\\'+source_type+'_import\\'
     sql_filename = source + '_' + tablename
 
-    merge_with_db_powershell(output_df, sql_filepath, sql_filename, tablename, fields, db, database, 
+    merge_with_database(output_df, sql_filepath, sql_filename, tablename, fields, db, database, 
     staging_tablename, delete_staging, print_details=print_details, merge_sql=merge_sql) #in FUNCTIONS_sql
+
+    #merge_with_db_powershell(output_df, sql_filepath, sql_filename, tablename, fields, db, database, 
+    #staging_tablename, delete_staging, print_details=print_details, merge_sql=merge_sql) #in FUNCTIONS_sql
 
 
 ###################################################################################################################
@@ -274,8 +277,11 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 
 			merge_sql = generate_merge_sql(source, tablename, table_info, selected_fields)
 
-			output_df = sql_query_parser_3(source, tablename, table_info, fields, filter_fields, start_date, end_date, 
-			    run_extract=run_extract, print_details=print_details)      
+			#output_df = sql_query_parser_3(source, tablename, table_info, fields, filter_fields, start_date, end_date, 
+			#    run_extract=run_extract, print_details=print_details)      
+
+			output_df = sql_query_parser_3_PYTHON(source, tablename, table_info, fields, filter_fields, start_date, end_date, 
+			    run_extract=run_extract, print_details=print_details)     
 
 
 	    #IF A ENTIRE DATASETS FIELDS ARE BLANK FOR A CERTAIN FIELD, THAT FIELD ISN'T RETURNED.
