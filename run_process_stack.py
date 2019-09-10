@@ -38,11 +38,15 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 		u_print(str(start_date) + " to " + str(end_date))
 
 	#generate_merge_query(source, tablename, user_picked_fields)	DO NOT DELETE!!!!!!!!
+	#generate_creation_query(source, tablename)
+
+
 	user_picked_fields = None
 
-	source = 'HE'
+	#source = 'HE'
+	#tablename = 'incident'
+	source = 'HE_KB'	
 	tablename = 'kb_knowledge'
-	generate_merge_query(source, tablename, user_picked_fields)
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
@@ -108,6 +112,10 @@ def run_process_stack_2(start_date, end_date, time_type, time_unit, db, database
 	tablename = 'sc_cat_item'
 	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
+	#HE KNOWLEDGE
+	source = 'HE_KB'	
+	tablename = 'kb_knowledge'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
 #######  #####     #    

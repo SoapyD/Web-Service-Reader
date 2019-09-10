@@ -18,7 +18,7 @@ def generate_creation_query(source, tablename, user_picked_fields=None, db=None,
 	selected_source_fields = return_info[1]
 	selected_mirror_fields = return_info[2]
 	create_sql = generate_create_sql(source, tablename, table_info, selected_fields)
-	#print(create_sql)
+	print(create_sql)
 
 	drop_script = "DROP TABLE "+source+"_"+tablename
 

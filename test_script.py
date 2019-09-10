@@ -162,6 +162,12 @@ def get_source_type(source):
 		instancename = he_instancename
 		username = he_username
 		password = he_password
+	if source == 'HE_KB':
+		source = "HE" #reset source
+		source_type = 'service_now'
+		instancename = he_instancename
+		username = he_kb_username
+		password = he_kb_password
 	#if source == 'HE_TEST':
 	#	source_type = 'service_now'
 	#	instancename = he_test_instancename
@@ -200,6 +206,7 @@ def get_source_type(source):
 	return_info[1] = instancename
 	return_info[2] = username
 	return_info[3] = password
+	return_info[4] = source #needed when source updates sometimes
 
 	return return_info
 
@@ -238,6 +245,7 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 		instancename = return_info[1]
 		username = return_info[2]
 		password = return_info[3]
+		source = return_info[4] #needed when source is updated, multi accounts need this
 
 		if source_type == 'service_now':
 
