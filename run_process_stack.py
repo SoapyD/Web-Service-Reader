@@ -43,12 +43,11 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 	user_picked_fields = None
 
-	#source = 'HE'
-	#tablename = 'incident'
-	source = 'HE_KB'	
-	tablename = 'kb_knowledge'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
+	source = 'LFLIVEEXTRACTNEW'
+	tablename = 'session'
+	generate_merge_query(source, tablename, user_picked_fields)
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
 
 
 

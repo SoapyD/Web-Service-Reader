@@ -132,6 +132,9 @@ def generate_merge_sql(source, tablename, table_info, selected_fields):
 	source_string = ''
 	join_string = ''
 	output_table = source+"_"+tablename
+	#OVERRIDE THE DESTINATION TABLE IF THERE'S AN OVERRIDE NAME PRESENT
+	if table_info.output_table_override != '':
+		output_table = table_info.output_table_override
 
 	#used the selected fields to create the various listed fields in the merge script
 	for field in selected_fields:
@@ -168,15 +171,12 @@ def generate_merge_sql(source, tablename, table_info, selected_fields):
 	error_string += "\nIF @table_count = 0\nBEGIN\nTHROW 50000, 'TEMP TABLE EMPTY', 1;\nEND\n"
 
 	#add an error to check for the target table
-	error_string += "\nIF OBJECT_ID(N'"+output_table+"') IS NULL\nBEGIN\nTHROW 50001, 'TARGET TABLE DOES NOT EXIST', 1;\nEND\n"
+	error_string += "\nIF OBJECT_ID(N'"+output_table+"') IS NULL\nBEGIN\nTHROW 50001, 'TARGET TABLE "+output_table+" DOES NOT EXIST', 1;\nEND\n"
 
 	#space after error messages
 	error_string += '\n'
 
-	#OVERRIDE THE DESTINATION TABLE IF THERE'S AN OVERRIDE NAME PRESENT
-	
-	if table_info.output_table_override != '':
-		output_table = table_info.output_table_override
+
 
 	join_string = "MERGE [dbo].["+output_table+"] target\nUsing @Temp_Table source\nON (\n"+join_string+"\n)\n"
 
