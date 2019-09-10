@@ -40,15 +40,11 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 	#generate_merge_query(source, tablename, user_picked_fields)	DO NOT DELETE!!!!!!!!
 	user_picked_fields = None
 
-	#user_picked_fields = ['recid','numberofusersaffected','repeatissue']
-	#source = 'HEATSM'
-	#tablename = 'incident'
-	#process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	source = 'HE'
+	tablename = 'kb_knowledge'
+	generate_merge_query(source, tablename, user_picked_fields)
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
-
-	source = 'LFLIVEEXTRACTNEW'
-	tablename = 'completedsurveyresponse'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details, run_creation=False)
 
 
 

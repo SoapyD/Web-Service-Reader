@@ -131,6 +131,7 @@ def generate_merge_sql(source, tablename, table_info, selected_fields):
 	insert_string = ''
 	source_string = ''
 	join_string = ''
+	output_table = source+"_"+tablename
 
 	#used the selected fields to create the various listed fields in the merge script
 	for field in selected_fields:
@@ -159,15 +160,21 @@ def generate_merge_sql(source, tablename, table_info, selected_fields):
 		first_pass = False
 
 	#DEFINE THE STRINGS SO THEY HAVE A BEGINNING AND ENDING TO ANY FIELDS REFERENCED
-	create_string = "DECLARE @Temp_Table TABLE(\n"+create_string+"\n)\n"
+	create_string = "SET NOCOUNT ON;\n\nDECLARE @Temp_Table TABLE(\n"+create_string+"\n)\n"
 	import_string = "INSERT INTO @Temp_Table\nSELECT\n"+import_string+"\nFROM\n[dbo].[stg] stg\n"
 
 	#format the message that'll display if the temp value is empty (which it shouldn't be if data was bulk uploaded)
 	error_string = "\nDECLARE @table_count FLOAT;\nSET @table_count = (select COUNT(*) from @Temp_Table)"
 	error_string += "\nIF @table_count = 0\nBEGIN\nTHROW 50000, 'TEMP TABLE EMPTY', 1;\nEND\n"
 
+	#add an error to check for the target table
+	error_string += "\nIF OBJECT_ID(N'"+output_table+"') IS NULL\nBEGIN\nTHROW 50001, 'TARGET TABLE DOES NOT EXIST', 1;\nEND\n"
+
+	#space after error messages
+	error_string += '\n'
+
 	#OVERRIDE THE DESTINATION TABLE IF THERE'S AN OVERRIDE NAME PRESENT
-	output_table = source+"_"+tablename
+	
 	if table_info.output_table_override != '':
 		output_table = table_info.output_table_override
 
