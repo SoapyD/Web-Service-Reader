@@ -10,8 +10,10 @@ def generate_creation_query(source, tablename, user_picked_fields=None, db=None,
 		table_info = return_servicenow_field_list_2(tablename)
 	if source_type == 'live':
 		table_info = return_heat_field_list_2(tablename)	
+	if source_type == 'ivanti_api':
+		table_info = return_ivanti_api_field_list_2(tablename, '', '')
 
-	#print(table_info)
+	
 
 	return_info = get_field_info(source, table_info, user_picked_fields)
 	selected_fields = return_info[0]

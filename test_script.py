@@ -1,4 +1,11 @@
 
+#####  ######   ##   #####  #   #    #####  #####   ####   ####  ######  ####   ####  
+#    # #       #  #  #    #  # #     #    # #    # #    # #    # #      #      #      
+#    # #####  #    # #    #   #      #    # #    # #    # #      #####   ####   ####  
+#####  #      ###### #    #   #      #####  #####  #    # #      #           #      # 
+#   #  #      #    # #    #   #      #      #   #  #    # #    # #      #    # #    # 
+#    # ###### #    # #####    #      #      #    #  ####   ####  ######  ####   #### 
+
 def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields=None,
 	print_internal=False, print_details=False):
 
@@ -62,6 +69,13 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 ###################################################################################################################
 ###################################################################################################################
 
+#    # #####  #####    ##   ##### ######    #####   ##   #####  #      ######  ####  
+#    # #    # #    #  #  #    #   #           #    #  #  #    # #      #      #      
+#    # #    # #    # #    #   #   #####       #   #    # #####  #      #####   ####  
+#    # #####  #    # ######   #   #           #   ###### #    # #      #           # 
+#    # #      #    # #    #   #   #           #   #    # #    # #      #      #    # 
+ ####  #      #####  #    #   #   ######      #   #    # #####  ###### ######  ####  
+
 def TEST_update_tables(source, tablename, start_date, end_date, db, database, staging_tablename, delete_staging, user_picked_fields=None, print_details=False):
 
     global error_count
@@ -92,6 +106,13 @@ def TEST_update_tables(source, tablename, start_date, end_date, db, database, st
 ###################################################################################################################
 ###################################################################################################################
 
+#    # ###### #####   ####  ######    #####    ##   #####   ##   
+##  ## #      #    # #    # #         #    #  #  #    #    #  #  
+# ## # #####  #    # #      #####     #    # #    #   #   #    # 
+#    # #      #####  #  ### #         #    # ######   #   ###### 
+#    # #      #   #  #    # #         #    # #    #   #   #    # 
+#    # ###### #    #  ####  ######    #####  #    #   #   #    # 
+
 def TEST_merge_data(output_df, source_type, source, tablename, fields, db, database, staging_tablename, delete_staging, merge_sql, print_details=False):
 
     sql_filepath = this_dir+'\\sql\\'+source_type+'_import\\'
@@ -109,6 +130,13 @@ def TEST_merge_data(output_df, source_type, source, tablename, fields, db, datab
 ###################################################################################################################
 ###################################################################################################################
 ###################################################################################################################  
+
+ ####  ###### #####    ###### # ###### #      #####     # #    # ######  ####  
+#    # #        #      #      # #      #      #    #    # ##   # #      #    # 
+#      #####    #      #####  # #####  #      #    #    # # #  # #####  #    # 
+#  ### #        #      #      # #      #      #    #    # #  # # #      #    # 
+#    # #        #      #      # #      #      #    #    # #   ## #      #    # 
+ ####  ######   #      #      # ###### ###### #####     # #    # #       #### 
 
 def get_field_info(source, table_info, user_picked_fields=None):
 	#create an array of fields in the query tag array
@@ -148,6 +176,13 @@ def get_field_info(source, table_info, user_picked_fields=None):
 ###################################################################################################################
 ###################################################################################################################
 ###################################################################################################################  
+
+ ####  ###### #####     ####   ####  #    # #####   ####  ######    ##### #   # #####  ###### 
+#    # #        #      #      #    # #    # #    # #    # #           #    # #  #    # #      
+#      #####    #       ####  #    # #    # #    # #      #####       #     #   #    # #####  
+#  ### #        #           # #    # #    # #####  #      #           #     #   #####  #      
+#    # #        #      #    # #    # #    # #   #  #    # #           #     #   #      #      
+ ####  ######   #       ####   ####   ####  #    #  ####  ######      #     #   #      ###### 
 
 def get_source_type(source):
 
@@ -189,6 +224,7 @@ def get_source_type(source):
 		username = croydon_username
 		password = croydon_password
 
+	#HEAT MSSQL CONNECTION
 	if source == 'HEATSM':
 		source_type = 'live'
 
@@ -200,6 +236,10 @@ def get_source_type(source):
 
 	if source == 'TELEPHONYEXTRACT':
 		source_type = 'live'
+
+	#IVANTI API
+	if source == 'ENWL':
+		source_type = 'ivanti_api'
 
 	return_info = {}
 	return_info[0] = source_type
@@ -216,6 +256,13 @@ def get_source_type(source):
 ###################################################################################################################
 ###################################################################################################################
 ###################################################################################################################  
+
+ ####  #    # ###### #####  #   #     ####   ####  #    # #####   ####  ######    #####    ##   #####   ##   
+#    # #    # #      #    #  # #     #      #    # #    # #    # #    # #         #    #  #  #    #    #  #  
+#    # #    # #####  #    #   #       ####  #    # #    # #    # #      #####     #    # #    #   #   #    # 
+#  # # #    # #      #####    #           # #    # #    # #####  #      #         #    # ######   #   ###### 
+#   #  #    # #      #   #    #      #    # #    # #    # #   #  #    # #         #    # #    #   #   #    # 
+ ### #  ####  ###### #    #   #       ####   ####   ####  #    #  ####  ######    #####  #    #   #   #    # 
 
 def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_fields=None, run_extract=True, reference_list=None, print_details=False):
 
@@ -291,6 +338,27 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 			output_df = sql_query_parser_3_PYTHON(source, tablename, table_info, fields, filter_fields, start_date, end_date, 
 			    run_extract=run_extract, print_details=print_details)     
 
+
+		if source_type == 'ivanti_api':
+
+			table_info = return_ivanti_api_field_list_2(tablename, start_date, end_date)
+
+			connection_info = ivanti_connection_class(
+				url = enwl_url,
+				username = enwl_username,
+				password = enwl_password,
+				role = enwl_role,
+				tenant_id = enwl_tenant_id
+				)
+			fields = table_info.fields
+			table = tablename
+			filters = table_info.filter_fields
+
+			output_df = query_ivanti_2(connection_info, fields, table, filters)	
+
+			#NEED TO GENERATE A MERGE SCRIPT
+			merge_sql = generate_merge_sql(source, tablename, table_info, fields)
+			#print(merge_sql)		
 
 	    #IF A ENTIRE DATASETS FIELDS ARE BLANK FOR A CERTAIN FIELD, THAT FIELD ISN'T RETURNED.
 	    #IF THIS IS THE CASE THEN THAT FIELD AND IT'S RELATED VALUE FIELD NEED ADDING TO THE DATASET

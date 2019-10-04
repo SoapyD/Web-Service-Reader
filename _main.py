@@ -7,9 +7,9 @@ exec(open(base_path+"Functions\\functions.py").read()) #load the master password
 
 
 exec(open("run_process_stack.py").read())
-exec(open("ready_process.py").read())
-exec(open("query_source_data.py").read())
-exec(open("update_reporting_tables.py").read())
+#exec(open("ready_process.py").read())
+#exec(open("query_source_data.py").read())
+#exec(open("update_reporting_tables.py").read())
 exec(open("test_script.py").read())
 exec(open("generate_queries.py").read())
 #exec(open("web_service_reader.py").read()) #this has now been moved to the functions folder
@@ -28,7 +28,8 @@ u_print('########################################')
 start_time = datetime.datetime.now() #need for process time u_printing
 
 
-db = 1
+db = 1 #REPORTING DATABASE
+#db = 2 #DEV DATABASE
 database = ''
 
 ###############################################################################MAIN PROCESS
@@ -39,8 +40,8 @@ print_internal = True
 print_details = False
 
 now = d.now()
-start_date = now - datetime.timedelta(hours=2.0)
-end_date = now
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
+end_date = now.replace(microsecond=0)
 
 time_type = 'days'
 time_unit = 1
@@ -57,14 +58,14 @@ print_details = False
 
 #start_date = datetime.datetime(2017, 1, 1)
 #end_date = datetime.datetime(2019, 10, 1)
-#start_date = datetime.datetime(2017, 1, 1)
-#end_date = datetime.datetime(2019, 8, 30)
+start_date = datetime.datetime(2019, 8, 1)
+end_date = datetime.datetime(2019, 10, 5)
 #now = d.now()
-start_date = now - datetime.timedelta(hours=2.0)
-end_date = now + datetime.timedelta(hours=2.0)
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
+end_date = now.replace(microsecond=0) + datetime.timedelta(hours=2.0)
 
 
-time_type = 'weeks'
+time_type = 'days'
 time_unit = 5
 
 #run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
