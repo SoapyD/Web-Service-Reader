@@ -58,15 +58,15 @@ print_details = False
 
 #start_date = datetime.datetime(2017, 1, 1)
 #end_date = datetime.datetime(2019, 10, 1)
-start_date = datetime.datetime(2019, 8, 1)
-end_date = datetime.datetime(2019, 10, 5)
+start_date = datetime.datetime(2019, 10, 1)
+end_date = datetime.datetime(2019, 10, 9)
 #now = d.now()
-start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
-end_date = now.replace(microsecond=0) + datetime.timedelta(hours=2.0)
+#start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
+#end_date = now.replace(microsecond=0) + datetime.timedelta(hours=2.0)
 
 
 time_type = 'days'
-time_unit = 5
+time_unit = 1
 
 #run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 #run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)

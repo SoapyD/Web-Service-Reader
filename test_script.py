@@ -6,8 +6,11 @@
 #   #  #      #    # #    #   #      #      #   #  #    # #    # #      #    # #    # 
 #    # ###### #    # #####    #      #      #    #  ####   ####  ######  ####   #### 
 
-def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields=None,
-	print_internal=False, print_details=False):
+def TEST_ready_process(
+	source, tablename, start_date, end_date, time_type, time_unit, 
+	db, database, staging_tablename, delete_staging, 
+	user_picked_fields=None,print_internal=False, print_details=False,
+	wh_output_table=''):
 
 	global output_array
 
@@ -25,6 +28,7 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 	
 	u_print("UPDATING: "+source+"_"+tablename) #need to at least print whats being updated
 
+	#RUN THE DATE LOOP
 	run_loop = True
 	total_rows = 0
 	total_time = datetime.datetime.now() - datetime.datetime.now()
@@ -42,7 +46,11 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 		if print_internal == True:
 			u_print("QUERYING BETWEEN: "+str(temp_start)+" AND "+str(temp_end))
 		
-		query_rows = TEST_update_tables(source, tablename, temp_start, temp_end, db, database, staging_tablename, delete_staging, user_picked_fields=user_picked_fields, print_details=print_details)
+		query_rows = TEST_update_tables(source, tablename, temp_start, temp_end, 
+			db, database, staging_tablename, delete_staging, 
+			user_picked_fields=user_picked_fields, print_details=print_details,
+			wh_output_table=wh_output_table)
+
 		total_rows += query_rows
 
 		if print_internal == True:
@@ -55,8 +63,8 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 		temp_start = temp_end
 		temp_end = temp_end + time_add
 
-	if print_internal == True:
-		u_print('')
+	#if print_internal == True:
+	#	u_print('')
 
 
 
@@ -76,12 +84,16 @@ def TEST_ready_process(source, tablename, start_date, end_date, time_type, time_
 #    # #      #    # #    #   #   #           #   #    # #    # #      #      #    # 
  ####  #      #####  #    #   #   ######      #   #    # #####  ###### ######  ####  
 
-def TEST_update_tables(source, tablename, start_date, end_date, db, database, staging_tablename, delete_staging, user_picked_fields=None, print_details=False):
+def TEST_update_tables(source, tablename, start_date, end_date, 
+	db, database, staging_tablename, delete_staging, 
+	user_picked_fields=None, print_details=False,
+	wh_output_table=''):
 
     global error_count
     errors = error_count
 
-    return_info = TEST_query_source_data(source, tablename, start_date, end_date, user_picked_fields=user_picked_fields, print_details=print_details)
+    return_info = TEST_query_source_data(source, tablename, start_date, end_date, 
+    	user_picked_fields=user_picked_fields, print_details=print_details)
 
     source_type = return_info[0]
     output_df = return_info[1]
@@ -92,7 +104,9 @@ def TEST_update_tables(source, tablename, start_date, end_date, db, database, st
 
     #MERGE DATA WITH MAIN DATABASE TABLE
     if errors == error_count:
-        TEST_merge_data(output_df, source_type, source, tablename, fields, db, database, staging_tablename, delete_staging, merge_sql, print_details=print_details)
+        TEST_merge_data(output_df, source_type, source, tablename, fields, 
+        	db, database, staging_tablename, delete_staging, merge_sql, 
+        	print_details=print_details, wh_output_table=wh_output_table)
 
     #u_print('') #ADD GAP TO PROCESS
 
@@ -113,17 +127,28 @@ def TEST_update_tables(source, tablename, start_date, end_date, db, database, st
 #    # #      #   #  #    # #         #    # #    #   #   #    # 
 #    # ###### #    #  ####  ######    #####  #    #   #   #    # 
 
-def TEST_merge_data(output_df, source_type, source, tablename, fields, db, database, staging_tablename, delete_staging, merge_sql, print_details=False):
+def TEST_merge_data(output_df, source_type, source, tablename, fields, 
+	db, database, staging_tablename, delete_staging, merge_sql, 
+	print_details=False, wh_output_table=''):
 
-    sql_filepath = this_dir+'\\sql\\'+source_type+'_import\\'
-    sql_filename = source + '_' + tablename
+	sql_filepath = this_dir+'\\sql\\'+source_type+'_import\\'
+	sql_filename = source + '_' + tablename
 
-    merge_with_database(output_df, sql_filepath, sql_filename, tablename, fields, db, database, 
-    staging_tablename, delete_staging, print_details=print_details, merge_sql=merge_sql) #in FUNCTIONS_sql
+	merge_with_database(output_df, sql_filepath, sql_filename, tablename, fields, db, database, 
+	staging_tablename, delete_staging, print_details=print_details, merge_sql=merge_sql) #in FUNCTIONS_sql
+
+	if wh_output_table != '':
+
+		original_table = source + "_" + tablename
+		merge_sql = merge_sql.replace(original_table, wh_output_table)
+		#print(merge_sql)
+
+		merge_with_database(output_df, sql_filepath, sql_filename, 
+			wh_output_table, fields, db, database, staging_tablename, delete_staging, 
+			print_details=print_details, merge_sql=merge_sql) #in FUNCTIONS_sql    	
 
     #merge_with_db_powershell(output_df, sql_filepath, sql_filename, tablename, fields, db, database, 
     #staging_tablename, delete_staging, print_details=print_details, merge_sql=merge_sql) #in FUNCTIONS_sql
-
 
 ###################################################################################################################
 ###################################################################################################################

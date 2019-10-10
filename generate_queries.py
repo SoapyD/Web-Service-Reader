@@ -1,6 +1,7 @@
 
 
-def generate_creation_query(source, tablename, user_picked_fields=None, db=None, database=None, print_details=False):
+def generate_creation_query(source, tablename, user_picked_fields=None, 
+	db=None, database=None, output_table='', print_details=False):
 
 	table_info = None
 	return_info = get_source_type(source)
@@ -13,20 +14,25 @@ def generate_creation_query(source, tablename, user_picked_fields=None, db=None,
 	if source_type == 'ivanti_api':
 		table_info = return_ivanti_api_field_list_2(tablename, '', '')
 
-	
+	if output_table == '':
+		output_table = source + "_" + tablename
 
 	return_info = get_field_info(source, table_info, user_picked_fields)
 	selected_fields = return_info[0]
 	selected_source_fields = return_info[1]
 	selected_mirror_fields = return_info[2]
-	create_sql = generate_create_sql(source, tablename, table_info, selected_fields)
-	print(create_sql)
+	create_sql = generate_create_sql(output_table, table_info, selected_fields)
+	#print(create_sql)
 
-	drop_script = "DROP TABLE "+source+"_"+tablename
+	drop_script = "DROP TABLE "+output_table
 
 	if db:
-		query_db_powershell(drop_script, db, database=database, print_details=print_details)
-		query_db_powershell(create_sql, db, database=database, print_details=print_details)
+		#query_db_powershell(drop_script, db, database=database, print_details=print_details)
+		#query_db_powershell(create_sql, db, database=database, print_details=print_details)
+		
+		query_database2('drop table',drop_script, db, database, ignore_errors=True, print_details=print_details)
+		query_database2('create table',create_sql, db, database, print_details=print_details)		
+		#print(create_sql)
 
 
 ###################################################################################################################
@@ -36,7 +42,8 @@ def generate_creation_query(source, tablename, user_picked_fields=None, db=None,
 ###################################################################################################################  
 
 
-def generate_drop_query(source, tablename, user_picked_fields=None, db=None, database=None, print_details=False):
+def generate_drop_query(source, tablename, user_picked_fields=None, 
+	db=None, database=None, output_table='', print_details=False):
 	table_info = None
 	return_info = get_source_type(source)
 	source_type = return_info[0] 
@@ -46,15 +53,16 @@ def generate_drop_query(source, tablename, user_picked_fields=None, db=None, dat
 	if source_type == 'live':
 		table_info = return_heat_field_list_2(tablename)	
 
-	drop_script = "DROP TABLE "+source+"_"+tablename
+	if output_table == '':
+		output_table = source + "_" + tablename
 
-	#with open('exports\\'+'drop_table.sql', 'w') as file:
-	#  file.write(drop_script)
-	#file.close()
+	#drop_script = "DROP TABLE "+source+"_"+tablename
+	drop_script = "DROP TABLE "+output_table
 
 	if db:
-		query_db_powershell(drop_script, db, database=database, print_details=print_details)
-
+		#query_db_powershell(drop_script, db, database=database, print_details=print_details)
+		query_database2('drop table',drop_script, db, database, ignore_errors=True, print_details=print_details)
+""""""
 
 ###################################################################################################################
 ###################################################################################################################
@@ -79,7 +87,7 @@ def generate_merge_query(source, tablename, user_picked_fields=None):
 	selected_source_fields = return_info[1]
 	selected_mirror_fields = return_info[2]
 	create_sql = generate_merge_sql(source, tablename, table_info, selected_fields)
-	#print(create_sql)
+	print(create_sql)
 
 	with open('exports\\merge_query.sql', 'w') as file:
 	  file.write(create_sql)
@@ -92,7 +100,8 @@ def generate_merge_query(source, tablename, user_picked_fields=None):
 ###################################################################################################################
 ###################################################################################################################    
 
-def generate_create_sql(source, tablename, table_info, selected_fields):
+#def generate_create_sql(source, tablename, table_info, selected_fields):
+def generate_create_sql(output_table, table_info, selected_fields):
 	first_pass = True
 	create_string = ''
 
@@ -106,7 +115,7 @@ def generate_create_sql(source, tablename, table_info, selected_fields):
 		first_pass = False
 
 	#OVERRIDE THE DESTINATION TABLE IF THERE'S AN OVERRIDE NAME PRESENT
-	output_table = source+"_"+tablename
+	#output_table = source+"_"+tablename
 	if table_info.output_table_override != '':
 		output_table = table_info.output_table_override
 
