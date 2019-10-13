@@ -69,6 +69,9 @@ def run_process_stack_2(
 	start_date, end_date, time_type, time_unit, process_list, 
 	db, database, delete_staging, print_internal=False, print_details=False):
 
+
+	global error_count
+
 	if print_internal == True:
 		u_print(str(start_date) + " to " + str(end_date))
 
@@ -124,10 +127,11 @@ def run_process_stack_2(
 			wh_output_table += table_name
 			wh_combined_table = "COMBINED_" + wh_output_table
 
-		#CREATE THE DATA WAREHOUSE TABLE
-		generate_creation_query(
-			source, tablename, 
-			db=db, database=database, output_table=wh_output_table)
+			#CREATE THE DATA WAREHOUSE TABLE
+			if wh_output_table != '' and wh_output_table != table_name:
+				generate_creation_query(
+					source, tablename, 
+					db=db, database=database, output_table=wh_output_table)
 
 		##############################################################################################################################################################
 		##############################################################################################################################################################
@@ -147,17 +151,22 @@ def run_process_stack_2(
 
 		##############################################################################################################################################################
 		##############################################################################################################################################################
-		#######################################CLEANUP
+		#######################################WAREHOUSING SCRIPT
 		##############################################################################################################################################################
 		##############################################################################################################################################################
 
 		if make_wh_table == True:
-			update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table,
-				print_internal=print_internal, print_details=print_details)
+			try:
+				update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table,
+					print_internal=print_internal, print_details=print_details)
+			except:
+				error_count += 1
+				u_print("There was an error updating the warehouse")
 
 			drop_sql = "DROP TABLE "+wh_output_table
-			query_database2('Drop Temp WH Table',drop_sql, db, database, print_details=print_details)
+			if wh_output_table != table_name: #DON'T DROP THE TABLE IF IT'S JUST THE NORMAL TABLE
+				query_database2('Drop Temp WH Table',drop_sql, db, database, print_details=print_details)
 			
-			#if print_internal == True:
-			#	u_print("Warehousing Complete")
-				#u_print("")
+			if print_internal == True:
+				u_print("Warehousing Complete")
+				u_print("")

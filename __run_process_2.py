@@ -8,7 +8,7 @@ print_internal = True
 print_details = False
 
 
-start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=10.0)
 end_date = now.replace(microsecond=0)
 
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS
@@ -32,7 +32,6 @@ run_main(process_list, start_date, end_date,
 
 
 
-
 process_list = [
 	['HE','sys_user',False, None],
 	['HE','incident_task',False, None],
@@ -45,7 +44,7 @@ process_list = [
 	['HE','problem_task',False, None],
 	['HE','task_sla',False, None],
 	['HE','sc_cat_item',False, None],
-	['HE_KB','kb_knowledge',False, None],	
+	#['HE_KB','kb_knowledge',False, None],	
 	['HE','incident',True, "he_incident"],
 	['HE','sc_req_item',True, "he_request"],
 ]
@@ -65,7 +64,7 @@ process_list = [
 	['FSA','change_task',False, None],
 	['FSA','problem',False, None],
 	['FSA','problem_task',False, None],
-	['FSA','task_sla',False, None],
+	###['FSA','task_sla',False, None],
 	['FSA','sc_cat_item',False, None],	
 	['FSA','incident',True, "fsa_incident"],
 	['FSA','sc_req_item',True, "fsa_request"],

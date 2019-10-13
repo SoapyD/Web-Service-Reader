@@ -63,8 +63,8 @@ def TEST_ready_process(
 		temp_start = temp_end
 		temp_end = temp_end + time_add
 
-	#if print_internal == True:
-	#	u_print('')
+	if print_internal == True:
+		u_print('')
 
 
 
