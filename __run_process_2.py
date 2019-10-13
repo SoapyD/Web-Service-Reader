@@ -8,7 +8,7 @@ print_internal = True
 print_details = False
 
 
-start_date = now.replace(microsecond=0) - datetime.timedelta(hours=10.0)
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 end_date = now.replace(microsecond=0)
 
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS
