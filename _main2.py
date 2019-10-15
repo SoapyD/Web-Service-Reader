@@ -20,7 +20,7 @@ global error_count
 now = d.now()
 
 
-def run_main(process_list, start_date, end_date,
+def run_main(process_group, process_list, start_date, end_date,
 	delete_staging, print_internal, print_details):
 
 	u_print('########################################')
@@ -60,4 +60,4 @@ def run_main(process_list, start_date, end_date,
 	u_print('Time Taken: '+str(finish_time - start_time))
 	u_print('########################################')
 
-	#save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')
+	save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader "+process_group, 'hourly')

@@ -14,6 +14,15 @@ end_date = now.replace(microsecond=0)
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS
 
 
+### #     #    #    #     # ####### ###             ### #     #  #####  ####### 
+ #  #     #   # #   ##    #    #     #               #  ##    # #     #    #    
+ #  #     #  #   #  # #   #    #     #               #  # #   # #          #    
+ #  #     # #     # #  #  #    #     #     #####     #  #  #  #  #####     #    
+ #   #   #  ####### #   # #    #     #               #  #   # #       #    #    
+ #    # #   #     # #    ##    #     #               #  #    ## #     #    #    
+###    #    #     # #     #    #    ###             ### #     #  #####     #    
+
+
 process_list = [
 	['HEATSM','employee',False, None],
 	['HEATSM','organizationalunit',False, None],
@@ -27,9 +36,36 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main(process_list, start_date, end_date,
+run_main("HEATSM", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
 
+
+
+process_list = [
+	['ENWL','Employee',False, None],
+	#['ENWL','organizationalunit',False, None],
+	#['ENWL','pir',False, None],
+	#['ENWL','change',False, None],
+	['ENWL','Problem',False, None],
+	#['ENWL','task',False, None],
+	['ENWL','ServiceReq',False, "enwl_request"],
+	['ENWL','Incident',False, "enwl_incident"],
+]
+
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("ENWL", process_list, start_date, end_date,
+	delete_staging, print_internal, print_details)
+
+
+
+ #####  ####### ######  #     # ###  #####  ####### #     # ####### #     #             ### #     #  #####  ####### 
+#     # #       #     # #     #  #  #     # #       ##    # #     # #  #  #              #  ##    # #     #    #    
+#       #       #     # #     #  #  #       #       # #   # #     # #  #  #              #  # #   # #          #    
+ #####  #####   ######  #     #  #  #       #####   #  #  # #     # #  #  #    #####     #  #  #  #  #####     #    
+      # #       #   #    #   #   #  #       #       #   # # #     # #  #  #              #  #   # #       #    #    
+#     # #       #    #    # #    #  #     # #       #    ## #     # #  #  #              #  #    ## #     #    #    
+ #####  ####### #     #    #    ###  #####  ####### #     # #######  ## ##              ### #     #  #####     #   
 
 
 process_list = [
@@ -44,14 +80,14 @@ process_list = [
 	['HE','problem_task',False, None],
 	['HE','task_sla',False, None],
 	['HE','sc_cat_item',False, None],
-	#['HE_KB','kb_knowledge',False, None],	
+	['HE_KB','kb_knowledge',False, None],	
 	['HE','incident',True, "he_incident"],
 	['HE','sc_req_item',True, "he_request"],
 ]
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main(process_list, start_date, end_date,
+run_main("HE", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
 
 
@@ -72,7 +108,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main(process_list, start_date, end_date,
+run_main("FSA", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
 
 
@@ -93,7 +129,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main(process_list, start_date, end_date,
+run_main("MHCLG", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
 
 
@@ -114,6 +150,5 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main(process_list, start_date, end_date,
+run_main("CROYDON", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
-""""""
