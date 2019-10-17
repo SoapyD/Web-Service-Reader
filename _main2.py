@@ -42,6 +42,8 @@ def run_main(process_group, process_list, start_date, end_date,
 	output_array = ''
 	global error_count
 	error_count = 0
+	global output_string
+	output_string = ''
 
 	#POPULATE THE BASE AND TEMP WAREHOUSE TABLES
 	run_process_stack_2(
