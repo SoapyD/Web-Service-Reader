@@ -70,6 +70,7 @@ def run_process_stack_2(
 	db, database, delete_staging, print_internal=False, print_details=False):
 
 
+
 	global error_count
 
 	if print_internal == True:
@@ -90,11 +91,14 @@ def run_process_stack_2(
 		wh_query = process[3]
 
 		#WE WANT A UNIQUE INSTANCE OF A STAGING TABLE TO AVOID MULTIPLE INSTANCE PROBLEMS
-		staging_tablename='stg_web_service_'+now.strftime('%d_%m_%Y_%H_%M_%S')+"_"+source+"_"+tablename
+		if delete_staging == True:
+			staging_tablename='stg_web_service'+'_'+now.strftime('%d_%m_%Y_%H_%M_%S')+"_"+source+"_"+tablename
+		else:
+			staging_tablename='stg_web_service_TEST'
 
 		##############################################################################################################################################################
 		##############################################################################################################################################################
-		#######################################ADDITIONAL FUNCTIONS
+		#######################################PRE EXTRACT FUNCTIONS
 		##############################################################################################################################################################
 		##############################################################################################################################################################
 
@@ -147,6 +151,24 @@ def run_process_stack_2(
 			user_picked_fields=user_picked_fields, 
 			print_internal=print_internal, print_details=print_details,
 			wh_output_table=wh_output_table)
+
+
+		##############################################################################################################################################################
+		##############################################################################################################################################################
+		#######################################POST EXTRACT FUNCTIONS
+		##############################################################################################################################################################
+		##############################################################################################################################################################
+
+		#CHECK TO SEE IF THE PROCESS IS TELEPHONY, IF SO, DELETE THE OLD CALL DATA
+		if source == 'ENWL' and tablename == 'Frs_data_escalation_watch':
+			"""
+			DELETE ANY OBSOLETE CLOCKS FROM THE ESCALATIONS TABLE
+			"""
+			sqlfile = "DELETE FROM ENWL_Frs_data_escalation_watch WHERE clockstate = 'Obsolete'"	
+
+			#query_db_powershell(sqlfile, db, database)
+			query_database2('deleting enwl clock data',sqlfile, db, database)
+
 
 
 		##############################################################################################################################################################

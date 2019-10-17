@@ -40,6 +40,8 @@ def run_main(process_group, process_list, start_date, end_date,
 	time_unit = 1
 	global output_array
 	output_array = ''
+	global error_count
+	error_count = 0
 
 	#POPULATE THE BASE AND TEMP WAREHOUSE TABLES
 	run_process_stack_2(
@@ -60,4 +62,5 @@ def run_main(process_group, process_list, start_date, end_date,
 	u_print('Time Taken: '+str(finish_time - start_time))
 	u_print('########################################')
 
-	save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader "+process_group, 'hourly')
+	if delete_staging == True:
+		save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader "+process_group, 'hourly')

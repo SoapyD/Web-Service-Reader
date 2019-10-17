@@ -58,9 +58,11 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 
 
-	source = 'ENWL'
-	tablename = 'Frs_data_escalation_watch'
-	#process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	source = 'HEATSM'
+	tablename = 'organizationalunit'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
+	tablename = 'employee'
+	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
 
 
 

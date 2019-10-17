@@ -46,7 +46,7 @@ end_date = now.replace(microsecond=0)
 time_type = 'days'
 time_unit = 1
 
-run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
+#run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
 ############################################################################### PROCESS
 
@@ -58,8 +58,8 @@ print_details = False
 
 #start_date = datetime.datetime(2017, 1, 1)
 #end_date = datetime.datetime(2019, 10, 1)
-start_date = datetime.datetime(2019, 1, 1)
-end_date = datetime.datetime(2019, 10, 12)
+start_date = datetime.datetime(2015, 1, 1)
+end_date = datetime.datetime(2019, 10, 17)
 #now = d.now()
 #start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 #end_date = now.replace(microsecond=0) + datetime.timedelta(hours=2.0)
@@ -68,7 +68,7 @@ end_date = datetime.datetime(2019, 10, 12)
 time_type = 'weeks'
 time_unit = 4
 
-#run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
+run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 #run_process_stack_2(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal, print_details)
 
 u_print(output_array)
@@ -85,4 +85,4 @@ u_print('End: '+str(finish_time))
 u_print('Time Taken: '+str(finish_time - start_time))
 u_print('########################################')
 
-save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')
+#save_process(start_time, finish_time, str(finish_time - start_time), "Web-Service-Reader", 'hourly')

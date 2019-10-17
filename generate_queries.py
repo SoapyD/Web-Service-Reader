@@ -33,7 +33,8 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 		query_database2('drop table',drop_script, db, database, ignore_errors=True, print_details=print_details)
 		query_database2('create table',create_sql, db, database, print_details=print_details)		
 		#print(create_sql)
-
+	else:
+		u_print(create_sql)
 
 ###################################################################################################################
 ###################################################################################################################

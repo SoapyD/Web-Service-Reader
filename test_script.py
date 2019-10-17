@@ -383,10 +383,20 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 
 			#NEED TO GENERATE A MERGE SCRIPT
 			merge_sql = generate_merge_sql(source, tablename, table_info, fields)
-			#print(merge_sql)		
+
+			#WE THEN NEED TO FIND OUT IF THERE'S ANY FIELDS THAT AREN'T IN THE SOURCE BUT ARE NEEDED IN THE MIRROR
+			#return_info = get_field_info(source, table_info, user_picked_fields)
+			#selected_fields = return_info[0]
+
+			#for field in selected_fields:		
+			#	if field.source_name == '':
+			#		print(field.mirror_name)
+	
 
 	    #IF A ENTIRE DATASETS FIELDS ARE BLANK FOR A CERTAIN FIELD, THAT FIELD ISN'T RETURNED.
 	    #IF THIS IS THE CASE THEN THAT FIELD AND IT'S RELATED VALUE FIELD NEED ADDING TO THE DATASET
+
+
 		if source_type == 'service_now' and run_extract == True:
 			for field in fields:
 				if field not in output_df.columns:
