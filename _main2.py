@@ -23,9 +23,6 @@ now = d.now()
 def run_main(process_group, process_list, start_date, end_date,
 	delete_staging, print_internal, print_details):
 
-	u_print('########################################')
-	u_print('RUNNING SERVICE EXTRACT PROCESS')
-	u_print('########################################')
 
 	start_time = datetime.datetime.now() #need for process time u_printing
 
@@ -44,6 +41,12 @@ def run_main(process_group, process_list, start_date, end_date,
 	error_count = 0
 	global output_string
 	output_string = ''
+
+
+	u_print('########################################')
+	u_print('RUNNING SERVICE EXTRACT PROCESS')
+	u_print('########################################')
+
 
 	#POPULATE THE BASE AND TEMP WAREHOUSE TABLES
 	run_process_stack_2(
