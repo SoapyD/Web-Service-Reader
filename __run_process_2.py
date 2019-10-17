@@ -8,6 +8,8 @@ print_internal = True
 print_details = False
 
 
+#start_date = datetime.datetime(2019, 10, 1)
+#end_date = datetime.datetime(2019, 10, 18)
 start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 end_date = now.replace(microsecond=0)
 
@@ -20,12 +22,13 @@ end_date = now.replace(microsecond=0)
 ########################################################TEST DATA
 ##############################################################################################################################
 ##############################################################################################################################
+
 """
-#generate_creation_query('ENWL', 'Task')
+generate_creation_query('LFLIVEEXTRACTNEW', 'enwl_sessionincident')
 
 
 process_list = [
-	['ENWL','Task',False, None],
+	['LFLIVEEXTRACTNEW','sessionpostback',False, None],
 ]
 
 
@@ -38,7 +41,7 @@ run_main("ENWL", process_list, start_date, end_date,
 
 
 
-
+""""""
 ### #     #    #    #     # ####### ###             ### #     #  #####  ####### 
  #  #     #   # #   ##    #    #     #               #  ##    # #     #    #    
  #  #     #  #   #  # #   #    #     #               #  # #   # #          #    
@@ -187,6 +190,82 @@ process_list = [
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("CROYDON", process_list, start_date, end_date,
+	delete_staging, print_internal, print_details)
+
+
+
+
+
+#       ####### #       ### #     # ####### 
+#       #       #        #  #     # #       
+#       #       #        #  #     # #       
+#       #####   #        #  #     # #####   
+#       #       #        #   #   #  #       
+#       #       #        #    # #   #       
+####### #       ####### ###    #    ####### 
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################LFLIVEEXTRACT
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+process_list = [
+	['LFLIVEEXTRACT','session',False, None],
+	['LFLIVEEXTRACT','sessionincident',False, None],
+	['LFLIVEEXTRACT','he_sessionincident',False, None],
+	['LFLIVEEXTRACT','fsa_sessionincident',False, None],
+	['LFLIVEEXTRACT','mhclg_sessionincident',False, None],
+	['LFLIVEEXTRACT','croydon_sessionincident',False, None],
+	['LFLIVEEXTRACT','sessionpostback',False, None],
+	['LFLIVEEXTRACT','completedsurvey',False, None],
+	['LFLIVEEXTRACT','completedsurveyresponse',False, None],
+]
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("LFLIVEEXTRACT", process_list, start_date, end_date,
+	delete_staging, print_internal, print_details)
+
+
+
+process_list = [
+	['LFLIVEEXTRACTNEW','session',False, None],
+	['LFLIVEEXTRACTNEW','sessionincident',False, None],
+	['LFLIVEEXTRACTNEW','he_sessionincident',False, None],
+	['LFLIVEEXTRACTNEW','fsa_sessionincident',False, None],
+	['LFLIVEEXTRACTNEW','mhclg_sessionincident',False, None],
+	['LFLIVEEXTRACTNEW','croydon_sessionincident',False, None],
+	['LFLIVEEXTRACTNEW','enwl_sessionincident',False, None],
+	['LFLIVEEXTRACTNEW','sessionpostback',False, None],
+	['LFLIVEEXTRACTNEW','completedsurvey',False, None],
+	['LFLIVEEXTRACTNEW','completedsurveyresponse',False, None],
+]
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date,
+	delete_staging, print_internal, print_details)
+
+
+####### ####### #       ####### ######  #     # ####### #     # #     # 
+   #    #       #       #       #     # #     # #     # ##    #  #   #  
+   #    #       #       #       #     # #     # #     # # #   #   # #   
+   #    #####   #       #####   ######  ####### #     # #  #  #    #    
+   #    #       #       #       #       #     # #     # #   # #    #    
+   #    #       #       #       #       #     # #     # #    ##    #    
+   #    ####### ####### ####### #       #     # ####### #     #    #  
+
+##############################################################################################################################################################
+##############################################################################################################################################################
+###############################################################################TELEPHONY
+##############################################################################################################################################################
+##############################################################################################################################################################
+
+process_list = [
+	['TELEPHONYEXTRACT','call',False, None],
+]
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("TELEPHONYEXTRACT", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
 
 """"""
