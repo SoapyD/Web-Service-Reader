@@ -8,8 +8,8 @@ print_internal = True
 print_details = False
 
 
-#start_date = datetime.datetime(2019, 10, 14)
-#end_date = datetime.datetime(2019, 10, 19)
+start_date = datetime.datetime(2019, 10, 18)
+end_date = datetime.datetime(2019, 10, 19)
 start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 end_date = now.replace(microsecond=0)
 
@@ -30,7 +30,7 @@ end_date = now.replace(microsecond=0)
 
 """
 process_list = [
-	['TELEPHONYEXTRACT','call',False, None],
+	['ENWL','ServiceReq',True, "enwl_request"]
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
