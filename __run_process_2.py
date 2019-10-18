@@ -8,8 +8,8 @@ print_internal = True
 print_details = False
 
 
-#start_date = datetime.datetime(2019, 10, 1)
-#end_date = datetime.datetime(2019, 10, 18)
+#start_date = datetime.datetime(2019, 10, 14)
+#end_date = datetime.datetime(2019, 10, 19)
 start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 end_date = now.replace(microsecond=0)
 
@@ -23,25 +23,26 @@ end_date = now.replace(microsecond=0)
 ##############################################################################################################################
 ##############################################################################################################################
 
+
+#generate_creation_query('LFLIVEEXTRACTNEW', 'enwl_sessionincident')
+
+
+
 """
-generate_creation_query('LFLIVEEXTRACTNEW', 'enwl_sessionincident')
-
-
 process_list = [
-	['LFLIVEEXTRACTNEW','sessionpostback',False, None],
+	['TELEPHONYEXTRACT','call',False, None],
 ]
 
-
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("ENWL", process_list, start_date, end_date,
+run_main("TELEPHONYEXTRACT", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
-
-
 """
 
 
 
-""""""
+
+
+
 ### #     #    #    #     # ####### ###             ### #     #  #####  ####### 
  #  #     #   # #   ##    #    #     #               #  ##    # #     #    #    
  #  #     #  #   #  # #   #    #     #               #  # #   # #          #    
@@ -82,8 +83,8 @@ process_list = [
 	['ENWL','Problem',False, None],
 	['ENWL','Frs_data_escalation_watch',False, None],
 	['ENWL','Task',False, None],
-	['ENWL','ServiceReq',False, "enwl_request"],
-	['ENWL','Incident',False, "enwl_incident"],
+	['ENWL','ServiceReq',True, "enwl_request"],
+	['ENWL','Incident',True, "enwl_incident"],
 ]
 
 
@@ -268,4 +269,3 @@ process_list = [
 run_main("TELEPHONYEXTRACT", process_list, start_date, end_date,
 	delete_staging, print_internal, print_details)
 
-""""""
