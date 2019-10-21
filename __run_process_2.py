@@ -6,10 +6,12 @@ exec(open("_main2.py").read())
 delete_staging = True
 print_internal = True
 print_details = False
+time_type = 'days'
+time_unit = 1
 
 
-start_date = datetime.datetime(2019, 10, 18)
-end_date = datetime.datetime(2019, 10, 19)
+#start_date = datetime.datetime(2019, 10, 20)
+#end_date = datetime.datetime(2019, 10, 21)
 start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 end_date = now.replace(microsecond=0)
 
@@ -28,15 +30,6 @@ end_date = now.replace(microsecond=0)
 
 
 
-"""
-process_list = [
-	['ENWL','ServiceReq',True, "enwl_request"]
-]
-
-#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("TELEPHONYEXTRACT", process_list, start_date, end_date,
-	delete_staging, print_internal, print_details)
-"""
 
 
 
@@ -71,7 +64,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HEATSM", process_list, start_date, end_date,
+run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -89,7 +82,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("ENWL", process_list, start_date, end_date,
+run_main("ENWL", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -127,7 +120,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HE", process_list, start_date, end_date,
+run_main("HE", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -148,7 +141,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("FSA", process_list, start_date, end_date,
+run_main("FSA", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -169,7 +162,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("MHCLG", process_list, start_date, end_date,
+run_main("MHCLG", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -190,7 +183,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("CROYDON", process_list, start_date, end_date,
+run_main("CROYDON", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -212,25 +205,24 @@ run_main("CROYDON", process_list, start_date, end_date,
 ##############################################################################################################################################################
 
 process_list = [
-	['LFLIVEEXTRACT','session',False, None],
 	['LFLIVEEXTRACT','sessionincident',False, None],
 	['LFLIVEEXTRACT','he_sessionincident',False, None],
 	['LFLIVEEXTRACT','fsa_sessionincident',False, None],
 	['LFLIVEEXTRACT','mhclg_sessionincident',False, None],
 	['LFLIVEEXTRACT','croydon_sessionincident',False, None],
 	['LFLIVEEXTRACT','sessionpostback',False, None],
-	['LFLIVEEXTRACT','completedsurvey',False, None],
 	['LFLIVEEXTRACT','completedsurveyresponse',False, None],
+	['LFLIVEEXTRACT','session',True, "lfliveextract_session"],
+	['LFLIVEEXTRACT','completedsurvey',True, "lfliveextract_nps"],
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("LFLIVEEXTRACT", process_list, start_date, end_date,
+run_main("LFLIVEEXTRACT", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
 
 process_list = [
-	['LFLIVEEXTRACTNEW','session',False, None],
 	['LFLIVEEXTRACTNEW','sessionincident',False, None],
 	['LFLIVEEXTRACTNEW','he_sessionincident',False, None],
 	['LFLIVEEXTRACTNEW','fsa_sessionincident',False, None],
@@ -238,12 +230,13 @@ process_list = [
 	['LFLIVEEXTRACTNEW','croydon_sessionincident',False, None],
 	['LFLIVEEXTRACTNEW','enwl_sessionincident',False, None],
 	['LFLIVEEXTRACTNEW','sessionpostback',False, None],
-	['LFLIVEEXTRACTNEW','completedsurvey',False, None],
 	['LFLIVEEXTRACTNEW','completedsurveyresponse',False, None],
+	['LFLIVEEXTRACTNEW','session',True, "lfliveextract_session"],
+	['LFLIVEEXTRACTNEW','completedsurvey',True, "lfliveextract_nps"],
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date,
+run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
@@ -266,6 +259,8 @@ process_list = [
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("TELEPHONYEXTRACT", process_list, start_date, end_date,
+run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
+"""
+"""

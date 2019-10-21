@@ -7,6 +7,7 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 	return_info = get_source_type(source)
 	source_type = return_info[0] 
 
+
 	if source_type == 'service_now':
 		table_info = return_servicenow_field_list_2(tablename)
 	if source_type == 'live':
@@ -14,15 +15,19 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 	if source_type == 'ivanti_api':
 		table_info = return_ivanti_api_field_list_2(tablename, '', '')
 
+	perm_name = source + "_" + tablename
 	if output_table == '':
-		output_table = source + "_" + tablename
+		output_table = perm_name
+	
 
 	return_info = get_field_info(source, table_info, user_picked_fields)
 	selected_fields = return_info[0]
 	selected_source_fields = return_info[1]
 	selected_mirror_fields = return_info[2]
 	create_sql = generate_create_sql(output_table, table_info, selected_fields)
-	#print(create_sql)
+	
+	if output_table != '':
+		 create_sql = create_sql.replace(perm_name, output_table)
 
 	drop_script = "DROP TABLE "+output_table
 
@@ -32,7 +37,8 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 		
 		query_database2('drop table',drop_script, db, database, ignore_errors=True, print_details=print_details)
 		query_database2('create table',create_sql, db, database, print_details=print_details)		
-		#print(create_sql)
+		#u_print(create_sql)
+		#u_print(drop_script)
 	else:
 		u_print(create_sql)
 
@@ -102,6 +108,7 @@ def generate_merge_query(source, tablename, user_picked_fields=None):
 ###################################################################################################################    
 
 #def generate_create_sql(source, tablename, table_info, selected_fields):
+#CONTAINS A TABLE OVERRIDE THAT MEANS TABLE NAMES WOULD NEED TO BE CHANGED AFTER THIS POINT IN ORDER TO WORK
 def generate_create_sql(output_table, table_info, selected_fields):
 	first_pass = True
 	create_string = ''

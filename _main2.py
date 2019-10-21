@@ -20,7 +20,7 @@ global error_count
 now = d.now()
 
 
-def run_main(process_group, process_list, start_date, end_date,
+def run_main(process_group, process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details):
 
 
@@ -33,8 +33,8 @@ def run_main(process_group, process_list, start_date, end_date,
 
 	###############################################################################MAIN PROCESS
 
-	time_type = 'days'
-	time_unit = 1
+	#time_type = 'days'
+	#time_unit = 1
 	global output_array
 	output_array = ''
 	global error_count

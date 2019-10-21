@@ -132,11 +132,12 @@ def run_process_stack_2(
 			wh_combined_table = "COMBINED_" + wh_output_table
 
 			#CREATE THE DATA WAREHOUSE TABLE
+			#u_print(wh_output_table)
 			if wh_output_table != '' and wh_output_table != table_name:
 				generate_creation_query(
 					source, tablename, 
 					db=db, database=database, output_table=wh_output_table)
-
+		
 		##############################################################################################################################################################
 		##############################################################################################################################################################
 		#######################################RUN EXTRACT AND MERGE
@@ -161,9 +162,9 @@ def run_process_stack_2(
 
 		#CHECK TO SEE IF THE PROCESS IS TELEPHONY, IF SO, DELETE THE OLD CALL DATA
 		if source == 'ENWL' and tablename == 'Frs_data_escalation_watch':
-			"""
-			DELETE ANY OBSOLETE CLOCKS FROM THE ESCALATIONS TABLE
-			"""
+			
+			#DELETE ANY OBSOLETE CLOCKS FROM THE ESCALATIONS TABLE
+			
 			sqlfile = "DELETE FROM ENWL_Frs_data_escalation_watch WHERE clockstate = 'Obsolete'"	
 
 			#query_db_powershell(sqlfile, db, database)
@@ -178,12 +179,21 @@ def run_process_stack_2(
 		##############################################################################################################################################################
 
 		if make_wh_table == True:
-			try:
-				update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table,
-					print_internal=print_internal, print_details=print_details)
-			except:
-				error_count += 1
-				u_print("There was an error updating the warehouse")
+			run = True
+			if run == True:
+			#try:
+				print(wh_query)
+				if 'lfliveextract' in wh_query:
+					update_warehouse_lflive(table_name, wh_output_table, wh_query, wh_combined_table,
+						print_internal=print_internal, print_details=print_details)
+				else:
+					update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table,
+						print_internal=print_internal, print_details=print_details)
+
+			#except:
+			#	error_count += 1
+			#	u_print("There was an error updating the warehouse")
+
 
 			drop_sql = "DROP TABLE "+wh_output_table
 			if wh_output_table != table_name: #DON'T DROP THE TABLE IF IT'S JUST THE NORMAL TABLE
@@ -192,3 +202,5 @@ def run_process_stack_2(
 			if print_internal == True:
 				u_print("Warehousing Complete")
 				u_print("")
+		""""""
+		
