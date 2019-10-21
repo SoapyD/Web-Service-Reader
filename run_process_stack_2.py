@@ -143,7 +143,7 @@ def run_process_stack_2(
 		#######################################RUN EXTRACT AND MERGE
 		##############################################################################################################################################################
 		##############################################################################################################################################################
-
+		
 		#THIS PROCESS UPDATES THE BASE TABLES
 		#IT ALSO POPULATES THE TEMPORARY WAREHOUSE TABLES
 		process_stack_subprocess(source, tablename, start_date, end_date, 
@@ -202,5 +202,5 @@ def run_process_stack_2(
 			if print_internal == True:
 				u_print("Warehousing Complete")
 				u_print("")
-		""""""
+	
 		

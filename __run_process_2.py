@@ -29,11 +29,17 @@ end_date = now.replace(microsecond=0)
 #generate_creation_query('LFLIVEEXTRACTNEW', 'enwl_sessionincident')
 
 
+"""
+process_list = [
+	['HEATSM','servicereq',True, "heatsm_request"],
+]
 
 
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit,
+	delete_staging, print_internal, print_details)
 
-
-
+"""
 
 
 ### #     #    #    #     # ####### ###             ### #     #  #####  ####### 
@@ -262,5 +268,4 @@ process_list = [
 run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
-"""
-"""
+

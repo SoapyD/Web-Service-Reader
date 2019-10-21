@@ -26,8 +26,9 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 	selected_mirror_fields = return_info[2]
 	create_sql = generate_create_sql(output_table, table_info, selected_fields)
 	
-	if output_table != '':
-		 create_sql = create_sql.replace(perm_name, output_table)
+	if output_table != '' and output_table not in create_sql:
+		#print(create_sql)
+		create_sql = create_sql.replace(perm_name, output_table)
 
 	drop_script = "DROP TABLE "+output_table
 
