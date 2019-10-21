@@ -28,16 +28,17 @@ end_date = now.replace(microsecond=0)
 
 #generate_creation_query('LFLIVEEXTRACTNEW', 'enwl_sessionincident')
 
-
 """
 process_list = [
-	['HEATSM','servicereq',True, "heatsm_request"],
+	#['LFLIVEEXTRACT','session',True, "lfliveextract_session"],
+	['LFLIVEEXTRACT','completedsurvey',True, "lfliveextract_nps"],
 ]
 
-
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit,
+run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
+
+
 
 """
 
