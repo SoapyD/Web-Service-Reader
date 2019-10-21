@@ -3,7 +3,7 @@ import os
 exec(open("_main2.py").read())
 
 
-delete_staging = True
+delete_staging = False
 print_internal = True
 print_details = False
 time_type = 'days'
@@ -30,8 +30,8 @@ end_date = now.replace(microsecond=0)
 
 """
 process_list = [
-	#['LFLIVEEXTRACT','session',True, "lfliveextract_session"],
-	['LFLIVEEXTRACT','completedsurvey',True, "lfliveextract_nps"],
+	#['LFLIVEEXTRACTNEW','session',True, "lfliveextract_session"],
+	['LFLIVEEXTRACTNEW','completedsurvey',True, "lfliveextract_nps"],
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES

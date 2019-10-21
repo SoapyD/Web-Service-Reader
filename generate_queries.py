@@ -16,6 +16,10 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 		table_info = return_ivanti_api_field_list_2(tablename, '', '')
 
 	perm_name = source + "_" + tablename
+
+	if table_info.output_table_override != '':
+		perm_name = table_info.output_table_override
+	#print(perm_name)
 	if output_table == '':
 		output_table = perm_name
 	
@@ -26,6 +30,7 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 	selected_mirror_fields = return_info[2]
 	create_sql = generate_create_sql(output_table, table_info, selected_fields)
 	
+
 	if output_table != '' and output_table not in create_sql:
 		#print(create_sql)
 		create_sql = create_sql.replace(perm_name, output_table)
