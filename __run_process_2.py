@@ -3,7 +3,7 @@ import os
 exec(open("_main2.py").read())
 
 
-delete_staging = False
+delete_staging = True
 print_internal = True
 print_details = False
 time_type = 'days'
