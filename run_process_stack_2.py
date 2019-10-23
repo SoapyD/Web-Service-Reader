@@ -70,7 +70,6 @@ def run_process_stack_2(
 	db, database, delete_staging, print_internal=False, print_details=False):
 
 
-
 	global error_count
 
 	if print_internal == True:
@@ -90,11 +89,37 @@ def run_process_stack_2(
 		make_wh_table = process[2]
 		wh_query = process[3]
 
+		table_name = source + "_" + tablename
+		wh_output_table = wh_table_prefix
+		wh_output_table += table_name
+		wh_combined_table = "COMBINED_" + wh_output_table
+
+		staging_tablename='stg_web_service'+'_'+now.strftime('%d_%m_%Y_%H_%M_%S')+"_"+source+"_"+tablename
+
 		#WE WANT A UNIQUE INSTANCE OF A STAGING TABLE TO AVOID MULTIPLE INSTANCE PROBLEMS
-		if delete_staging == True:
-			staging_tablename='stg_web_service'+'_'+now.strftime('%d_%m_%Y_%H_%M_%S')+"_"+source+"_"+tablename
-		else:
+		if delete_staging == False:
+			#USE GENERIC NAMES IF WE'RE NOT DELETING THE STAGING NAMES
 			staging_tablename='stg_web_service_TEST'
+			wh_output_table = "warehouse_TEST"
+			wh_combined_table = "COMBINED_warehouse_TEST"
+
+		##############################################################################################################################################################
+		##############################################################################################################################################################
+		#######################################OUTPUT TABLE CREATION
+		##############################################################################################################################################################
+		##############################################################################################################################################################
+
+		#CREATE THE OUTPUT TABLE WE'LL LOAD THE DATA INTO, ONLY NEED TO DO THIS WITH SOME TABLES
+
+		if make_wh_table == True:
+			#CREATE THE DATA WAREHOUSE TABLE
+			#u_print(wh_output_table)
+			if wh_output_table != '' and wh_output_table != table_name:
+				generate_creation_query(
+					source, tablename, 
+					db=db, database=database, output_table=wh_output_table)
+		else:
+			wh_output_table = ''
 
 		##############################################################################################################################################################
 		##############################################################################################################################################################
@@ -116,27 +141,7 @@ def run_process_stack_2(
 
 			#DELETE THE DATA FROM THE WAREHOUSE AND AGGREGATION TABLES
 
-		##############################################################################################################################################################
-		##############################################################################################################################################################
-		#######################################OUTPUT TABLE CREATION
-		##############################################################################################################################################################
-		##############################################################################################################################################################
 
-		#CREATE THE OUTPUT TABLE WE'LL LOAD THE DATA INTO, ONLY NEED TO DO THIS WITH SOME TABLES
-		wh_output_table = ''
-		wh_combined_table = ''
-		table_name = source + "_" + tablename
-		if make_wh_table == True:
-			wh_output_table = wh_table_prefix
-			wh_output_table += table_name
-			wh_combined_table = "COMBINED_" + wh_output_table
-
-			#CREATE THE DATA WAREHOUSE TABLE
-			#u_print(wh_output_table)
-			if wh_output_table != '' and wh_output_table != table_name:
-				generate_creation_query(
-					source, tablename, 
-					db=db, database=database, output_table=wh_output_table)
 		
 		##############################################################################################################################################################
 		##############################################################################################################################################################
@@ -179,7 +184,7 @@ def run_process_stack_2(
 		##############################################################################################################################################################
 
 		if make_wh_table == True:
-			run = True
+			run = False
 			if run == True:
 			#try:
 				print(wh_query)
@@ -195,9 +200,10 @@ def run_process_stack_2(
 			#	u_print("There was an error updating the warehouse")
 
 
-			drop_sql = "DROP TABLE "+wh_output_table
-			if wh_output_table != table_name: #DON'T DROP THE TABLE IF IT'S JUST THE NORMAL TABLE
-				query_database2('Drop Temp WH Table',drop_sql, db, database, print_details=print_details)
+			if delete_staging == True: #ONLY DELETE THE WAREHOUSE TABLE IS WE'RE DELETING THE STAGING TABLES
+				drop_sql = "DROP TABLE "+wh_output_table
+				if wh_output_table != table_name: #DON'T DROP THE TABLE IF IT'S JUST THE NORMAL TABLE
+					query_database2('Drop Temp WH Table',drop_sql, db, database, print_details=print_details)
 			
 			if print_internal == True:
 				u_print("Warehousing Complete")

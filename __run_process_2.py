@@ -3,9 +3,9 @@ import os
 exec(open("_main2.py").read())
 
 
-delete_staging = True
+delete_staging = False
 print_internal = True
-print_details = False
+print_details = True
 time_type = 'days'
 time_unit = 1
 
@@ -30,12 +30,23 @@ end_date = now.replace(microsecond=0)
 
 """
 process_list = [
-	#['LFLIVEEXTRACTNEW','session',True, "lfliveextract_session"],
-	['LFLIVEEXTRACTNEW','completedsurvey',True, "lfliveextract_nps"],
+	['MHCLG','sys_user',False, None],
+	['MHCLG','incident_task',False, None],
+	['MHCLG','sc_request',False, None],
+	['MHCLG','sc_task',False, None],
+	['MHCLG','change_request',False, None],
+	['MHCLG','change_task',False, None],
+	['MHCLG','problem',False, None],
+	['MHCLG','problem_task',False, None],
+	['MHCLG','task_sla',False, None],
+	['MHCLG','sc_cat_item',False, None],	
+	['MHCLG','incident',True, "mhclg_incident"],
+	#['MHCLG','sc_req_item',True, "mhclg_request"],
 ]
 
+
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time_unit,
+run_main("MHCLG", process_list, start_date, end_date, time_type, time_unit,
 	delete_staging, print_internal, print_details)
 
 
