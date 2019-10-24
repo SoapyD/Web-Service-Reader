@@ -29,33 +29,6 @@ def process_stack_subprocess(source, tablename, start_date, end_date,
 		error_count += 1
 
 
-####### #######  #####  #######             ######  ######  #######  #####  #######  #####   #####  
-   #    #       #     #    #                #     # #     # #     # #     # #       #     # #     # 
-   #    #       #          #                #     # #     # #     # #       #       #       #       
-   #    #####    #####     #       #####    ######  ######  #     # #       #####    #####   #####  
-   #    #             #    #                #       #   #   #     # #       #             #       # 
-   #    #       #     #    #                #       #    #  #     # #     # #       #     # #     # 
-   #    #######  #####     #                #       #     # #######  #####  #######  #####   #####  
-
-
-def run_test_process_stack(start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, print_internal=False, print_details=False):
-
-	if print_internal == True:
-		u_print(str(start_date) + " to " + str(end_date))
-
-	#generate_merge_query(source, tablename, user_picked_fields)	DO NOT DELETE!!!!!!!!
-	#generate_creation_query(source, tablename)
-
-
-	user_picked_fields = None
-
-	source = 'HE'
-	#tablename = 'sys_user'
-	#process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-	tablename = 'incident'
-	process_stack_subprocess(source, tablename, start_date, end_date, time_type, time_unit, db, database, staging_tablename, delete_staging, user_picked_fields, print_internal, print_details)
-
-
 
 #     # ####### #     #             ######  ######  #######  #####  #######  #####   #####  
 ##    # #       #  #  #             #     # #     # #     # #     # #       #     # #     # 
@@ -89,6 +62,8 @@ def run_process_stack_2(
 		tablename = process[1]
 		make_wh_table = process[2]
 		wh_query = process[3]
+
+		#generate_creation_query(source, tablename)
 
 		table_name = source + "_" + tablename
 		wh_output_table = wh_table_prefix
@@ -185,9 +160,9 @@ def run_process_stack_2(
 		##############################################################################################################################################################
 
 		if make_wh_table == True and run_warehousing == True:
-			run = True
-			if run == True:
-			#try:
+			#run = True
+			#if run == True:
+			try:
 				print(wh_query)
 				if 'lfliveextract' in wh_query:
 					update_warehouse_lflive(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
@@ -196,9 +171,9 @@ def run_process_stack_2(
 					update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 
-			#except:
-			#	error_count += 1
-			#	u_print("There was an error updating the warehouse")
+			except:
+				error_count += 1
+				u_print("There was an error updating the warehouse")
 
 
 			if delete_staging == True: #ONLY DELETE THE WAREHOUSE TABLE IS WE'RE DELETING THE STAGING TABLES

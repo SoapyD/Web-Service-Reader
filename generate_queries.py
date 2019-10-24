@@ -14,6 +14,8 @@ def generate_creation_query(source, tablename, user_picked_fields=None,
 		table_info = return_heat_field_list_2(tablename)	
 	if source_type == 'ivanti_api':
 		table_info = return_ivanti_api_field_list_2(tablename, '', '')
+	if source_type == 'ringcentral_api':
+		table_info = return_ringcentral_api_field_list(tablename)
 
 	perm_name = source + "_" + tablename
 
@@ -65,6 +67,10 @@ def generate_drop_query(source, tablename, user_picked_fields=None,
 		table_info = return_servicenow_field_list_2(tablename)
 	if source_type == 'live':
 		table_info = return_heat_field_list_2(tablename)	
+	if source_type == 'ivanti_api':
+		table_info = return_ivanti_api_field_list_2(tablename, '', '')
+	if source_type == 'ringcentral_api':
+		table_info = return_ringcentral_api_field_list(tablename)
 
 	if output_table == '':
 		output_table = source + "_" + tablename
@@ -94,13 +100,17 @@ def generate_merge_query(source, tablename, user_picked_fields=None):
 		table_info = return_servicenow_field_list_2(tablename)
 	if source_type == 'live':
 		table_info = return_heat_field_list_2(tablename)	
+	if source_type == 'ivanti_api':
+		table_info = return_ivanti_api_field_list_2(tablename, '', '')
+	if source_type == 'ringcentral_api':
+		table_info = return_ringcentral_api_field_list(tablename)
 
 	return_info = get_field_info(source, table_info, user_picked_fields)
 	selected_fields = return_info[0]
 	selected_source_fields = return_info[1]
 	selected_mirror_fields = return_info[2]
 	create_sql = generate_merge_sql(source, tablename, table_info, selected_fields)
-	print(create_sql)
+
 
 	with open('exports\\merge_query.sql', 'w') as file:
 	  file.write(create_sql)

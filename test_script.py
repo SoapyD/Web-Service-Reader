@@ -266,6 +266,10 @@ def get_source_type(source):
 	if source == 'ENWL':
 		source_type = 'ivanti_api'
 
+	#RINGCENTRAL API
+	if source == 'RINGCENTRAL':
+		source_type = 'ringcentral_api'	
+
 	return_info = {}
 	return_info[0] = source_type
 	return_info[1] = instancename
@@ -384,13 +388,28 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 			#NEED TO GENERATE A MERGE SCRIPT
 			merge_sql = generate_merge_sql(source, tablename, table_info, fields)
 
-			#WE THEN NEED TO FIND OUT IF THERE'S ANY FIELDS THAT AREN'T IN THE SOURCE BUT ARE NEEDED IN THE MIRROR
-			#return_info = get_field_info(source, table_info, user_picked_fields)
-			#selected_fields = return_info[0]
 
-			#for field in selected_fields:		
-			#	if field.source_name == '':
-			#		print(field.mirror_name)
+		if source_type == 'ringcentral_api':
+
+			table_info = return_ringcentral_api_field_list(tablename)
+			return_info = get_field_info(source, table_info, user_picked_fields)
+			selected_fields = return_info[0]
+			
+			field_string = ''
+			for field in selected_fields:
+				if field_string != '':
+					field_string += ", "
+				field_string += field.source_name 
+
+			fields = table_info.fields
+			table = tablename
+
+			#print(fields)
+			output_df = query_ringcentral(table, field_string, start_date, end_date, print_details)
+
+			#NEED TO GENERATE A MERGE SCRIPT
+			merge_sql = generate_merge_sql(source, table, table_info, fields)
+			#print(merge_sql)
 	
 
 	    #IF A ENTIRE DATASETS FIELDS ARE BLANK FOR A CERTAIN FIELD, THAT FIELD ISN'T RETURNED.
