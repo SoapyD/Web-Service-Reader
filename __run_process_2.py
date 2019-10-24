@@ -189,6 +189,7 @@ run_main("CROYDON", process_list, start_date, end_date, time_type, time_unit, ru
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
+"""
 process_list = [
 	['LFLIVEEXTRACT','sessionincident',False, None],
 	['LFLIVEEXTRACT','he_sessionincident',False, None],
@@ -223,7 +224,7 @@ process_list = [
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
-
+"""
 
 ####### ####### #       ####### ######  #     # ####### #     # #     # 
    #    #       #       #       #     # #     # #     # ##    #  #   #  
@@ -239,6 +240,7 @@ run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
+"""
 process_list = [
 	['TELEPHONYEXTRACT','call',False, None],
 ]
@@ -246,7 +248,7 @@ process_list = [
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
-
+"""
 
 
 ######  ### #     #  #####               #####  ####### #     # ####### ######     #    #       
