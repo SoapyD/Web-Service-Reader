@@ -35,7 +35,7 @@ end_date = now.replace(microsecond=0)
 ##############################################################################################################################
 ##############################################################################################################################
 
-
+"""
 process_list = [
 	['HEATSM','employee',False, None],
 	['HEATSM','organizationalunit',False, None],
@@ -51,7 +51,7 @@ process_list = [
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
-
+"""
 
 
 process_list = [
