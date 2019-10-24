@@ -6,12 +6,13 @@ exec(open("_main2.py").read())
 delete_staging = True
 print_internal = True
 print_details = False
+run_warehousing = True
 time_type = 'days'
-time_unit = 1
+time_unit = 7
 
 
-#start_date = datetime.datetime(2019, 10, 20)
-#end_date = datetime.datetime(2019, 10, 21)
+#start_date = datetime.datetime(2019, 10, 22)
+#end_date = datetime.datetime(2019, 10, 25)
 start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 end_date = now.replace(microsecond=0)
 
@@ -30,24 +31,21 @@ end_date = now.replace(microsecond=0)
 
 """
 process_list = [
-	['MHCLG','sys_user',False, None],
-	['MHCLG','incident_task',False, None],
-	['MHCLG','sc_request',False, None],
-	['MHCLG','sc_task',False, None],
-	['MHCLG','change_request',False, None],
-	['MHCLG','change_task',False, None],
-	['MHCLG','problem',False, None],
-	['MHCLG','problem_task',False, None],
-	['MHCLG','task_sla',False, None],
-	['MHCLG','sc_cat_item',False, None],	
-	['MHCLG','incident',True, "mhclg_incident"],
-	#['MHCLG','sc_req_item',True, "mhclg_request"],
+	['ENWL','Employee',False, None],
+	#['ENWL','pir',False, None],
+	#['ENWL','change',False, None],
+	['ENWL','Problem',False, None],
+	['ENWL','Frs_data_escalation_watch',False, None],
+	['ENWL','Task',False, None],
+	['ENWL','ServiceReq',True, "enwl_request"],
+	['ENWL','Incident',True, "enwl_incident"],
 ]
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("MHCLG", process_list, start_date, end_date, time_type, time_unit,
+run_main("ENWL", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
+
 
 
 
@@ -82,7 +80,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit,
+run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -100,7 +98,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("ENWL", process_list, start_date, end_date, time_type, time_unit,
+run_main("ENWL", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -138,7 +136,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HE", process_list, start_date, end_date, time_type, time_unit,
+run_main("HE", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -159,7 +157,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("FSA", process_list, start_date, end_date, time_type, time_unit,
+run_main("FSA", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -180,7 +178,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("MHCLG", process_list, start_date, end_date, time_type, time_unit,
+run_main("MHCLG", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -201,7 +199,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("CROYDON", process_list, start_date, end_date, time_type, time_unit,
+run_main("CROYDON", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -235,7 +233,7 @@ process_list = [
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("LFLIVEEXTRACT", process_list, start_date, end_date, time_type, time_unit,
+run_main("LFLIVEEXTRACT", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -254,7 +252,7 @@ process_list = [
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time_unit,
+run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
@@ -277,7 +275,7 @@ process_list = [
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit,
+run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 

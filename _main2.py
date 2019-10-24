@@ -20,7 +20,8 @@ global error_count
 now = d.now()
 
 
-def run_main(process_group, process_list, start_date, end_date, time_type, time_unit,
+def run_main(process_group, process_list, start_date, end_date, 
+	time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details):
 
 
@@ -51,7 +52,7 @@ def run_main(process_group, process_list, start_date, end_date, time_type, time_
 	#POPULATE THE BASE AND TEMP WAREHOUSE TABLES
 	run_process_stack_2(
 		start_date, end_date, time_type, time_unit, process_list, 
-		db, database, delete_staging, print_internal, print_details)
+		db, database, delete_staging, run_warehousing, print_internal, print_details)
 
 	u_print(output_array)
 

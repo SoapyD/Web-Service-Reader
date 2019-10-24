@@ -67,7 +67,8 @@ def run_test_process_stack(start_date, end_date, time_type, time_unit, db, datab
 
 def run_process_stack_2(
 	start_date, end_date, time_type, time_unit, process_list, 
-	db, database, delete_staging, print_internal=False, print_details=False):
+	db, database, delete_staging, run_warehousing, 
+	print_internal=False, print_details=False):
 
 
 	global error_count
@@ -183,16 +184,16 @@ def run_process_stack_2(
 		##############################################################################################################################################################
 		##############################################################################################################################################################
 
-		if make_wh_table == True:
-			run = False
+		if make_wh_table == True and run_warehousing == True:
+			run = True
 			if run == True:
 			#try:
 				print(wh_query)
 				if 'lfliveextract' in wh_query:
-					update_warehouse_lflive(table_name, wh_output_table, wh_query, wh_combined_table,
+					update_warehouse_lflive(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 				else:
-					update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table,
+					update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 
 			#except:
