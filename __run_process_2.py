@@ -263,6 +263,7 @@ run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
+"""
 process_list = [
 	['RINGCENTRAL','completedcontacts',False, ""],
 	['RINGCENTRAL','agents',False, ""],
@@ -272,3 +273,4 @@ process_list = [
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
 	delete_staging, print_internal, print_details)
+"""
