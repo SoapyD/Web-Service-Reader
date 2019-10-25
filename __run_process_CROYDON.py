@@ -21,18 +21,18 @@ end_date = now.replace(microsecond=0)
 
 
 process_list = [
-	['CROYDON','sys_user',False, None],
-	['CROYDON','incident_task',False, None],
-	['CROYDON','sc_request',False, None],
-	['CROYDON','sc_task',False, None],
-	['CROYDON','change_request',False, None],
-	['CROYDON','change_task',False, None],
-	['CROYDON','problem',False, None],
-	['CROYDON','problem_task',False, None],
-	['CROYDON','task_sla',False, None],
-	['CROYDON','sc_cat_item',False, None],	
-	['CROYDON','incident',True, "croydon_incident"],
-	['CROYDON','sc_req_item',True, "croydon_request"],
+	ws_process_class('CROYDON','sys_user'),
+	ws_process_class('CROYDON','incident_task'),
+	ws_process_class('CROYDON','sc_request'),
+	ws_process_class('CROYDON','sc_task'),
+	ws_process_class('CROYDON','change_request'),
+	ws_process_class('CROYDON','change_task'),
+	ws_process_class('CROYDON','problem'),
+	ws_process_class('CROYDON','problem_task'),
+	ws_process_class('CROYDON','task_sla'),
+	ws_process_class('CROYDON','sc_cat_item'),	
+	ws_process_class('CROYDON','incident',True, "croydon_incident"),
+	ws_process_class('CROYDON','sc_req_item',True, "croydon_request"),
 ]
 
 

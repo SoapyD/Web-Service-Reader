@@ -21,18 +21,18 @@ end_date = now.replace(microsecond=0)
 
 
 process_list = [
-	['FSA','sys_user',False, None],
-	['FSA','incident_task',False, None],
-	['FSA','sc_request',False, None],
-	['FSA','sc_task',False, None],
-	['FSA','change_request',False, None],
-	['FSA','change_task',False, None],
-	['FSA','problem',False, None],
-	['FSA','problem_task',False, None],
+	ws_process_class('FSA','sys_user'),
+	ws_process_class('FSA','incident_task'),
+	ws_process_class('FSA','sc_request'),
+	ws_process_class('FSA','sc_task'),
+	ws_process_class('FSA','change_request'),
+	ws_process_class('FSA','change_task'),
+	ws_process_class('FSA','problem'),
+	ws_process_class('FSA','problem_task'),
 	###['FSA','task_sla',False, None],
-	['FSA','sc_cat_item',False, None],	
-	['FSA','incident',True, "fsa_incident"],
-	['FSA','sc_req_item',True, "fsa_request"],
+	ws_process_class('FSA','sc_cat_item'),	
+	ws_process_class('FSA','incident',True, "fsa_incident"),
+	ws_process_class('FSA','sc_req_item',True, "fsa_request"),
 ]
 
 

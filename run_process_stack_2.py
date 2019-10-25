@@ -58,10 +58,11 @@ def run_process_stack_2(
 
 	for process in process_list:
 
-		source = process[0]
-		tablename = process[1]
-		make_wh_table = process[2]
-		wh_query = process[3]
+		source = process.source
+		tablename = process.tablename
+		make_wh_table = process.make_wh_table
+		wh_query = process.wh_query
+		user_picked_fields = process.user_picked_fields 
 
 		#generate_creation_query(source, tablename)
 

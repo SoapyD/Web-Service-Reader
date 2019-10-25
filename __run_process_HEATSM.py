@@ -37,14 +37,14 @@ end_date = now.replace(microsecond=0)
 
 
 process_list = [
-	['HEATSM','employee',False, None],
-	['HEATSM','organizationalunit',False, None],
-	['HEATSM','pir',False, None],
-	['HEATSM','change',False, None],
-	['HEATSM','problem',False, None],
-	['HEATSM','task',False, None],
-	['HEATSM','servicereq',True, "heatsm_request"],
-	['HEATSM','incident',True, "heatsm_incident"],
+	ws_process_class('HEATSM','employee'),
+	ws_process_class('HEATSM','organizationalunit'),
+	ws_process_class('HEATSM','pir'),
+	ws_process_class('HEATSM','change'),
+	ws_process_class('HEATSM','problem'),
+	ws_process_class('HEATSM','task'),
+	ws_process_class('HEATSM','servicereq',True, "heatsm_request"),
+	ws_process_class('HEATSM','incident',True, "heatsm_incident"),
 ]
 
 

@@ -27,7 +27,7 @@ end_date = now.replace(microsecond=0)
 ##############################################################################################################################################################
 
 process_list = [
-	['TELEPHONYEXTRACT','call',False, None],
+	ws_process_class('TELEPHONYEXTRACT','call'),
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES

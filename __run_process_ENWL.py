@@ -21,14 +21,14 @@ end_date = now.replace(microsecond=0)
 
 
 process_list = [
-	['ENWL','Employee',False, None],
+	ws_process_class('ENWL','Employee'),
 	#['ENWL','pir',False, None],
 	#['ENWL','change',False, None],
-	['ENWL','Problem',False, None],
-	['ENWL','Frs_data_escalation_watch',False, None],
-	['ENWL','Task',False, None],
-	['ENWL','ServiceReq',True, "enwl_request"],
-	['ENWL','Incident',True, "enwl_incident"],
+	ws_process_class('ENWL','Problem'),
+	ws_process_class('ENWL','Frs_data_escalation_watch'),
+	ws_process_class('ENWL','Task'),
+	ws_process_class('ENWL','ServiceReq',True, "enwl_request"),
+	ws_process_class('ENWL','Incident',True, "enwl_incident"),
 ]
 
 

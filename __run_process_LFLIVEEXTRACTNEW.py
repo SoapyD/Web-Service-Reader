@@ -27,15 +27,16 @@ end_date = now.replace(microsecond=0)
 ##############################################################################################################################################################
 
 process_list = [
-	['LFLIVEEXTRACTNEW','sessionincident',False, None],
-	['LFLIVEEXTRACTNEW','he_sessionincident',False, None],
-	['LFLIVEEXTRACTNEW','fsa_sessionincident',False, None],
-	['LFLIVEEXTRACTNEW','mhclg_sessionincident',False, None],
-	['LFLIVEEXTRACTNEW','croydon_sessionincident',False, None],
-	['LFLIVEEXTRACTNEW','sessionpostback',False, None],
-	['LFLIVEEXTRACTNEW','completedsurveyresponse',False, None],
-	['LFLIVEEXTRACTNEW','session',True, "lfliveextract_session"],
-	['LFLIVEEXTRACTNEW','completedsurvey',True, "lfliveextract_nps"],
+	ws_process_class('LFLIVEEXTRACTNEW','sessionincident'),
+	ws_process_class('LFLIVEEXTRACTNEW','he_sessionincident'),
+	ws_process_class('LFLIVEEXTRACTNEW','fsa_sessionincident'),
+	ws_process_class('LFLIVEEXTRACTNEW','mhclg_sessionincident'),
+	ws_process_class('LFLIVEEXTRACTNEW','croydon_sessionincident'),
+	ws_process_class('LFLIVEEXTRACTNEW','enwl_sessionincident'),
+	ws_process_class('LFLIVEEXTRACTNEW','sessionpostback'),
+	ws_process_class('LFLIVEEXTRACTNEW','completedsurveyresponse'),
+	ws_process_class('LFLIVEEXTRACTNEW','session',True, "lfliveextract_session"),
+	ws_process_class('LFLIVEEXTRACTNEW','completedsurvey',True, "lfliveextract_nps"),
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES

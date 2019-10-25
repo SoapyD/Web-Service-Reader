@@ -21,20 +21,20 @@ end_date = now.replace(microsecond=0)
 
 
 process_list = [
-	['HE','sys_user',False, None],
-	['HE','incident_task',False, None],
-	['HE','incident_alert',False, None],
-	['HE','sc_request',False, None],
-	['HE','sc_task',False, None],
-	['HE','change_request',False, None],
-	['HE','change_task',False, None],
-	['HE','problem',False, None],
-	['HE','problem_task',False, None],
-	['HE','task_sla',False, None],
-	['HE','sc_cat_item',False, None],
-	['HE_KB','kb_knowledge',False, None],	
-	['HE','incident',True, "he_incident"],
-	['HE','sc_req_item',True, "he_request"],
+	ws_process_class('HE','sys_user'),
+	ws_process_class('HE','incident_task'),
+	ws_process_class('HE','incident_alert'),
+	ws_process_class('HE','sc_request'),
+	ws_process_class('HE','sc_task'),
+	ws_process_class('HE','change_request'),
+	ws_process_class('HE','change_task'),
+	ws_process_class('HE','problem'),
+	ws_process_class('HE','problem_task'),
+	ws_process_class('HE','task_sla'),
+	ws_process_class('HE','sc_cat_item'),
+	ws_process_class('HE_KB','kb_knowledge'),	
+	ws_process_class('HE','incident',True, "he_incident"),
+	ws_process_class('HE','sc_req_item',True, "he_request"),
 ]
 
 

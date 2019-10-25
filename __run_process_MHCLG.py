@@ -22,18 +22,18 @@ end_date = now.replace(microsecond=0)
 
 
 process_list = [
-	['MHCLG','sys_user',False, None],
-	['MHCLG','incident_task',False, None],
-	['MHCLG','sc_request',False, None],
-	['MHCLG','sc_task',False, None],
-	['MHCLG','change_request',False, None],
-	['MHCLG','change_task',False, None],
-	['MHCLG','problem',False, None],
-	['MHCLG','problem_task',False, None],
-	['MHCLG','task_sla',False, None],
-	['MHCLG','sc_cat_item',False, None],	
-	['MHCLG','incident',True, "mhclg_incident"],
-	['MHCLG','sc_req_item',True, "mhclg_request"],
+	ws_process_class('MHCLG','sys_user'),
+	ws_process_class('MHCLG','incident_task'),
+	ws_process_class('MHCLG','sc_request'),
+	ws_process_class('MHCLG','sc_task'),
+	ws_process_class('MHCLG','change_request'),
+	ws_process_class('MHCLG','change_task'),
+	ws_process_class('MHCLG','problem'),
+	ws_process_class('MHCLG','problem_task'),
+	ws_process_class('MHCLG','task_sla'),
+	ws_process_class('MHCLG','sc_cat_item'),	
+	ws_process_class('MHCLG','incident',True, "mhclg_incident"),
+	ws_process_class('MHCLG','sc_req_item',True, "mhclg_request"),
 ]
 
 
