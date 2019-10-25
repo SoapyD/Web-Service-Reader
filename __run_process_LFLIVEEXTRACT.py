@@ -6,7 +6,7 @@ exec(open("_main2.py").read())
 delete_staging = True
 print_internal = True
 print_details = False
-run_warehousing = True
+run_warehousing = False
 time_type = 'days'
 time_unit = 7
 
