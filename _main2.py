@@ -21,16 +21,16 @@ now = d.now()
 
 
 def run_main(process_group, process_list, start_date, end_date, 
-	time_type, time_unit, run_warehousing,
+	time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details):
 
 
 	start_time = datetime.datetime.now() #need for process time u_printing
 
 
-	db = 1 #REPORTING DATABASE
+	#db = 1 #REPORTING DATABASE
 	#db = 2 #DEV DATABASE
-	database = ''
+	#database = ''
 
 	###############################################################################MAIN PROCESS
 

@@ -161,10 +161,10 @@ def run_process_stack_2(
 		##############################################################################################################################################################
 
 		if make_wh_table == True and run_warehousing == True:
-			#run = True
-			#if run == True:
+			run = True
+			if run == True:
 			try:
-				print(wh_query)
+				#print(wh_query)
 				if 'lfliveextract' in wh_query:
 					update_warehouse_lflive(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
