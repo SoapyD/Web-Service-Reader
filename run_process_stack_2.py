@@ -161,8 +161,8 @@ def run_process_stack_2(
 		##############################################################################################################################################################
 
 		if make_wh_table == True and run_warehousing == True:
-			run = True
-			if run == True:
+			#run = True
+			#if run == True:
 			try:
 				#print(wh_query)
 				if 'lfliveextract' in wh_query:

@@ -62,7 +62,7 @@ process_list = [
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HE", process_list, start_date, end_date, time_type, time_unit, run_warehousing,
+run_main("HE", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)
 
 
