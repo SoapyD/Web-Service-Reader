@@ -6,7 +6,7 @@ db = 1 #REPORTING DATABASE
 database = ''
 
 
-delete_staging = True
+delete_staging = False
 print_internal = True
 print_details = False
 run_warehousing = True
@@ -15,7 +15,7 @@ time_unit = 7
 
 
 
-start_date = datetime.datetime(2019, 10, 24)
+start_date = datetime.datetime(2019, 10, 23)
 end_date = datetime.datetime(2019, 10, 26)
 #start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
 #end_date = now.replace(microsecond=0)
@@ -222,7 +222,7 @@ run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
-"""
+
 process_list = [
 	ws_process_class('RINGCENTRAL','completedcontacts'),
 	ws_process_class('RINGCENTRAL','agents'),
@@ -232,7 +232,7 @@ process_list = [
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)
-"""
+""""""
 
 
 
