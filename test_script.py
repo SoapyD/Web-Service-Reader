@@ -101,11 +101,12 @@ def TEST_update_tables(source, tablename, start_date, end_date,
     filter_fields = return_info[3]
     filter_mirror_fields = return_info[4]
     merge_sql = return_info[5]
+    output_table_override = return_info[6]
 
     #MERGE DATA WITH MAIN DATABASE TABLE
     if errors == error_count:
         TEST_merge_data(output_df, source_type, source, tablename, fields, 
-        	db, database, staging_tablename, delete_staging, merge_sql, 
+        	db, database, staging_tablename, delete_staging, merge_sql, output_table_override,
         	print_details=print_details, wh_output_table=wh_output_table)
 
     #u_print('') #ADD GAP TO PROCESS
@@ -128,7 +129,7 @@ def TEST_update_tables(source, tablename, start_date, end_date,
 #    # ###### #    #  ####  ######    #####  #    #   #   #    # 
 
 def TEST_merge_data(output_df, source_type, source, tablename, fields, 
-	db, database, staging_tablename, delete_staging, merge_sql, 
+	db, database, staging_tablename, delete_staging, merge_sql, output_table_override,
 	print_details=False, wh_output_table=''):
 
 	sql_filepath = this_dir+'\\sql\\'+source_type+'_import\\'
@@ -140,6 +141,8 @@ def TEST_merge_data(output_df, source_type, source, tablename, fields,
 	if wh_output_table != '':
 
 		original_table = source + "_" + tablename
+		if output_table_override != '':
+			original_table = output_table_override
 		merge_sql = merge_sql.replace(original_table, wh_output_table)
 		#print(merge_sql)
 
@@ -428,6 +431,7 @@ def TEST_query_source_data(source, tablename, start_date, end_date, user_picked_
 		return_info[3] = filter_fields
 		return_info[4] = filter_mirror_fields
 		return_info[5] = merge_sql
+		return_info[6] = table_info.output_table_override
     #except:
     #	print("ERROR: Data Query Didn't Work")
     #	error_count += 1
