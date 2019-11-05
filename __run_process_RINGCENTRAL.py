@@ -17,8 +17,8 @@ time_unit = 7
 
 start_date = datetime.datetime(2019, 11, 4)
 end_date = datetime.datetime(2019, 11, 6)
-#start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
-#end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
+end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
 
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS
 
@@ -31,8 +31,8 @@ end_date = datetime.datetime(2019, 11, 6)
 
 
 process_list = [
-	ws_process_class('RINGCENTRAL','completedcontacts'),
 	ws_process_class('RINGCENTRAL','agents'),
+	ws_process_class('RINGCENTRAL','completedcontacts'),
 ]
 
 
