@@ -7,6 +7,7 @@ exec(open(base_path+"Functions\\functions.py").read()) #load the master password
 
 warehousing_path = base_path+"Warehousing-Process"
 exec(open(warehousing_path+"\\process\\process1\\_main.py").read()) #load the warehousing process
+exec(open(warehousing_path+"\\process\\process2\\_main2.py").read()) #load the warehousing process
 
 
 exec(open("run_process_stack_2.py").read())
