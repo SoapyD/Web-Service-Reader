@@ -9,7 +9,7 @@ database = ''
 
 delete_staging = False
 print_internal = True
-print_details = False
+print_details = True
 run_warehousing = True
 time_type = 'days'
 time_unit = 7
@@ -94,7 +94,7 @@ end_date = start_date + datetime.timedelta(days=1.0)
 ##############################################################################################################################################################
 ##############################################################################################################################################################
 
-
+"""
 process_list = [
 	ws_process_class('RINGCENTRAL','agents'),
 	ws_process_class('RINGCENTRAL','completedcontacts'),
@@ -105,6 +105,17 @@ process_list = [
 run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)
 
-"""
+
 generate_creation_query('RINGCENTRAL', 'completedcontacts')
 """
+
+
+
+process_list = [
+	ws_process_class('TELEPHONYEXTRACT','call'),
+]
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
+	delete_staging, print_internal, print_details)
+
