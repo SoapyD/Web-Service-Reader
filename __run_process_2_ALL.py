@@ -17,7 +17,7 @@ time_unit = 1
 
 start_date = datetime.datetime(2019, 11, 16)
 end_date = datetime.datetime(2019, 11, 17)
-start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=6.0)
 end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
 
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS

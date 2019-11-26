@@ -14,10 +14,10 @@ time_unit = 7
 
 
 
-start_date = datetime.datetime(2019, 10, 21)
-end_date = datetime.datetime(2019, 10, 23)
-#start_date = now.replace(microsecond=0) - datetime.timedelta(hours=2.0)
-#end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
+#start_date = datetime.datetime(2019, 11, 18)
+#end_date = datetime.datetime(2019, 11, 27)
+start_date = now.replace(microsecond=0) - datetime.timedelta(hours=4.0)
+end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
 
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS
 
