@@ -29,7 +29,7 @@ end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
 ##############################################################################################################################################################
 
 process_list = [
-	ws_process_class('TELEPHONYEXTRACT','call'),
+	ws_process_class('TELEPHONYEXTRACT','call', True,'MYCALLS_telephony'),
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES

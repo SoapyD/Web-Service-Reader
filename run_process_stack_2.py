@@ -173,7 +173,8 @@ def run_process_stack_2(
 				if 'lfliveextract' in wh_query:
 					update_warehouse_lflive(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
-				else:
+
+				if 'incident' in wh_query or 'request' in wh_query:
 					update_warehouse(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 
@@ -181,11 +182,17 @@ def run_process_stack_2(
 				u_print('RUNNING NEW SCRIPT')
 				u_print('')
 
+				print(wh_query)
 				
 				if 'lfliveextract' in wh_query:
 					update_warehouse_lflive2(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
-				else:
+
+				if 'telephony' in wh_query:
+					update_warehouse_telephony2(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
+						print_internal=print_internal, print_details=print_details)
+				
+				if 'incident' in wh_query or 'request' in wh_query:
 					update_warehouse2(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 				""""""
