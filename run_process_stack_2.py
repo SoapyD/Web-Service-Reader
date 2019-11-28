@@ -88,7 +88,7 @@ def run_process_stack_2(
 
 		#CREATE THE OUTPUT TABLE WE'LL LOAD THE DATA INTO, ONLY NEED TO DO THIS WITH SOME TABLES
 
-		if make_wh_table == True:
+		if make_wh_table == True and run_warehousing == True:
 			#CREATE THE DATA WAREHOUSE TABLE
 			#u_print(wh_output_table)
 			if wh_output_table != '' and wh_output_table != table_name:
@@ -159,6 +159,7 @@ def run_process_stack_2(
 		#######################################WAREHOUSING SCRIPT
 		##############################################################################################################################################################
 		##############################################################################################################################################################
+
 
 		if make_wh_table == True and run_warehousing == True:
 			#run = True

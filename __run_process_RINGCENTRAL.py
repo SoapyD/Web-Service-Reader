@@ -9,7 +9,7 @@ database = ''
 delete_staging = True
 print_internal = True
 print_details = False
-run_warehousing = False
+run_warehousing = True
 time_type = 'days'
 time_unit = 7
 
