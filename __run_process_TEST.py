@@ -9,7 +9,7 @@ database = ''
 
 delete_staging = False
 print_internal = True
-print_details = False
+print_details = True
 run_warehousing = True
 time_type = 'days'
 time_unit = 7
@@ -24,50 +24,12 @@ end_date = datetime.datetime(2019, 11, 28)
 
 
 
-##############################################################################################################################################################
-##############################################################################################################################################################
-###############################################################################LFLIVEEXTRACT
-##############################################################################################################################################################
-##############################################################################################################################################################
-
 process_list = [
-	ws_process_class('TELEPHONYEXTRACT','call', True,'MYCALLS_telephony'),
-]
-
-#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
-	delete_staging, print_internal, print_details)
-
-
-
-
-#CAN ONLY SEND DATES TO RINGCENTRAL, SO THE TIME COMPONENT NEEDS STRIPPING OUT
-
-start_date = now.replace(hour=0)
-start_date = start_date.replace(minute=0)
-start_date = start_date.replace(second=0)
-start_date = start_date.replace(microsecond=0)
-
-end_date = start_date + datetime.timedelta(days=1.0)
-""""""
-
-#start_date = datetime.datetime(2019, 11, 23)
-#end_date = datetime.datetime(2019, 11, 26)
-
-
-##############################################################################################################################################################
-##############################################################################################################################################################
-###############################################################################RINGCENTRAL
-##############################################################################################################################################################
-##############################################################################################################################################################
-
-
-process_list = [
-	ws_process_class('RINGCENTRAL','agents'),
-	ws_process_class('RINGCENTRAL','completedcontacts', True,'RINGCENTRAL_telephony'),
+	ws_process_class('HE','sys_user'),
+	ws_process_class('HE','problem', True, "he_problem"),
 ]
 
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
+run_main("HE", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)

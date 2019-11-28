@@ -29,10 +29,10 @@ process_list = [
 	ws_process_class('CROYDON','sc_task'),
 	ws_process_class('CROYDON','change_request'),
 	ws_process_class('CROYDON','change_task'),
-	ws_process_class('CROYDON','problem'),
 	ws_process_class('CROYDON','problem_task'),
 	ws_process_class('CROYDON','task_sla'),
 	ws_process_class('CROYDON','sc_cat_item'),	
+	ws_process_class('CROYDON','problem', True,'croydon_problem'),
 	ws_process_class('CROYDON','incident',True, "croydon_incident"),
 	ws_process_class('CROYDON','sc_req_item',True, "croydon_request"),
 ]

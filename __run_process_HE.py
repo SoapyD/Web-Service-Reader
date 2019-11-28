@@ -30,11 +30,11 @@ process_list = [
 	ws_process_class('HE','sc_task'),
 	ws_process_class('HE','change_request'),
 	ws_process_class('HE','change_task'),
-	ws_process_class('HE','problem'),
 	ws_process_class('HE','problem_task'),
 	ws_process_class('HE','task_sla'),
 	ws_process_class('HE','sc_cat_item'),
 	ws_process_class('HE_KB','kb_knowledge'),	
+	ws_process_class('HE','problem', True, "he_problem"),
 	ws_process_class('HE','incident',True, "he_incident"),
 	ws_process_class('HE','sc_req_item',True, "he_request"),
 ]

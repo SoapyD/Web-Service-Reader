@@ -29,10 +29,10 @@ process_list = [
 	ws_process_class('FSA','sc_task'),
 	ws_process_class('FSA','change_request'),
 	ws_process_class('FSA','change_task'),
-	ws_process_class('FSA','problem'),
 	ws_process_class('FSA','problem_task'),
 	###['FSA','task_sla',False, None],
 	ws_process_class('FSA','sc_cat_item'),	
+	ws_process_class('FSA','problem',True, "fsa_problem"),
 	ws_process_class('FSA','incident',True, "fsa_incident"),
 	ws_process_class('FSA','sc_req_item',True, "fsa_request"),
 ]
