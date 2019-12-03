@@ -40,12 +40,12 @@ process_list = [
 	ws_process_class('RINGCENTRAL','completedcontacts', True,'RINGCENTRAL_telephony'),
 ]
 
-"""
+
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
 run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)
 
-"""
+""""""
 
 """
 generate_creation_query('RINGCENTRAL', 'agents')
