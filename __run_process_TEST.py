@@ -26,10 +26,12 @@ end_date = datetime.datetime(2019, 12, 4)
 
 
 process_list = [
-	ws_process_class('TELEPHONYEXTRACT','call', True,'MYCALLS_telephony'),
+	ws_process_class('RINGCENTRAL','agents'),
+	ws_process_class('RINGCENTRAL','completedcontacts', True,'RINGCENTRAL_telephony'),
 ]
 
+
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
+run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)
 
