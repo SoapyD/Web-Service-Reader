@@ -199,7 +199,7 @@ run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time
 
 
 process_list = [
-	ws_process_class('TELEPHONYEXTRACT','call'),
+	ws_process_class('TELEPHONYEXTRACT','call', True,'MYCALLS_telephony'),
 ]
 
 #QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
@@ -224,8 +224,8 @@ run_main("TELEPHONYEXTRACT", process_list, start_date, end_date, time_type, time
 
 
 process_list = [
-	ws_process_class('RINGCENTRAL','completedcontacts'),
 	ws_process_class('RINGCENTRAL','agents'),
+	ws_process_class('RINGCENTRAL','completedcontacts', True,'RINGCENTRAL_telephony'),
 ]
 
 
