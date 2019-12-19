@@ -6,7 +6,7 @@ base_path = path[:string_pos]+'Python\\' #create a base filepath string
 exec(open(base_path+"Functions\\functions.py").read()) #load the master password file
 
 warehousing_path = base_path+"Warehousing-Process"
-exec(open(warehousing_path+"\\process\\process1\\_main.py").read()) #load the warehousing process
+#exec(open(warehousing_path+"\\process\\process1\\_main.py").read()) #load the warehousing process
 exec(open(warehousing_path+"\\process\\process2\\_main2.py").read()) #load the warehousing process
 
 
