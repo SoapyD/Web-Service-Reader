@@ -37,6 +37,8 @@ end_date = start_date + datetime.timedelta(days=1.0)
 
 process_list = [
 	ws_process_class('RINGCENTRAL','agents'),
+	ws_process_class('RINGCENTRAL','skills'),
+	ws_process_class('RINGCENTRAL','campaigns'),	
 	ws_process_class('RINGCENTRAL','completedcontacts', True,'RINGCENTRAL_telephony'),
 ]
 

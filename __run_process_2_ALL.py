@@ -15,10 +15,10 @@ time_unit = 1
 
 
 
-start_date = datetime.datetime(2019, 11, 16)
-end_date = datetime.datetime(2019, 11, 17)
-start_date = now.replace(microsecond=0) - datetime.timedelta(hours=6.0)
-end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
+start_date = datetime.datetime(2020, 1, 9)
+end_date = datetime.datetime(2020, 1, 11)
+#start_date = now.replace(microsecond=0) - datetime.timedelta(hours=6.0)
+#end_date = now.replace(microsecond=0) + datetime.timedelta(hours=1.0)
 
 #CREATE TEMP WAREHOUSING TABLE NAMES HERE VIA A CLASS
 
@@ -130,6 +130,58 @@ run_main("CROYDON", process_list, start_date, end_date, time_type, time_unit, db
 
 
 
+### #     #    #    #     # ####### ###             ### #     #  #####  ####### 
+ #  #     #   # #   ##    #    #     #               #  ##    # #     #    #    
+ #  #     #  #   #  # #   #    #     #               #  # #   # #          #    
+ #  #     # #     # #  #  #    #     #     #####     #  #  #  #  #####     #    
+ #   #   #  ####### #   # #    #     #               #  #   # #       #    #    
+ #    # #   #     # #    ##    #     #               #  #    ## #     #    #    
+###    #    #     # #     #    #    ###             ### #     #  #####     #    
+
+##############################################################################################################################
+##############################################################################################################################
+########################################################IVANTI INSTANCE
+##############################################################################################################################
+##############################################################################################################################
+
+process_list = [
+	ws_process_class('ENWL','Employee'),
+	#['ENWL','pir',False, None],
+	#['ENWL','change',False, None],
+	ws_process_class('ENWL','Problem'),
+	ws_process_class('ENWL','Frs_data_escalation_watch'),
+	ws_process_class('ENWL','Task'),
+	ws_process_class('ENWL','ServiceReq',True, "enwl_request"),
+	ws_process_class('ENWL','Incident',True, "enwl_incident"),
+]
+
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("ENWL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
+	delete_staging, print_internal, print_details)
+
+
+process_list = [
+	ws_process_class('HEATSM','employee'),
+	ws_process_class('HEATSM','organizationalunit'),
+	ws_process_class('HEATSM','pir'),
+	ws_process_class('HEATSM','change'),
+	ws_process_class('HEATSM','problem'),
+	ws_process_class('HEATSM','task'),
+	ws_process_class('HEATSM','servicereq',True, "heatsm_request"),
+	ws_process_class('HEATSM','incident',True, "heatsm_incident"),
+]
+
+
+#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
+run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
+	delete_staging, print_internal, print_details)
+
+
+
+
+
+
 
 
 #       ####### #       ### #     # ####### 
@@ -183,6 +235,8 @@ run_main("LFLIVEEXTRACTNEW", process_list, start_date, end_date, time_type, time
 	delete_staging, print_internal, print_details)
 
 
+
+
 ####### ####### #       ####### ######  #     # ####### #     # #     # 
    #    #       #       #       #     # #     # #     # ##    #  #   #  
    #    #       #       #       #     # #     # #     # # #   #   # #   
@@ -233,53 +287,3 @@ process_list = [
 run_main("RINGCENTRAL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
 	delete_staging, print_internal, print_details)
 """"""
-
-
-
-
-### #     #    #    #     # ####### ###             ### #     #  #####  ####### 
- #  #     #   # #   ##    #    #     #               #  ##    # #     #    #    
- #  #     #  #   #  # #   #    #     #               #  # #   # #          #    
- #  #     # #     # #  #  #    #     #     #####     #  #  #  #  #####     #    
- #   #   #  ####### #   # #    #     #               #  #   # #       #    #    
- #    # #   #     # #    ##    #     #               #  #    ## #     #    #    
-###    #    #     # #     #    #    ###             ### #     #  #####     #    
-
-##############################################################################################################################
-##############################################################################################################################
-########################################################IVANTI INSTANCE
-##############################################################################################################################
-##############################################################################################################################
-
-process_list = [
-	ws_process_class('ENWL','Employee'),
-	#['ENWL','pir',False, None],
-	#['ENWL','change',False, None],
-	ws_process_class('ENWL','Problem'),
-	ws_process_class('ENWL','Frs_data_escalation_watch'),
-	ws_process_class('ENWL','Task'),
-	ws_process_class('ENWL','ServiceReq',True, "enwl_request"),
-	ws_process_class('ENWL','Incident',True, "enwl_incident"),
-]
-
-
-#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("ENWL", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
-	delete_staging, print_internal, print_details)
-
-
-process_list = [
-	ws_process_class('HEATSM','employee'),
-	ws_process_class('HEATSM','organizationalunit'),
-	ws_process_class('HEATSM','pir'),
-	ws_process_class('HEATSM','change'),
-	ws_process_class('HEATSM','problem'),
-	ws_process_class('HEATSM','task'),
-	ws_process_class('HEATSM','servicereq',True, "heatsm_request"),
-	ws_process_class('HEATSM','incident',True, "heatsm_incident"),
-]
-
-
-#QUERY DATA AND MERGE IT INTO THE BASE TABLES AND TEMP WAREHOUSING TABLES
-run_main("HEATSM", process_list, start_date, end_date, time_type, time_unit, db, database, run_warehousing,
-	delete_staging, print_internal, print_details)
