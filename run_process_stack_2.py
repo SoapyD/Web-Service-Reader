@@ -194,8 +194,12 @@ def run_process_stack_2(
 					update_warehouse_telephony2(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 				
-				if 'problem' in wh_query:
+				if 'problem' in wh_query and 'problem_task' not in wh_query:
 					update_warehouse_problem2(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
+						print_internal=print_internal, print_details=print_details)
+
+				if 'problem_task' in wh_query:
+					update_warehouse_problem_task2(table_name, wh_output_table, wh_query, wh_combined_table, delete_staging,
 						print_internal=print_internal, print_details=print_details)
 
 				if 'incident' in wh_query or 'request' in wh_query:

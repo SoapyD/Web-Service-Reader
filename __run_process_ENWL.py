@@ -27,8 +27,8 @@ process_list = [
 	#['ENWL','pir',False, None],
 	#['ENWL','change',False, None],
 	ws_process_class('ENWL','Frs_data_escalation_watch'),
-	ws_process_class('ENWL','Task'),
 	ws_process_class('ENWL','Problem', True, "enwl_problem"),
+	ws_process_class('ENWL','Task', True, "enwl_problem_task"),	
 	ws_process_class('ENWL','ServiceReq',True, "enwl_request"),
 	ws_process_class('ENWL','Incident',True, "enwl_incident"),
 ]

@@ -30,10 +30,10 @@ process_list = [
 	ws_process_class('MHCLG','sc_task'),
 	ws_process_class('MHCLG','change_request'),
 	ws_process_class('MHCLG','change_task'),
-	ws_process_class('MHCLG','problem_task'),
 	ws_process_class('MHCLG','task_sla'),
 	ws_process_class('MHCLG','sc_cat_item'),	
 	ws_process_class('MHCLG','problem',True, "mhclg_problem"),
+	ws_process_class('MHCLG','problem_task', True, "mhclg_problem_task"),
 	ws_process_class('MHCLG','incident',True, "mhclg_incident"),
 	ws_process_class('MHCLG','sc_req_item',True, "mhclg_request"),
 ]

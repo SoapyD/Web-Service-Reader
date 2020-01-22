@@ -42,9 +42,9 @@ process_list = [
 	ws_process_class('HEATSM','employee'),
 	ws_process_class('HEATSM','pir'),
 	ws_process_class('HEATSM','change'),
-	ws_process_class('HEATSM','task'),
 	ws_process_class('HEATSM','organizationalunit'),
 	ws_process_class('HEATSM','problem',True, "heatsm_problem"),
+	ws_process_class('HEATSM','task', True, "heatsm_problem_task"),
 	ws_process_class('HEATSM','servicereq',True, "heatsm_request"),
 	ws_process_class('HEATSM','incident',True, "heatsm_incident"),
 ]
